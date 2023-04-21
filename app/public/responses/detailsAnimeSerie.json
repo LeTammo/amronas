@@ -1,0 +1,18 @@
+{
+  "@type": "imdb.api.title.title",
+  "id": "/title/tt2560140/",
+  "image": {
+    "height": 1200,
+    "id": "/title/tt2560140/images/rm2459906561",
+    "url": "https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_.jpg",
+    "width": 889
+  },
+  "runningTimeInMinutes": 24,
+  "nextEpisode": "/title/tt2825724/",
+  "numberOfEpisodes": 98,
+  "seriesEndYear": 2023,
+  "seriesStartYear": 2013,
+  "title": "Attack on Titan",
+  "titleType": "tvSeries",
+  "year": 2013
+}

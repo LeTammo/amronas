@@ -1,0 +1,18 @@
+{
+  "@type": "imdb.api.title.title",
+  "id": "/title/tt21344706/",
+  "image": {
+    "height": 933,
+    "id": "/title/tt21344706/images/rm2903718657",
+    "url": "https://m.media-amazon.com/images/M/MV5BZjkzOTJkNWEtOThmMC00MjQ3LWFhODQtMDhjNjJkMGE5OTcxXkEyXkFqcGdeQXVyNDYzNDg2MTM@._V1_.jpg",
+    "width": 630
+  },
+  "runningTimeInMinutes": 50,
+  "nextEpisode": "/title/tt21345432/",
+  "numberOfEpisodes": 16,
+  "seriesStartYear": 2022,
+  "title": "The Glory",
+  "titleType": "tvSeries",
+  "year": 2022
+}
+

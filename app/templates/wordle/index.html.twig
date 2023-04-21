@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WordleSolution index{% endblock %}
+
+{% block body %}
+    <h1>WordleSolution index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>CorrectWord</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for wordle_solution in wordle_solutions %}
+            <tr>
+                <td>{{ wordle_solution.id }}</td>
+                <td>{{ wordle_solution.correctWord }}</td>
+                <td>{{ wordle_solution.createdAt ? wordle_solution.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_wordle_show', {'id': wordle_solution.id}) }}">show</a>
+                    <a href="{{ path('app_wordle_edit', {'id': wordle_solution.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_wordle_new') }}">Create new</a>
+{% endblock %}

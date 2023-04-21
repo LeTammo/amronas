@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invite{% endblock %}
+{% block headline %}Maintainer einladen{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center text-center">
+        <h4>
+            Folgt ...
+        </h4>
+    </div>
+    <div class="d-none d-flex justify-content-center text-center">
+        <div class="col-6">
+            <div>Schicke diesen Link an deine Freunde:</div>
+            <div id="copyOnClick">
+                <div class="input-group overflow-hidden my-3">
+                    <label for="inviteUrl"></label>
+                    <span id="copyMe" class="input-group-text" style="cursor: pointer; width: 90px">copy me!</span>
+                    <input type="text" id="inviteUrl" name="inviteUrl" class="form-control" readonly
+                           style="cursor: pointer"
+                           value="{{ url('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
+                </div>
+            </div>
+            <div class="fw-bold">Achtung!</div>
+            <div>Maintainer können Filme und die ganze Liste löschen.</div>
+            <div>
+                Subscriber hingegen können die Liste nur anschauen:
+            </div>
+            <div>
+                <a class="btn btn-small" href="{{ url('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
+                    invite subscriber
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeoutId = null;
+        let copyText = document.getElementById('inviteUrl');
+        let copyOnClick = document.getElementById('copyOnClick');
+        copyOnClick.addEventListener('click', copyToClipboard);
+
+        function copyToClipboard() {
+            console.log(timeoutId)
+            if (timeoutId !== null) return
+
+            navigator.clipboard.writeText(copyText.value)
+                .then(() => {
+                    document.getElementById('copyMe').innerText = 'copied!';
+                    timeoutId = setTimeout(() => {
+                        document.getElementById('copyMe').innerText = 'copy me!';
+                        timeoutId = null;
+                    }, 1000);
+                })
+                .catch(err => {
+                    console.log('Something went wrong', err);
+                });
+        }
+    </script>
+{% endblock %}

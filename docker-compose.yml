@@ -1,19 +1,19 @@
 version: '3'
 
 networks:
-  symfony-brain-bites:
+  symfony-amronas:
 
 services:
     nginx-service:
         image: nginx:latest
-        container_name: nginx-container
+        container_name: nginx-amronas
         volumes:
             - ./app:/var/www/app
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         ports:
             - ${NGINX_PORT}:80
         networks:
-            - symfony-brain-bites
+            - symfony-amronas
         depends_on:
             - php-service
             - mysql-service
@@ -22,22 +22,21 @@ services:
         build:
             context: ./php
             args:
-                HOSTNAME: ${HOSTNAME}
                 EMAIL: ${GIT_EMAIL}
                 NAME: ${GIT_NAME}
-        container_name: php-container
+        container_name: php-amronas
         volumes:
             - ./app:/var/www/app
         ports:
             - ${PHP_PORT}:9000
         networks:
-            - symfony-brain-bites
+            - symfony-amronas
         depends_on:
             -   mysql-service
 
     phpmyadmin-service:
         image: phpmyadmin
-        container_name: phpmyadmin-container
+        container_name: phpmyadmin-amronas
         ports:
             - ${PHPMYADMIN_PORT}:80
         environment:
@@ -47,13 +46,13 @@ services:
             PMA_PASSWORD: ${MYSQL_PASSWORD}
         restart: always
         networks:
-            - symfony-brain-bites
+            - symfony-amronas
         depends_on:
             - mysql-service
 
     mysql-service:
         image: mysql:8
-        container_name: mysql-container
+        container_name: mysql-amronas
         volumes:
             - ./mysql:/var/lib/mysql
         command:
@@ -70,13 +69,13 @@ services:
         ports:
             - ${MYSQL_PORT}:3306
         networks:
-            - symfony-brain-bites
+            - symfony-amronas
 
     node-service:
         image: node:latest
-        container_name: node-container
+        container_name: node-amronas
         volumes:
             - ./app:/var/www/app
         working_dir: /var/www/app
         networks:
-            - symfony-brain-bites
+            - symfony-amronas

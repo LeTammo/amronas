@@ -1,0 +1,14 @@
+{
+  "@type": "imdb.api.title.title",
+  "id": "/title/tt0091605/",
+  "image": {
+    "height": 1000,
+    "id": "/title/tt0091605/images/rm1189816576",
+    "url": "https://m.media-amazon.com/images/M/MV5BZjEyZTdhNDMtMWFkMS00ZmRjLWEyNmEtZDU3MWFkNDEzMDYwXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_.jpg",
+    "width": 666
+  },
+  "runningTimeInMinutes": 130,
+  "title": "The Name of the Rose",
+  "titleType": "movie",
+  "year": 1986
+}

@@ -1,11 +1,9 @@
 ARG EMAIL
-ARG HOSTNAME
 ARG NAME
 
 FROM php:8.2-fpm
 
 ARG EMAIL
-ARG HOSTNAME
 ARG NAME
 
 WORKDIR /var/www/app
@@ -24,9 +22,5 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 RUN git config --global user.email "$EMAIL" \
     && git config --global user.name "$NAME"
-
-RUN apt install -y sendmail \
-    && echo $HOSTNAME > /etc/hostname \
-    && service sendmail start
 
 RUN chown -R www-data:www-data /var/www/app

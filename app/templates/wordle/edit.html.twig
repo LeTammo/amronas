@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit WordleSolution{% endblock %}
+
+{% block body %}
+    <h1>Edit WordleSolution</h1>
+
+    {{ include('wordle/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_wordle_index') }}">back to list</a>
+
+    {{ include('wordle/_delete_form.html.twig') }}
+{% endblock %}

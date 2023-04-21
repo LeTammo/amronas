@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <link rel="icon" href="{{ asset('heart.ico') }}">
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_home') }}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_profile') }}">Profil</a>
+    </li>
+    {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_user_index') }}">Admin</a>
+        </li>
+    {% endif %}
+</ul>
+<div class="d-flex justify-content-end mx-2">
+    {% if app.user %}
+        Logged in as:&nbsp;<span class="fw-bold font-amro-red">{{ app.user.username|capitalize }}</span>
+    {% else %}
+        You are not logged in
+    {% endif %}
+</div>
+<div class="h-100 container-lg text-center text-lg-start">
+    <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
+    {% for label, flashes in app.flashes(['success', 'error']) %}
+        {% for flash in flashes %}
+            <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
+                <div class="fw-bold">{{ flash.text }}</div>
+                <div class="remove-parent text-white">⨯</div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Watchlist{% endblock %}
+{% block headline %}{{ movieList.name }}{% endblock %}
+
+{% block body %}
+    <div class="search-bar row">
+        <div class="col-12 col-sm-9 col-md-6 mb-3">
+            <div class="d-flex justify-content-between">
+                <div class="input-group bg-dark overflow-hidden">
+                    <label for="imdb-search"></label><span class="input-group-text" id="search">suche Film/Serie:</span>
+                    <input type="text" class="form-control" id="imdb-search" aria-describedby="search">
+                </div>
+            </div>
+            <div class="search-results w-auto d-none" id="search_results"
+                 data-url="{{ path('app_movie_list_movie_add', {'id': movieList.id}) }}"></div>
+        </div>
+        <div class="col-3 col-xl-1 d-none d-sm-block d-md-none d-xl-block"></div>
+
+        <div class="col-5 col-sm-4 col-md-3 col-xl-2">
+            <div class="input-group bg-dark">
+                <label for="selectGenre"></label><span class="input-group-text">Genre:</span>
+                <select class="form-control" id="selectGenre" data-row="2" data-for="movieList">
+                    <option value="">wähle...</option>
+                    {% for genre in availableGenres %}
+                        <option value="{{ genre }}">{{ genre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-7 col-sm-5 col-md-3 col-xl-3">
+            <div class="input-group bg-dark">
+                <label for="table-filter"></label><span class="input-group-text">Filter:</span>
+                <input id="table-filter" type="text" class="form-control" aria-describedby="search" data-row="1"
+                       data-for="movieList" placeholder="gib ein...">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <table class="sortableTable filterableTable" id="movieList">
+                <thead>
+                <tr>
+                    <th class="numericSort d-none d-lg-table-cell" scope="col">Jahr</th>
+                    <th class="alphanumericSort" scope="col">Name</th>
+                    <th class="alphanumericSort d-none d-lg-table-cell" scope="col">Genre</th>
+                    <th class="text-center d-none d-lg-grid" scope="col">Trailer</th>
+                    <th class="text-center d-lg-none" scope="col">YT</th>
+                    <th class="text-center" scope="col">Verfügbarkeit</th>
+                    <th class="d-none d-lg-table-cell" scope="col">Beendet</th>
+                    <th class="d-none d-lg-table-cell" scope="col">
+                        <a class="edit-table" id="editTable">✎</a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for movieListEntry in movieListEntries %}
+                    <tr class="{% if movieListEntry.timeWatched %}}'watchedClass'{% endif %}">
+                        <td class="d-none d-lg-table-cell text-center">{{ movieListEntry.movie.year }}</td>
+                        <td class="fw-bold">
+                            {{ movieListEntry.movie.name }}
+                            {% if movieListEntry.timeAdded|date("U") > "-5 minutes"|date("U") %}<span
+                                    class="newEntry">NEU</span>{% endif %}
+                        </td>
+                        <td class="d-none d-lg-table-cell">{{ movieListEntry.movie.genre|join(', ') }}</td>
+                        <td class="text-center">
+                            {% if movieListEntry.movie.trailerYoutubeId|length > 0 %}
+                                <a class="youtube-link text-white" href="https://www.youtube.com/watch?v={{ movieListEntry.movie.trailerYoutubeId }}"
+                                   target="_blank">↗</a>
+                            {% else %}
+                                <a class="youtube-query" href="{{ path('addTrailer', {'id': movieListEntry.movie.id}) }}">➕</a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center text-nowrap">
+                            {% for provider in ['netflix', 'disney', 'amazon', 'youtube', 'wow', 'paramount'] %}
+                                {% set str = 'inactive' %}{% if provider in movieListEntry.movie.streamProvider %}{% set str = 'active' %}{% endif %}
+                                <a href="{{ path('app_movie_list_toggle_provider', {'id': movieListEntry.id, 'provider': provider}) }}">
+                                    <img class="streamProvider {{ str }} mx-lg-1"
+                                         src="{{ asset('img/%s.ico'|format(provider)) }}" alt="{{ provider }}">
+                                </a>
+                            {% endfor %}
+                        </td>
+                        <td class="d-none d-lg-table-cell">
+                            {% if movieListEntry.timeWatched > date("2020-09-05") %}
+                                <div class="toggleOnEdit">{{ movieListEntry.timeWatched|date('d.m.Y') }}</div>
+                            {% else %}
+                                <div class="toggleOnEdit">NOPE</div>
+                            {% endif %}
+                            <div class="d-none toggleOnEdit">
+                                <form class="row" method="post" action="{{ path('app_movie_list_movie_set_watched', {'id': movieListEntry.id}) }}">
+                                    <div class="col-10 p-0">
+                                        <label for="date" class="d-none"></label>
+                                        <input id="date" name="date" formmethod="post"
+                                               value="{{ movieListEntry.timeWatched|date('d.m.Y') }}">
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <button type="submit">OK</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                        <td class="d-none d-lg-table-cell">
+                            <a class="d-none removeMovie toggleOnEdit text-center"
+                               href="{{ path('app_movie_list_movie_delete', {'id': movieListEntry.id}) }}">
+                                <img class="delete" src="{{ asset('img/delete.png') }}" width="20" height="20"
+                                     alt="removeMovie">
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div>
+            <a class="btn btn-small" href="{{ path('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
+                Maintainer hinzufügen
+            </a>
+            <a class="btn btn-small" href="{{ path('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
+                Subscriber hinzufügen
+            </a>
+        </div>
+        <div>
+            {{ include('movie_list/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+  "@type": "imdb.api.title.title",
+  "id": "/title/tt0245429/",
+  "image": {
+    "height": 2900,
+    "id": "/title/tt0245429/images/rm4207852801",
+    "url": "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+    "width": 1956
+  },
+  "runningTimeInMinutes": 125,
+  "title": "Spirited Away",
+  "titleType": "movie",
+  "year": 2001
+}

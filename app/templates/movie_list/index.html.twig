@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Watchlist{% endblock %}
+{% block headline %}Deine Watchlisten{% endblock %}
+
+{% block body %}
+    <div class="row text-center justify-content-md-center">
+        {% for movieList in maintainedMovieLists %}
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <a href="{{ path('app_movie_list', {'id': movieList.id}) }}">
+                    <div class="card border-primary mx-auto w-75">
+                        <div class="card-header h5">{{ movieList.name }}</div>
+                        <div class="card-body text-primary">
+                            <div class="text-dark">Filme & Serien:</div>
+                            <div class="card-text">
+                                <span class="fw-bold">{{ movieList.movies|length }}</span> Einträge, davon
+                            </div>
+                            <div class="card-text">
+                                <span class="fw-bold">{{ movieList.unwatchedMovies|length }}</span> noch nicht geschaut
+                            </div>
+                            <div class="text-dark">Maintainer:</div>
+                            <div class="card-text" style="">
+                                <span>{{ movieList.maintainerToString(app.user)|join(', ', ' und ') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+
+        {% for movieList in subscribedMovieLists %}
+            <div class="col-4">
+                <div class="watchlist-card">
+                    <div>{{ movieList.name }}</div>
+                    <div>
+                        <a href="{{ path('app_movie_list', {'id': movieList.id}) }}">show</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-12"></div>
+        <div class="col-12 col-md-6 col-xl-4 my-5">
+            <a href="{{ path('app_movie_list_new') }}">
+                <div class="card card-secondary border-primary mx-auto w-75">
+                    <div class="card-header h5">Neu</div>
+                    <div class="card-body text-primary">
+                        <div class="text-dark font-italic">oder erstelle eine neue Liste...</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

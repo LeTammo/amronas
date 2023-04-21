@@ -1,0 +1,23 @@
+{% use "bootstrap_5_horizontal_layout.html.twig" %}
+
+
+{% for flash_error in app.flashes('verify_email_error') %}
+    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+{% if error %}
+    <div class="slim-alert alert-error d-flex justify-content-between">
+        <div class="fw-bold">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="remove-parent text-white">⨯</div>
+    </div>
+{% endif %}
+{% block form_row %}
+    <div class="input-group overflow-hidden my-3">
+        <label for="username"></label><span class="input-group-text">{{ form_label(form) }}</span>
+        {{ form_widget(form, {attr: {'class': 'form-control'}}) }}
+    </div>
+{% endblock %}
+
+{% block submit_widget %}
+    {% set attr = {'class': 'form-control'} %}
+    {{ block('button_widget') }}
+{% endblock submit_widget %}

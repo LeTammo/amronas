@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if error %}
+        <div class="slim-alert alert-error d-flex justify-content-between">
+            <div class="fw-bold">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="remove-parent text-white">⨯</div>
+        </div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="text-center">
+            <h1 class="py-5 font-handwritten">♡ Hiiii {{ app.user.username }} ♡</h1>
+            <div class="d-flex justify-content-center">
+                <div class="mt-2"><a class="input-group btn px-5" href="{{ path('app_logout') }}">logout</a></div>
+            </div>
+        </div>
+    {% else %}
+        <div class="d-flex justify-content-center">
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="input-group overflow-hidden my-3">
+                    <label for="username"></label><span class="input-group-text">Username:</span>
+                    <input type="text" class="form-control" id="username" name="_username" aria-describedby="search"
+                           value="{{ last_username }}">
+                </div>
+
+                <div class="input-group overflow-hidden my-3">
+                    <label for="password"></label><span class="input-group-text">Password:</span>
+                    <input type="password" class="form-control" id="password" name="_password"
+                           aria-describedby="search">
+                </div>
+
+                <input type="hidden" name="home" value="/account"/>
+                <div class="my-3">
+                    <input id="remember_me" type="checkbox" name="_remember_me" checked>
+                    <label for="remember_me">Keep me logged in</label>
+                </div>
+
+                <div>
+                    <button class="input-group btn" type="submit">login</button>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <div class="text-center">
+                <div class="m-3">Noch kein Account?</div>
+                <div><a class="input-group btn" href="{{ path('app_register') }}">Registrieren</a></div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

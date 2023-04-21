@@ -1,0 +1,8 @@
+// customize some Bootstrap variables
+$primary: #903f39;
+$card-cap-bg: #903f39;
+$card-cap-color: white;
+$card-border-width: 2px;
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";

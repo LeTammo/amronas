@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Neue Watchlist{% endblock %}
+{% block headline %}Neue Watchlist erstellen{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        {{ include('movie_list/_form.html.twig') }}
+    </div>
+{% endblock %}
