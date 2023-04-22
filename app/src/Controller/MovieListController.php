@@ -22,9 +22,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MovieListController extends AbstractController
 {
     public function __construct(
-        private MovieRepository          $movieRepository,
-        private MovieListRepository      $listRepository,
-        private MovieListEntryRepository $entryRepository,
+        private readonly MovieRepository          $movieRepository,
+        private readonly MovieListRepository      $listRepository,
+        private readonly MovieListEntryRepository $entryRepository,
     )
     {
     }
@@ -84,6 +84,11 @@ class MovieListController extends AbstractController
     #[Route('/{id}/movie/add', name: 'app_movie_list_movie_add', methods: ['POST'])]
     public function addEntry(MovieList $movieList, Request $request, GoogleService $googleService): Response
     {
+        if ($movieList->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
+            return $this->redirectToRoute('app_home');
+        }
+
         $parameters = json_decode($request->getContent(), true);
         $movieListEntry = new MovieListEntry();
         $movieListEntry->setMovieList($movieList);
@@ -126,6 +131,11 @@ class MovieListController extends AbstractController
     #[Route('movie/{id}/delete', name: 'app_movie_list_movie_delete', methods: ['GET'])]
     public function deleteEntry(MovieListEntry $entry): Response
     {
+        if ($entry->getMovieList()->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Nice try, aber du bist nicht berechtigt, diesen Eintrag zu löschen ;)']);
+            return $this->redirectToRoute('app_home');
+        }
+
         $this->entryRepository->remove($entry, true);
         $this->addFlash('success', ['text' => sprintf('Der Eintrag "%s" wurde aus der Liste entfernt', $entry->getMovie()->getName())]);
 
@@ -135,6 +145,11 @@ class MovieListController extends AbstractController
     #[Route('/{id}/invite-maintainer', name: 'app_movie_list_invite_maintainer', methods: ['GET'])]
     public function inviteMaintainer(MovieList $movieList): Response
     {
+        if ($movieList->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('movie_list/invite_maintainer.html.twig', [
             'movieList' => $movieList,
         ]);
@@ -143,6 +158,11 @@ class MovieListController extends AbstractController
     #[Route('/{id}/invite-subscriber', name: 'app_movie_list_invite_subscriber', methods: ['GET'])]
     public function inviteSubscriber(MovieList $movieList): Response
     {
+        if ($movieList->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('movie_list/invite_subscriber.html.twig', [
             'movieList' => $movieList,
         ]);
@@ -152,6 +172,12 @@ class MovieListController extends AbstractController
     public function setAsWatched(Request $request): Response
     {
         $entry = $this->entryRepository->find($request->get('id'));
+
+        if ($entry->getMovieList()->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
+            return $this->redirectToRoute('app_home');
+        }
+
         try {
             $entry->setTimeWatched(new DateTime($request->get('date')));
             $this->entryRepository->save($entry, true);
@@ -163,23 +189,14 @@ class MovieListController extends AbstractController
         return $this->redirectToRoute('app_movie_list', ['id' => $entry->getMovieList()->getId()]);
     }
 
-    #[Route('/{id}/toggle-provider', name: 'app_movie_list_toggle_provider', methods: ['GET'])]
-    public function activateProvider(Request $request): Response
-    {
-        $entry = $this->entryRepository->find($request->get('id'));
-        if ($entry->getMovie()->toggleProvider($request->get('provider'))) {
-            $this->addFlash('success', ['text' => sprintf('Ahyoo, man kann "%s" wohl doch nicht auf %s anschauen :(', $entry->getMovie()->getName(), ucfirst($request->get('provider')))]);
-        } else {
-            $this->addFlash('success', ['text' => sprintf('Super, man kann "%s" auf %s anschauen :D', $entry->getMovie()->getName(), ucfirst($request->get('provider')))]);
-        }
-        $this->movieRepository->save($entry->getMovie(), true);
-
-        return $this->redirectToRoute('app_movie_list', ['id' => $entry->getMovieList()->getId()], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route('/{id}/edit', name: 'app_movie_list_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, MovieList $movieList): Response
     {
+        if ($movieList->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
+            return $this->redirectToRoute('app_home');
+        }
+
         $form = $this->createForm(MovieListType::class, $movieList);
         $form->handleRequest($request);
 
@@ -195,16 +212,14 @@ class MovieListController extends AbstractController
         ]);
     }
 
-    public function addTrailer(GoogleService $googleService): Response
-    {
-        LoggerService::log('movie', sprintf('Added trailer for movie )'));
-
-        return $this->redirectToRoute('app_movie_list');
-    }
-
     #[Route('/{id}', name: 'app_movie_list_delete', methods: ['POST'])]
     public function delete(Request $request, MovieList $movieList): Response
     {
+        if ($movieList->getMaintainer() !== $this->getUser()) {
+            $this->addFlash('error', ['text' => 'Ziemlich ugly, aber du bist nicht berechtigt, diese Liste zu löschen ;)']);
+            return $this->redirectToRoute('app_home');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $movieList->getId(), $request->request->get('_token'))) {
             $this->listRepository->remove($movieList, true);
         }
