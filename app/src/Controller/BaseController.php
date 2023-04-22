@@ -21,6 +21,12 @@ class BaseController extends AbstractController
         return $this->render('home.html.twig');
     }
 
+    #[Route('/ich-arbeite-dran', name: 'app_at_construction')]
+    public function atConstruction(): Response
+    {
+        return $this->render('at_construction.html.twig');
+    }
+
     #[Route('/error', name: 'app_error')]
     public function error(): Response
     {
