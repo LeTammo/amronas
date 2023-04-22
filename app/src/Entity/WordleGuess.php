@@ -102,13 +102,4 @@ class WordleGuess
 
         return $this;
     }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-    #[ORM\Column]
-    private int $oldId;
-    public function getOldId(): ?int{return $this->oldId;}
-    public function setOldId(int $oldId): self{$this->oldId = $oldId;return $this;}
 }
