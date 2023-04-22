@@ -108,7 +108,7 @@ class UserController extends AbstractController
         $user = $userRepository->find($request->get('user'));
         $user->setPassword($userPasswordHashService->hashPassword($user, $_POST['_password1']));
 
-        $userRepository->save($user);
+        $userRepository->save($user, true);
 
         $this->addFlash('success', ['text' => "Dein Password wurde erfolgreich geändert"]);
 
