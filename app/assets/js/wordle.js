@@ -35,8 +35,6 @@ $(document).ready(function () {
      **************************************************************/
 
     const evaluateKey = (keyCode) => {
-        //console.log(keyCode)
-
         if (keysDisabled || finished || !focus)
             return;
 
@@ -124,7 +122,7 @@ $(document).ready(function () {
         waiting();
         $.getJSON(url, data)
             .done(response => onSuccess(response))
-            .fail(() => onError());
+            .fail(response => onError(response));
     }
 
     let intervalID, pulsatingColor, x = 0;
@@ -142,25 +140,12 @@ $(document).ready(function () {
         focus.parent().css("opacity", 1)
     };
 
-    const onSuccess = (data) => {
+    const onSuccess = () => {
         location.reload();
-        return;
-
-        clearWaiting();
-        changeFocusToFirst();
-        focus.addClass(data[0]);
-        changeFocusToNext();
-        focus.addClass(data[1]);
-        changeFocusToNext();
-        focus.addClass(data[2]);
-        changeFocusToNext();
-        focus.addClass(data[3]);
-        changeFocusToNext();
-        focus.addClass(data[4]);
-        changeFocusToNextRow();
     }
 
-    const onError = () => {
+    const onError = response => {
+        console.log(response.responseText)
         clearWaiting();
         keysDisabled = false;
         focus.parent().addClass('wordle-shake')

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use const Grpc\STATUS_CANCELLED;
 
 #[Route('/wordle')]
 class WordleController extends AbstractController
@@ -51,7 +52,7 @@ class WordleController extends AbstractController
     }
 
     #[Route('/guess', name: 'app_wordle_guess', methods: ['GET'])]
-    public function wordleGuess(Request $request, EntityManagerInterface $entityManager, int $difficulty = 0): JsonResponse
+    public function wordleGuess(Request $request, EntityManagerInterface $entityManager, int $difficulty = 0): Response
     {
         $date = new DateTime();
         $date->setTimestamp($request->get('unix'));
@@ -64,7 +65,7 @@ class WordleController extends AbstractController
 
         $words = $this->getWords($difficulty);
         if ($game->isSolved() || !in_array($request->get("guess"), $words)) {
-            throw new Exception();
+            return new Response("Invalid guess");
         }
 
         $response = $this->compareGuess(str_split($request->get("guess")), str_split($solution->getCorrectWord()));
