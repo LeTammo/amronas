@@ -17,6 +17,8 @@ services:
         depends_on:
             - php-service
             - mysql-service
+        environment:
+            - TZ=${TIME_ZONE}
 
     php-service:
         build:
@@ -24,6 +26,7 @@ services:
             args:
                 EMAIL: ${GIT_EMAIL}
                 NAME: ${GIT_NAME}
+                TIME_ZONE: ${TIME_ZONE}
         container_name: php-amronas
         volumes:
             - ./app:/var/www/app
@@ -32,7 +35,7 @@ services:
         networks:
             - symfony-amronas
         depends_on:
-            -   mysql-service
+            - mysql-service
 
     phpmyadmin-service:
         image: phpmyadmin
@@ -42,8 +45,7 @@ services:
         environment:
             PMA_HOST: mysql-service
             PMA_PORT: 3306
-            PMA_USER: ${MYSQL_USER}
-            PMA_PASSWORD: ${MYSQL_PASSWORD}
+            TZ: ${TIME_ZONE}
         restart: always
         networks:
             - symfony-amronas
@@ -64,6 +66,7 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
+            TZ: ${TIME_ZONE}
         restart:
             always
         ports:
@@ -79,3 +82,5 @@ services:
         working_dir: /var/www/app
         networks:
             - symfony-amronas
+        environment:
+          - TZ=${TIME_ZONE}

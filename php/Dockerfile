@@ -1,10 +1,12 @@
 ARG EMAIL
 ARG NAME
+ARG TIME_ZONE
 
 FROM php:8.2-fpm
 
 ARG EMAIL
 ARG NAME
+ARG TIME_ZONE
 
 WORKDIR /var/www/app
 
@@ -24,3 +26,4 @@ RUN git config --global user.email "$EMAIL" \
     && git config --global user.name "$NAME"
 
 RUN chown -R www-data:www-data /var/www/app
+RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
