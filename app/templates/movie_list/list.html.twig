@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 mb-5">
         <div class="col">
             <table class="sortableTable filterableTable" id="movieList">
                 <thead>
@@ -113,18 +113,18 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="d-flex justify-content-between">
-        <div>
-            <a class="btn btn-small" href="{{ path('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
-                Maintainer hinzufügen
-            </a>
-            <a class="btn btn-small" href="{{ path('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
-                Subscriber hinzufügen
-            </a>
-        </div>
-        <div>
-            {{ include('movie_list/_delete_form.html.twig') }}
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-small" href="{{ path('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
+                    Maintainer hinzufügen
+                </a>
+                <a class="btn btn-small" href="{{ path('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
+                    Subscriber hinzufügen
+                </a>
+            </div>
+            <div>
+                {{ include('movie_list/_delete_form.html.twig') }}
+            </div>
         </div>
     </div>
 {% endblock %}
