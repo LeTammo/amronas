@@ -84,7 +84,7 @@ class MovieListController extends AbstractController
     #[Route('/{id}/movie/add', name: 'app_movie_list_movie_add', methods: ['POST'])]
     public function addEntry(MovieList $movieList, Request $request, GoogleService $googleService): Response
     {
-        if ($movieList->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $movieList->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
             return $this->redirectToRoute('app_home');
         }
@@ -131,7 +131,7 @@ class MovieListController extends AbstractController
     #[Route('movie/{id}/delete', name: 'app_movie_list_movie_delete', methods: ['GET'])]
     public function deleteEntry(MovieListEntry $entry): Response
     {
-        if ($entry->getMovieList()->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $entry->getMovieList()->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Nice try, aber du bist nicht berechtigt, diesen Eintrag zu löschen ;)']);
             return $this->redirectToRoute('app_home');
         }
@@ -145,7 +145,7 @@ class MovieListController extends AbstractController
     #[Route('/{id}/invite-maintainer', name: 'app_movie_list_invite_maintainer', methods: ['GET'])]
     public function inviteMaintainer(MovieList $movieList): Response
     {
-        if ($movieList->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $movieList->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
             return $this->redirectToRoute('app_home');
         }
@@ -158,7 +158,7 @@ class MovieListController extends AbstractController
     #[Route('/{id}/invite-subscriber', name: 'app_movie_list_invite_subscriber', methods: ['GET'])]
     public function inviteSubscriber(MovieList $movieList): Response
     {
-        if ($movieList->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $movieList->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
             return $this->redirectToRoute('app_home');
         }
@@ -173,7 +173,7 @@ class MovieListController extends AbstractController
     {
         $entry = $this->entryRepository->find($request->get('id'));
 
-        if ($entry->getMovieList()->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $entry->getMovieList()->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
             return $this->redirectToRoute('app_home');
         }
@@ -192,7 +192,7 @@ class MovieListController extends AbstractController
     #[Route('/{id}/edit', name: 'app_movie_list_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, MovieList $movieList): Response
     {
-        if ($movieList->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $movieList->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Du bist nicht berechtigt, diese Liste zu bearbeiten']);
             return $this->redirectToRoute('app_home');
         }
@@ -215,7 +215,7 @@ class MovieListController extends AbstractController
     #[Route('/{id}', name: 'app_movie_list_delete', methods: ['POST'])]
     public function delete(Request $request, MovieList $movieList): Response
     {
-        if ($movieList->getMaintainer() !== $this->getUser()) {
+        if (!in_array($this->getUser(), $movieList->getMaintainer()->toArray())) {
             $this->addFlash('error', ['text' => 'Ziemlich ugly, aber du bist nicht berechtigt, diese Liste zu löschen ;)']);
             return $this->redirectToRoute('app_home');
         }
