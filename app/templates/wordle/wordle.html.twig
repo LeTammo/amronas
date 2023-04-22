@@ -12,7 +12,7 @@
                class="mx-2 wordle-date {{ classes }}">{{ day }}</a>
         {% endfor %}
     </div>
-    <div class="h-100 text-center row">
+    <div class="h-100 text-center row disable-double-tap-zoom">
         <div id="wordle-game" class="col wordle-game col-12 col-lg-6" data-unix="{{ unix }}"
              data-url="{{ path('app_wordle_guess') }}" data-finished="{{ currentGame.isFinished|raw }}">
             {% for try in [0, 1, 2, 3, 4, 5] %}
