@@ -87,7 +87,7 @@
             <div id="wordle-info" class="row">
                 {% for game in solution.games %}
                     {% if game.guesses|length > 0 %}
-                        <div class="col-6 mb-3">
+                        <div class="col-12 col-sm-6 mb-3">
                             <div class="fw-bold">
                                 {{ game.player.getUserIdentifier|capitalize }}
                             </div>
@@ -136,19 +136,24 @@
                 }
             });
 
-            const colors = ["#67a760", "#c8b359", "#a4413a"];
+            const colors = ["#67a760", '#98ad5c', "#c8b359", "#b67a4a", "#a4413a"];
 
             let ctx = document.getElementById('guesses-chart').getContext('2d');
 
-            const updateGradient = () => {
-                const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
-                gradient.addColorStop(0, colors[0]);
-                gradient.addColorStop(0.1, colors[0]);
-                gradient.addColorStop(0.4, colors[1]);
-                gradient.addColorStop(0.5, colors[2]);
+            const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+            gradient.addColorStop(0, colors[0]);
 
-                return gradient;
-            }
+            const greenYellowGradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+            greenYellowGradient.addColorStop(0, colors[0]);
+            greenYellowGradient.addColorStop(0.4, colors[0]);
+            greenYellowGradient.addColorStop(0.8, colors[1]);
+            greenYellowGradient.addColorStop(1, colors[1]);
+
+            const yellowRedGradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+            yellowRedGradient.addColorStop(0, colors[1]);
+            yellowRedGradient.addColorStop(0.4, colors[1]);
+            yellowRedGradient.addColorStop(0.8, colors[2]);
+            yellowRedGradient.addColorStop(1, colors[2]);
 
             let chartData = {
                 labels: ["1", "2", "3", "4", "5", "6", "nope"],
@@ -159,7 +164,7 @@
                         {% endfor %}
                         {{ guessesNeeded|filter(x => x > 6)|length }}
                     ],
-                    backgroundColor: updateGradient(),
+                    backgroundColor: [colors[0], colors[0], colors[0], colors[1], colors[2], colors[3], colors[4]],
                     borderColor: 'rgba(164, 65, 58, 1)',
                 }]
             }
@@ -185,6 +190,7 @@
                     }
                 });
 
+                return;
                 chart.data.datasets[0].backgroundColor = updateGradient();
                 chart.update();
                 window.addEventListener('resize', () => {
