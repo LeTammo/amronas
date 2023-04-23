@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error {{ status_code }}{% endblock %}
+{% block headline %}Oooooopsie... 😅{% endblock %}
+{% block loginMessage %}\(^o^)/{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <div class="col-12 mt-3 mb-5 h3">
+                Es ist irgendetwas schief gelaufen...<br>
+                Bitte kontaktiere bitte den Administrator.
+        </div>
+        <div class="col-12 h5 my-3">
+            Folgender Fehler ist aufgetreten:
+        </div>
+        <div class="col-12 h6">
+            <div class="alert alert-danger">
+                {{ status_code }} {{ status_text }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

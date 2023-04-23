@@ -30,7 +30,6 @@ class BaseController extends AbstractController
     #[Route('/error', name: 'app_error')]
     public function error(): Response
     {
-        return $this->redirectToRoute('app_at_construction');
         return $this->render('bundles/TwigBundle/Exception/error.html.twig');
     }
 }

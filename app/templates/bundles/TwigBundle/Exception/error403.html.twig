@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error 403{% endblock %}
+{% block headline %}Oooooopsie... 😅{% endblock %}
+{% block loginMessage %}\(^o^)/{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <div class="col-12 mt-3 mb-5 h3">
+            Du hast kein Zugriff auf diese Route.<br>
+            Falls du denkst, dass es sich um einen Fehler handelt,<br>
+            kontaktiere bitte den Administrator.
+        </div>
+        <div class="col-12 h5 my-3">
+            Folgender Fehler ist aufgetreten:
+        </div>
+        <div class="col-12 h6">
+            <div class="alert alert-danger">
+                {{ status_code }} {{ status_text }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -35,15 +35,21 @@
         </li>
     {% endif %}
 </ul>
-<div class="d-flex justify-content-end mx-2">
-    {% if app.user %}
-        Logged in as:&nbsp;<span class="fw-bold font-amro-red">{{ app.user.username|capitalize }}</span>
-    {% else %}
-        You are not logged in
-    {% endif %}
-</div>
+{% block loginWrapper %}
+    <div class="d-flex justify-content-end mx-2">
+        {% block loginMessage %}
+            {% if app.user %}
+                Logged in as:&nbsp;<span class="fw-bold font-amro-red">{{ app.user.username|capitalize }}</span>
+            {% else %}
+                You are not logged in
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}
 <div class="h-100 container-lg text-center text-lg-start">
-    <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
+    {% block headlineWrapper %}
+        <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
+    {% endblock %}
     {% for label, flashes in app.flashes(['success', 'error']) %}
         {% for flash in flashes %}
             <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
