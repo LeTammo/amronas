@@ -12,78 +12,82 @@
                class="mx-2 wordle-date {{ classes }}">{{ day }}</a>
         {% endfor %}
     </div>
-    <div class="h-100 text-center row disable-double-tap-zoom">
-        <div id="wordle-game" class="col wordle-game col-12 col-lg-6" data-unix="{{ unix }}"
-             data-url="{{ path('app_wordle_guess') }}" data-finished="{{ currentGame.isFinished|raw }}">
-            {% for try in [0, 1, 2, 3, 4, 5] %}
-                <div class="wordle-try d-flex justify-content-center {% if try >= currentGame.guesses|length %}unfinished{% endif %}">
-                    {% for letter in [0, 1, 2, 3, 4] %}
-                        {% set statusInfo = '' %}
-                        {% if try < currentGame.guesses|length %}
-                            {% set statusInfo = currentGame.guesses[try].info[letter] %}
-                        {% endif %}
-                        <div class="wordle-cell d-flex justify-content-center align-items-center {{ statusInfo }}">
-                            <div class="wordle-letter">
-                                {% if try < currentGame.guesses|length %}
-                                    {{ currentGame.guesses[try].guessedWord[letter:1]|upper }}
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-            <div class="wordle-try d-flex justify-content-center">
-                {% if not currentGame.isSolved and currentGame.isFinished %}
-                    {% for letter in [0, 1, 2, 3, 4] %}
-                        <div class="wordle-cell d-flex justify-content-center align-items-center bg-amro-red">
-                            <div class="wordle-letter">
-                                {{ currentGame.solution.correctWord[letter:1]|upper }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
 
-            <div class="d-flex justify-content-center {% if currentGame.isFinished %}d-none{% endif %}">
-                <div id="keyboard" class="mt-3">
-                    <div class="d-flex justify-content-center">
-                        {% for char in ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'] %}
-                            <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
-                        {% endfor %}
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        {% for char in ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'] %}
-                            <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
-                        {% endfor %}
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="key" id="enter-key">⤶</div>
-                        {% for char in ['y', 'x', 'c', 'v', 'b', 'n', 'm'] %}
-                            <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
-                        {% endfor %}
-                        <div class="key" id="backspace-key">←</div>
-                    </div>
-                </div>
-            </div>
+    <div class="row text-center">
+        <div class="col-12 h1">
+            {% if currentGame.isSolved %}
+                <div>Congratulation! 🎉</div>
+            {% elseif currentGame.isFinished %}
+                <div>Sorryyyy 😔</div>
+            {% else %}
+                <div>viel Erfolg!</div>
+            {% endif %}
         </div>
-
-        <div id="wordle-info" class="col-12 col-lg-6">
-            <div class="row">
-                <div class="col-12">
-                    {% if currentGame.isSolved %}
-                        <h1>Congratulation! 🎉</h1>
-                        <div>Hier kannst du dich vergleichen:</div>
-                    {% elseif currentGame.isFinished %}
-                        <h1>Sorryyyy 😔</h1>
-                        <div>Hier kannst du dich vergleichen:</div>
-                    {% else %}
-                        <h1>viel Erfolg!</h1>
-                        <div>So wurde von anderen heute schon gespielt:</div>
+        <div class="col-12 col-lg-6 my-4">
+            <div id="wordle-game" class="wordle-game disable-double-tap-zoom" data-unix="{{ unix }}"
+                 data-url="{{ path('app_wordle_guess') }}" data-finished="{{ currentGame.isFinished|raw }}">
+                {% for try in [0, 1, 2, 3, 4, 5] %}
+                    <div class="wordle-try d-flex justify-content-center {% if try >= currentGame.guesses|length %}unfinished{% endif %}">
+                        {% for letter in [0, 1, 2, 3, 4] %}
+                            {% set statusInfo = '' %}
+                            {% if try < currentGame.guesses|length %}
+                                {% set statusInfo = currentGame.guesses[try].info[letter] %}
+                            {% endif %}
+                            <div class="wordle-cell d-flex justify-content-center align-items-center {{ statusInfo }}">
+                                <div class="wordle-letter">
+                                    {% if try < currentGame.guesses|length %}
+                                        {{ currentGame.guesses[try].guessedWord[letter:1]|upper }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div class="wordle-try d-flex justify-content-center">
+                    {% if not currentGame.isSolved and currentGame.isFinished %}
+                        {% for letter in [0, 1, 2, 3, 4] %}
+                            <div class="wordle-cell d-flex justify-content-center align-items-center bg-amro-red">
+                                <div class="wordle-letter">
+                                    {{ currentGame.solution.correctWord[letter:1]|upper }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     {% endif %}
                 </div>
+
+                <div class="d-flex justify-content-center {% if currentGame.isFinished %}d-none{% endif %}">
+                    <div id="keyboard" class="mt-3">
+                        <div class="d-flex justify-content-center">
+                            {% for char in ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p'] %}
+                                <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            {% for char in ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'] %}
+                                <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="key" id="enter-key">⤶</div>
+                            {% for char in ['y', 'x', 'c', 'v', 'b', 'n', 'm'] %}
+                                <div class="key {{ currentGame.getLetterStatus(char) }}">{{ char|upper }}</div>
+                            {% endfor %}
+                            <div class="key" id="backspace-key">←</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if currentGame.isFinished %}
+                <canvas id="guesses-chart" class="d-none"></canvas>
+                <div class="my-3"><button id="toggle-stats" class="btn btn-small">toggle stats</button></div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 col-lg-6 my-3">
+            <div id="wordle-info" class="row">
                 {% for game in solution.games %}
                     {% if game.guesses|length > 0 %}
-                        <div class="col-6 py-3">
+                        <div class="col-6 mb-3">
                             <div class="fw-bold">
                                 {{ game.player.getUserIdentifier|capitalize }}
                             </div>
@@ -97,6 +101,16 @@
                                         {% endfor %}
                                     </div>
                                 {% endfor %}
+
+                                <div class="d-flex justify-content-center">
+                                    {% if game.isFinished and not game.isSolved %}
+                                        {% for letter in [0, 1, 2, 3, 4] %}
+                                            <div class="wordle-cell-sm d-flex justify-content-center align-items-center bg-amro-red">
+                                                {{ solution.correctWord[letter:1]|upper }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
                             {% if not game.isFinished %}
                                 <div class="d-flex justify-content-center align-items-center pt-1">spielt noch...</div>
@@ -107,5 +121,78 @@
             </div>
         </div>
     </div>
+
+    {% if guessesNeeded is defined %}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <canvas id="guesses-chart" class="my-3"></canvas>
+        <script>
+            chart = null;
+            document.getElementById('toggle-stats').addEventListener('click', () => {
+                document.getElementById('guesses-chart').classList.toggle('d-none');
+                document.getElementById('wordle-game').classList.toggle('d-none');
+                if (!chart) {
+                    createChart();
+                }
+            });
+
+            const colors = ["#67a760", "#c8b359", "#a4413a"];
+
+            let ctx = document.getElementById('guesses-chart').getContext('2d');
+
+            const updateGradient = () => {
+                const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+                gradient.addColorStop(0, colors[0]);
+                gradient.addColorStop(0.1, colors[0]);
+                gradient.addColorStop(0.4, colors[1]);
+                gradient.addColorStop(0.5, colors[2]);
+
+                return gradient;
+            }
+
+            let chartData = {
+                labels: ["1", "2", "3", "4", "5", "6", "nope"],
+                datasets: [{
+                    data: [
+                        {% for i in 1..6 %}
+                        {{ guessesNeeded|filter(x => x == i)|length }},
+                        {% endfor %}
+                        {{ guessesNeeded|filter(x => x > 6)|length }}
+                    ],
+                    backgroundColor: updateGradient(),
+                    borderColor: 'rgba(164, 65, 58, 1)',
+                }]
+            }
+
+            function createChart() {
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        scales: {
+                            y: {
+                                title: {display: true, text: 'Anzahl der Spiele', font: {size: 20, style: 'bold'}},
+                            },
+                            x: {
+                                title: {display: true, text: 'So viel Versuche hast du gebraucht', font: {size: 20, style: 'bold'}},
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                    }
+                });
+
+                chart.data.datasets[0].backgroundColor = updateGradient();
+                chart.update();
+                window.addEventListener('resize', () => {
+                    chart.data.datasets[0].backgroundColor = updateGradient();
+                    chart.update();
+                });
+            }
+        </script>
+    {% endif %}
 
 {% endblock %}

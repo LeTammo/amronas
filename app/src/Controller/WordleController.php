@@ -6,49 +6,61 @@ use App\Entity\WordleGame;
 use App\Entity\WordleGuess;
 use App\Entity\WordleSolution;
 use App\Form\WordleSolutionType;
+use App\Repository\WordleGameRepository;
 use App\Repository\WordleSolutionRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use const Grpc\STATUS_CANCELLED;
 
 #[Route('/wordle')]
 class WordleController extends AbstractController
 {
     #[Route('/', name: 'app_wordle_index', methods: ['GET'])]
-    public function wordle(Request $request, EntityManagerInterface $entityManager): Response
+    public function wordle(Request $request, WordleGameRepository $gameRepository, WordleSolutionRepository $solutionRepository): Response
     {
         $date = new DateTime();
         $request->get('unix') && $date->setTimestamp($request->get('unix'));
         $date->setTime(0, 0);
 
-        $solution = $entityManager->getRepository(WordleSolution::class)->findOneBy(['createdAt' => $date]);
+        $solution = $solutionRepository->findOneBy(['createdAt' => $date]);
         if (!$solution) {
             $solution = $this->initializeSolution($date);
-            $entityManager->persist($solution);
+            $solutionRepository->save($solution, true);
         }
 
-        $game = $entityManager->getRepository(WordleGame::class)->findOneBy(['solution' => $solution, 'player' => $this->getUser()]);
+        $game = $gameRepository->findOneBy(['solution' => $solution, 'player' => $this->getUser()]);
         if (!$game) {
             $game = new WordleGame($solution);
             $game->setPlayer($this->getUser());
             $solution->addGame($game);
-            $entityManager->persist($game);
+            $gameRepository->save($game, true);
         }
 
-        $entityManager->flush();
-
-        return $this->render('wordle/wordle.html.twig', [
+        $params = [
             'days' => $this->getWordleDays(),
             'unix' => $date->getTimestamp(),
             'currentGame' => $game,
             'solution' => $solution,
-        ]);
+        ];
+
+        if ($game->isFinished()) {
+            $params['games'] = $gameRepository->findBy(['player' => $this->getUser()]);
+            $guessesNeeded = [];
+            foreach ($params['games'] as $game) {
+                if ($game->isSolved()) {
+                    $guessesNeeded[] = $game->getGuesses()->count();
+                } else if ($game->isFinished()) {
+                    $guessesNeeded[] = 7;
+                }
+            }
+            $params['guessesNeeded'] = $guessesNeeded;
+        }
+
+        return $this->render('wordle/wordle.html.twig', $params);
     }
 
     #[Route('/guess', name: 'app_wordle_guess', methods: ['GET'])]
