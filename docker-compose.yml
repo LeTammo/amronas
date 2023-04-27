@@ -24,8 +24,6 @@ services:
         build:
             context: ./php
             args:
-                EMAIL: ${GIT_EMAIL}
-                NAME: ${GIT_NAME}
                 TIME_ZONE: ${TIME_ZONE}
         container_name: php-amronas
         volumes:
