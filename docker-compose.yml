@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  symfony-amronas:
+    symfony-amronas:
 
 services:
     nginx-service:
@@ -29,7 +29,7 @@ services:
         volumes:
             - ./app:/var/www/app
         ports:
-            - "9000"
+            - ${PHP_PORT}:9000
         networks:
             - symfony-amronas
         depends_on:
@@ -68,7 +68,7 @@ services:
         restart:
             always
         ports:
-            - "3306"
+            - ${MYSQL_PORT}:3306
         networks:
             - symfony-amronas
 
@@ -81,4 +81,4 @@ services:
         networks:
             - symfony-amronas
         environment:
-          - TZ=${TIME_ZONE}
+            - TZ=${TIME_ZONE}
