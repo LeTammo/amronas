@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('app_movie_list_delete', {'id': movieList.id}) }}"
       onsubmit="return confirm('Willst du wirklich die gesamte Liste löschen?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movieList.id) }}">
-    <button class="btn btn-small" style="background-color: var(--amro-creme-dark); color: black">Liste löschen</button>
+    <button class="btn btn-small btn-plain">Liste löschen</button>
 </form>

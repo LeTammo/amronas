@@ -44,6 +44,15 @@ a, a:visited, a:active {
     border-radius: 0.2rem;
 }
 
+.btn-plain {
+    background-color: var(--amro-creme-dark);
+    color: black;
+}
+
+.btn-plain:hover {
+    box-shadow: rgba(0, 0, 0, 0.12) 4px 4px 5px, rgba(0, 0, 0, 0.24) 2px 2px 3px;
+}
+
 .form-control option {
     background-color: var(--amro-creme);
 }
