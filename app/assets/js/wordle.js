@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
 
     // onKeyPressed
-    $(document).bind("keyup", function(e) {
+    $(document).bind("keyup", function (e) {
         evaluateKey(e.keyCode);
     });
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     /**************************************************************
-            Functions
+     Functions
      **************************************************************/
 
     const evaluateKey = (keyCode) => {
@@ -55,8 +55,12 @@ $(document).ready(function () {
                 break;
             case 8:
             case 8592:
-                removeLetter();
-                changeFocusToPrevious();
+                if (focus.children().first().text().length === 69 || focus.children().first().text().length === 0) {
+                    removePreviousLetter();
+                    changeFocusToPrevious();
+                } else {
+                    removeCurrentLetter();
+                }
         }
 
         if (keyCode > 64 && keyCode < 91) {
@@ -69,11 +73,12 @@ $(document).ready(function () {
         focus.children().first().text(letter);
     }
 
-    const removeLetter = () => {
-        if (focus.children().first().text().length === 69 || focus.children().first().text().length === 0)
-            focus.prev().children().first().text("");
-        else
-            focus.children().first().text("");
+    const removePreviousLetter = () => {
+        focus.prev().children().first().text("");
+    }
+
+    const removeCurrentLetter = () => {
+        focus.children().first().text("");
     }
 
     const userChangeFocus = to => {
@@ -109,7 +114,7 @@ $(document).ready(function () {
     }
 
     const changeFocusToFirst = () => {
-       changeFocus(focus.siblings().first())
+        changeFocus(focus.siblings().first())
     };
 
     const removeFocus = () => {
