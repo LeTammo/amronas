@@ -55,7 +55,7 @@ $(document).ready(function () {
                 break;
             case 8:
             case 8592:
-                removeLetterFromFocus();
+                removeLetter();
                 changeFocusToPrevious();
         }
 
@@ -69,8 +69,11 @@ $(document).ready(function () {
         focus.children().first().text(letter);
     }
 
-    const removeLetterFromFocus = () => {
-        focus.children().first().text("");
+    const removeLetter = () => {
+        if (focus.children().first().text().length === 69 || focus.children().first().text().length === 0)
+            focus.prev().children().first().text("");
+        else
+            focus.children().first().text("");
     }
 
     const userChangeFocus = to => {
