@@ -16,7 +16,7 @@
     <div class="row text-center">
         <div class="col-12 h1">
             {% if currentGame.isSolved %}
-                <div>Congratulation! 🎉</div>
+                <div>Glückwunsch! 🎉</div>
             {% elseif currentGame.isFinished %}
                 <div>Sorryyyy 😔</div>
             {% else %}
@@ -25,7 +25,7 @@
         </div>
         <div class="col-12 col-lg-6">
             {% if currentGame.isFinished %}
-                <div class="my-2"><button id="toggle-stats" class="btn btn-small btn-plain">toggle stats</button></div>
+                <div class="my-2"><button id="toggle-stats" class="btn btn-small btn-plain">Statistik anzeigen</button></div>
                 <canvas id="guesses-chart" class="d-none"></canvas>
             {% endif %}
             <div id="wordle-game" class="wordle-game disable-double-tap-zoom" data-unix="{{ unix }}"
@@ -176,10 +176,10 @@
                     options: {
                         scales: {
                             y: {
-                                title: {display: true, text: 'Anzahl der Spiele', font: {size: 20, style: 'bold'}},
+                                title: {display: true, text: 'Spiele', font: {size: 20, style: 'bold'}},
                             },
                             x: {
-                                title: {display: true, text: 'So viel Versuche hast du gebraucht', font: {size: 20, style: 'bold'}},
+                                title: {display: true, font: {size: 20, style: 'bold'}},
                             }
                         },
                         plugins: {

@@ -19,13 +19,13 @@
         <div class="d-flex justify-content-center">
             <form action="{{ path('app_login') }}" method="post">
                 <div class="input-group overflow-hidden my-3">
-                    <label for="username"></label><span class="input-group-text">Username:</span>
+                    <label for="username"></label><span class="input-group-text">Benutzername:</span>
                     <input type="text" class="form-control" id="username" name="_username" aria-describedby="search"
                            value="{{ last_username }}">
                 </div>
 
                 <div class="input-group overflow-hidden my-3">
-                    <label for="password"></label><span class="input-group-text">Password:</span>
+                    <label for="password"></label><span class="input-group-text">Passwort:</span>
                     <input type="password" class="form-control" id="password" name="_password"
                            aria-describedby="search">
                 </div>
@@ -33,7 +33,7 @@
                 <input type="hidden" name="home" value="/account"/>
                 <div class="my-3">
                     <input id="remember_me" type="checkbox" name="_remember_me" checked>
-                    <label for="remember_me">Keep me logged in</label>
+                    <label for="remember_me">Eingeloggt bleiben</label>
                 </div>
 
                 <div>
