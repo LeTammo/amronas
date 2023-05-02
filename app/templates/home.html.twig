@@ -6,8 +6,5 @@
 {% block body %}
     <div class="text-center">
         <h1 class="py-5 font-handwritten">♡ Hiiii {{ app.user.username|capitalize }} ♡</h1>
-        <div class="d-flex justify-content-center">
-            <div class="mt-2"><a class="input-group btn px-5" href="{{ path('app_logout') }}">logout</a></div>
-        </div>
     </div>
 {% endblock %}

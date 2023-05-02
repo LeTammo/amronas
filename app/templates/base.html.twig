@@ -15,41 +15,111 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
-<ul class="nav justify-content-center">
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_home') }}">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_profile') }}">Profil</a>
-    </li>
-    {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_user_index') }}">Admin</a>
-        </li>
-    {% endif %}
-</ul>
+
+<body class="d-flex flex-column h-100">
+
+<header class="navbar bd-navbar navbar-expand-md sticky-top">
+    <div class="container-fluid d-flex justify-content-between">
+        <div class="collapsed d-flex">
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="nav navbar-toggler border-0 position-absolute start-50 translate-middle-x flex-nowrap">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+            <ul class="nav d-flex d-inline-block">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_home') }}">Home</a>
+                </li>
+                <li class="nav-item d-none d-md-inline">
+                    <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
+                </li>
+                <li class="nav-item d-none d-md-inline">
+                    <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_profile') }}">Profil</a>
+                </li>
+                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_user_index') }}">Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse position-absolute end-0 px-3 d-none d-md-inline" id="navbarCollapse">
+            <div class="header-user col-lg-3 text-white text-nowrap d-flex align-items-end">
+                {% if app.user %}
+                    Hi&nbsp;<span class="fw-bold">{{ app.user.username|capitalize }}</span>&nbsp;
+                    <a href="{{ path('app_logout') }}"><img src="{{ asset('img/box-arrow-right.svg') }}"
+                                                            alt="logout"></a>
+                {% else %}
+                    <span>You are not logged in</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="flex-shrink-0">
+    <div class="h-100 container-xxl text-center text-lg-start">
+        {% block headlineWrapper %}
+            <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
+        {% endblock %}
+        {% for label, flashes in app.flashes(['success', 'error']) %}
+            {% for flash in flashes %}
+                <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
+                    <div class="fw-bold">{{ flash.text }}</div>
+                    <div class="remove-parent text-white">⨯</div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}{% endblock %}
+    </div>
+</main>
+
+<footer class="d-none footer fixed-bottom d-lg-none mt-auto">
+    <div class="container-xxl">
+        <div class="d-flex justify-content-between">
+            <div class="header-locale">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown-language" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">{{ app.request.locale|locale_name(app.request.locale) }}</a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-language">
+                    <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}">English</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'de'}) }}">Deutsch</a></li>
+                </ul>
+            </div>
+            <div class="header-user text-white text-end">
+                {% if app.user %}
+                    Hi&nbsp;<span class="fw-bold">{{ app.user.username|capitalize }}</span>&nbsp;
+                    <a href="{{ path('app_logout') }}"><img src="{{ asset('img/box-arrow-right.svg') }}"
+                                                            alt="logout"></a>
+                {% else %}
+                    <span>You are not logged in</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+
 {% block loginWrapper %}
     <div class="d-flex justify-content-end mx-2">
-        {% block loginMessage %}
-            {% if app.user %}
-                Logged in as:&nbsp;<span class="fw-bold font-amro-red">{{ app.user.username|capitalize }}</span>
-            {% else %}
-                You are not logged in
-            {% endif %}
-        {% endblock %}
     </div>
 {% endblock %}
-<div class="h-100 container-lg text-center text-lg-start">
-    {% block headlineWrapper %}
-        <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
-    {% endblock %}
+<div class="d-none h-100 container-xxl text-center text-lg-start">
+    <h1 class="mt-3 mb-5 font-handwritten title text-center">Amronas</h1>
     {% for label, flashes in app.flashes(['success', 'error']) %}
         {% for flash in flashes %}
             <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
@@ -58,7 +128,26 @@
             </div>
         {% endfor %}
     {% endfor %}
-    {% block body %}{% endblock %}
 </div>
-</body>
+<div class="d-none d-lg-none sticky-bottom">
+    <div class="d-flex justify-content-between">
+        <div class="header-locale">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown-language" role="button"
+               data-bs-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">{{ app.request.locale|locale_name(app.request.locale) }}</a>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-language">
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}">English</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'de'}) }}">Deutsch</a></li>
+            </ul>
+        </div>
+        <div class="header-user text-white">
+            {% if app.user %}
+                Hi <span class="fw-bold">{{ app.user.username|capitalize }}</span>
+                <a href="{{ path('app_logout') }}" class="btn btn-sm">Logout</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-sm">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
 </html>

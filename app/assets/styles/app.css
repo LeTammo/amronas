@@ -393,8 +393,15 @@ img.delete:hover {
     navigation
     -------------------------------------------------------------------------- */
 
-.nav {
+.navbar-collapse {
+    flex-grow: 0.5;
+}
+
+header, footer {
     background-color: var(--amro-red);
+}
+
+.nav {
     color: white;
     font-size: larger;
 }
