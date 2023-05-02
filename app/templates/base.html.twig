@@ -35,15 +35,30 @@
                 </li>
             </ul>
         </div>
-        <div class="navbar-collapse collapse" id="navbarCollapse" style="">
-            <ul class="nav d-flex d-inline-block">
+        <div class="navbar-collapse collapse d-md-none" id="navbarCollapse">
+            <ul class="nav d-flex justify-content-center d-inline-block d-md-none">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_home') }}">Home</a>
                 </li>
-                <li class="nav-item d-none d-md-inline">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_profile') }}">Profil</a>
+                </li>
+                {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_user_index') }}">Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="d-none d-md-inline-block w-100" id="navbarCollapse">
+            <ul class="nav d-flex d-inline-block justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
                 </li>
-                <li class="nav-item d-none d-md-inline">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
                 </li>
                 <li class="nav-item">
