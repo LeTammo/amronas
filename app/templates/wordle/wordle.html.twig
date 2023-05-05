@@ -106,7 +106,8 @@
                                     {% if game.isFinished and not game.isSolved %}
                                         {% for letter in [0, 1, 2, 3, 4] %}
                                             <div class="wordle-cell-sm d-flex justify-content-center align-items-center bg-amro-red">
-                                                {{ solution.correctWord[letter:1]|upper }}
+                                                {% if currentGame.isFinished %}{{ solution.correctWord[letter:1]|upper }}{% endif %}
+
                                             </div>
                                         {% endfor %}
                                     {% endif %}
