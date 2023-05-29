@@ -49,7 +49,7 @@
                     <th class="text-center d-none d-lg-grid" scope="col">Trailer</th>
                     <th class="text-center d-lg-none" scope="col">YT</th>
                     <th class="text-center" scope="col">Verfügbarkeit</th>
-                    <th class="d-none d-lg-table-cell" scope="col">Beendet</th>
+                    <th class="d-none d-lg-table-cell" scope="col">Geschaut?</th>
                     <th class="d-none d-lg-table-cell" scope="col">
                         <a class="edit-table" id="editTable">✎</a>
                     </th>
@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                 {% for movieListEntry in movieListEntries %}
-                    <tr class="{% if movieListEntry.timeWatched %}}'watchedClass'{% endif %}">
+                    <tr class="{% if movieListEntry.timeWatched %}watchedRow{% endif %}">
                         <td class="d-none d-lg-table-cell text-center">{{ movieListEntry.movie.year }}</td>
                         <td class="fw-bold">
                             {{ movieListEntry.movie.name }}
@@ -79,10 +79,10 @@
                             {% endfor %}
                         </td>
                         <td class="d-none d-lg-table-cell">
-                            {% if movieListEntry.timeWatched > date("2020-09-05") %}
+                            {% if movieListEntry.timeWatched %}
                                 <div class="toggleOnEdit">{{ movieListEntry.timeWatched|date('d.m.Y') }}</div>
                             {% else %}
-                                <div class="toggleOnEdit">NOPE</div>
+                                <div class="toggleOnEdit">nope</div>
                             {% endif %}
                             <div class="d-none toggleOnEdit">
                                 <form class="row" method="post" action="{{ path('app_movie_list_movie_set_watched', {'id': movieListEntry.id}) }}">
