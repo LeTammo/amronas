@@ -92,6 +92,11 @@ class MovieList
         return $this->subscriber;
     }
 
+    public function getSubscriberToString(User $currentUser): array
+    {
+        return array_map(fn (User $user) => $user === $currentUser ? 'Du' : ucfirst($user->getUsername()), $this->maintainer->toArray());
+    }
+
     public function addSubscriber(UserInterface $subscriber): self
     {
         if (!$this->subscriber->contains($subscriber)) {

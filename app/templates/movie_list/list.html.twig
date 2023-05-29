@@ -66,12 +66,8 @@
                         </td>
                         <td class="d-none d-lg-table-cell">{{ movieListEntry.movie.genre|join(', ') }}</td>
                         <td class="text-center">
-                            {% if movieListEntry.movie.trailerYoutubeId|length > 0 %}
-                                <a class="youtube-link text-white" href="https://www.youtube.com/watch?v={{ movieListEntry.movie.trailerYoutubeId }}"
-                                   target="_blank">↗</a>
-                            {% else %}
-                                <a class="youtube-query" href="{{ path('addTrailer', {'id': movieListEntry.movie.id}) }}">➕</a>
-                            {% endif %}
+                            <a class="youtube-link text-white" href="https://www.youtube.com/watch?v={{ movieListEntry.movie.trailerYoutubeId }}"
+                               target="_blank">↗</a>
                         </td>
                         <td class="text-center text-nowrap">
                             {% for provider in ['netflix', 'disney', 'amazon', 'youtube', 'wow', 'paramount'] %}
