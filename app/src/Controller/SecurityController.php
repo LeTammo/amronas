@@ -52,7 +52,7 @@ class SecurityController extends AbstractController
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-    #[Route('/register', name: 'app_register')]
+    //#[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHashService, EntityManagerInterface $entityManager,
         UserAuthenticatorInterface $authenticatorManager): Response
     {

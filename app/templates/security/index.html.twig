@@ -16,22 +16,36 @@
             </div>
         </div>
     {% else %}
+        <div class="text-center">
+            <h3 class="font-handwritten">Eine Website für Amrei und Jonas</h3>
+        </div>
+
         <div class="d-flex justify-content-center">
             <form action="{{ path('app_login') }}" method="post">
                 <div class="input-group overflow-hidden my-3">
-                    <label for="username"></label><span class="input-group-text">Benutzername:</span>
-                    <input type="text" class="form-control" id="username" name="_username" aria-describedby="search"
-                           value="{{ last_username }}">
+                    <label for="username"></label>
+                    <div class="col-4">
+                        <span class="input-group-text">Benutzername:</span>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="username" name="_username" aria-describedby="search"
+                               value="{{ last_username }}">
+                    </div>
                 </div>
 
                 <div class="input-group overflow-hidden my-3">
-                    <label for="password"></label><span class="input-group-text">Passwort:</span>
-                    <input type="password" class="form-control" id="password" name="_password"
-                           aria-describedby="search">
+                    <label for="password"></label>
+                    <div class="col-4">
+                        <span class="input-group-text w-100 text-end">Passwort:</span>
+                    </div>
+                    <div class="col-8">
+                        <input type="password" class="form-control" id="password" name="_password"
+                               aria-describedby="search">
+                    </div>
                 </div>
 
                 <input type="hidden" name="home" value="/account"/>
-                <div class="my-3">
+                <div class="my-3 d-none">
                     <input id="remember_me" type="checkbox" name="_remember_me" checked>
                     <label for="remember_me">Eingeloggt bleiben</label>
                 </div>
@@ -44,7 +58,12 @@
         <div class="d-flex justify-content-center mt-4">
             <div class="text-center">
                 <div class="m-3">Noch kein Account?</div>
+                <div class="m-3">Dann schreibe eine Nachricht an Tammo :)</div>
+                <div class="m-3">Du kennst Tammo nicht?</div>
+                <div class="m-3">Dann wird es schwierig...</div>
+                {#
                 <div><a class="input-group btn" href="{{ path('app_register') }}">Registrieren</a></div>
+                #}
             </div>
         </div>
     {% endif %}
