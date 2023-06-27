@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
-use App\Entity\MovieListEntry;
 use App\Form\MovieType;
 use App\Repository\MovieListEntryRepository;
 use App\Repository\MovieRepository;

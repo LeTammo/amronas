@@ -4,9 +4,14 @@ namespace App\Service;
 
 class LoggerService
 {
-    static function log(string $type, string $message)
+    static function log(string $type, string $message): void
     {
-        $filename = sprintf("%s%s.log", __DIR__ . "/../../logs/", $type);
+        $dir = __DIR__ . "/../../logs/";
+        $filename = sprintf("%s%s.log", $dir, $type);
+
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
 
         $content = sprintf("[%s] %s\n", (new \DateTime())->format('Y-m-d_H:i:s'), $message);
 
