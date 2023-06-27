@@ -1,30 +1,36 @@
 $(document).ready(function () {
-
-    $('#table-filter').keyup(function (event) {
-        tableFilter($(this), $(this)[0].value);
-    })
-
-    $('#selectGenre').change(function (event) {
-        tableFilter($(this), event.target.value);
+    $('.table-input').keyup(function () {
+        tableFilter($(this));
     })
 });
 
-function tableFilter(event, value) {
-    let table = document.getElementById(event.data('for'));
+function tableFilter(event) {
+    let table = document.getElementById('movieList');
     let tr = table.getElementsByTagName("tr");
 
-    let filter = value.toUpperCase();
+    let filter = event.val().split(' ').filter(function (el) {
+        return el !== '';
+    });
 
     let td, i, txtValue;
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[event.data('row')];
+        td = tr[i].getElementsByTagName("td")[event.closest("th").index()];
         if (td) {
             txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+            tr[i].style.display = getDisplay(txtValue, filter)
         }
     }
+}
+
+function getDisplay(txtValue, filter) {
+    if (filter.length === 0) {
+        return "";
+    }
+
+    for (let i = 0; i < filter.length; i++) {
+        if (txtValue.toLowerCase().indexOf(filter[i].toLowerCase()) > -1) {
+            return "";
+        }
+    }
+    return "none";
 }

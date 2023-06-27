@@ -4,53 +4,51 @@
 {% block headline %}{{ movieList.name }}{% endblock %}
 
 {% block body %}
-    <div class="search-bar row">
-        <div class="col-12 col-sm-9 col-md-6 mb-3">
+    <div class="search-bar row mb-3">
+        <div class="col-6 col-sm-9 col-md-6">
             <div class="d-flex justify-content-between">
                 <div class="input-group bg-dark overflow-hidden">
-                    <label for="imdb-search"></label><span class="input-group-text" id="search">suche Film/Serie:</span>
+                    <label for="imdb-search"></label><span class="input-group-text" id="search">Film/Serie hinzufügen:</span>
                     <input type="text" class="form-control" id="imdb-search" aria-describedby="search">
                 </div>
             </div>
             <div class="search-results w-auto d-none" id="search_results"
                  data-url="{{ path('app_movie_list_movie_add', {'id': movieList.id}) }}"></div>
         </div>
-        <div class="col-3 col-xl-1 d-none d-sm-block d-md-none d-xl-block"></div>
-
-        <div class="col-5 col-sm-4 col-md-3 col-xl-2">
-            <div class="input-group bg-dark">
-                <label for="selectGenre"></label><span class="input-group-text">Genre:</span>
-                <select class="form-control" id="selectGenre" data-row="2" data-for="movieList">
-                    <option value="">wähle...</option>
-                    {% for genre in availableGenres %}
-                        <option value="{{ genre }}">{{ genre }}</option>
-                    {% endfor %}
-                </select>
+        <div class="col-6 text-end d-flex justify-content-end align-items-center">
+            <div class="mx-1">
+                <a class="btn btn-small" href="{{ path('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
+                    Maintainer hinzufügen
+                </a>
+                <a class="btn btn-small" href="{{ path('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
+                    Subscriber hinzufügen
+                </a>
             </div>
-        </div>
-
-        <div class="col-7 col-sm-5 col-md-3 col-xl-3">
-            <div class="input-group bg-dark">
-                <label for="table-filter"></label><span class="input-group-text">Filter:</span>
-                <input id="table-filter" type="text" class="form-control" aria-describedby="search" data-row="1"
-                       data-for="movieList" placeholder="gib ein...">
+            <div>
+                {{ include('movie_list/_delete_form.html.twig') }}
             </div>
         </div>
     </div>
 
-    <div class="row mt-3 mb-5">
+    <div class="row mb-5">
         <div class="col">
             <table class="sortableTable filterableTable" id="movieList">
                 <thead>
                 <tr>
-                    <th class="numericSort d-none d-lg-table-cell" scope="col">Jahr</th>
-                    <th class="alphanumericSort" scope="col">Name</th>
-                    <th class="alphanumericSort d-none d-lg-table-cell" scope="col">Genre</th>
-                    <th class="text-center d-none d-lg-grid" scope="col">Trailer</th>
-                    <th class="text-center d-lg-none" scope="col">YT</th>
-                    <th class="text-center" scope="col">Verfügbarkeit</th>
-                    <th class="d-none d-lg-table-cell" scope="col">Geschaut?</th>
-                    <th class="d-none d-lg-table-cell" scope="col">
+                    <th class="numericSort d-none d-lg-table-cell py-1" scope="col">
+                        <label><input class="table-input input-sm text-center" size="1" placeholder="Jahr"></label>
+                    </th>
+                    <th class="py-1 alphanumericSort" scope="col">
+                        <label><input class="table-input input-sm" placeholder="Name"></label>
+                    </th>
+                    <th class="py-1 alphanumericSort d-none d-lg-table-cell" scope="col">
+                        <label><input class="table-input input-sm" placeholder="Genre"></label>
+                    </th>
+                    <th class="py-1 text-center d-none d-lg-grid" scope="col">Trailer</th>
+                    <th class="py-1 text-center d-lg-none" scope="col">YT</th>
+                    <th class="py-1 text-center" scope="col">Verfügbarkeit</th>
+                    <th class="py-1 d-none d-lg-table-cell" scope="col">Geschaut?</th>
+                    <th class="py-1 d-none d-lg-table-cell" scope="col">
                         <a class="edit-table" id="editTable">✎</a>
                     </th>
                 </tr>
@@ -108,19 +106,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <a class="btn btn-small" href="{{ path('app_movie_list_invite_maintainer', {'id': movieList.id}) }}">
-                    Maintainer hinzufügen
-                </a>
-                <a class="btn btn-small" href="{{ path('app_movie_list_invite_subscriber', {'id': movieList.id}) }}">
-                    Subscriber hinzufügen
-                </a>
-            </div>
-            <div>
-                {{ include('movie_list/_delete_form.html.twig') }}
-            </div>
         </div>
     </div>
 {% endblock %}

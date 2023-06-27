@@ -61,15 +61,9 @@ class MovieListController extends AbstractController
     #[Route('/{id}/list', name: 'app_movie_list', methods: ['GET'])]
     public function list(MovieList $movieList): Response
     {
-        $genres = [];
-        foreach ($movieList->getMovies() as $entry) {
-            $genres = array_merge($genres, $entry->getMovie()->getGenre());
-        }
-
         return $this->render('movie_list/list.html.twig', [
             'movieList' => $movieList,
             'movieListEntries' => $this->entryRepository->findByCustomOrder($movieList),
-            'availableGenres' => array_unique($genres),
         ]);
     }
 

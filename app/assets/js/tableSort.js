@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
     $('.numericSort').click(function (event) {
-        tableSort(event.target, true);
+        //tableSort(event.target, true);
     })
 
     $('.alphanumericSort').click(function (event) {
-        tableSort(event.target, false);
+        //tableSort(event.target, false);
     })
 
     function tableSort(target, isNumeric) {

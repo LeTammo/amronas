@@ -234,6 +234,28 @@ tr.watchedRow a {
     font-size: 0.8em;
 }
 
+th .table-input {
+    background-color: var(--amro-red);
+    border: none;
+    font-weight: bold;
+    color: white;
+}
+
+th .table-input:focus {
+    background-color: var(--amro-red)!important;
+    border: none!important;
+    outline: none;
+    font-weight: bold;
+    color: white;
+}
+
+th .table-input::placeholder {
+    font-weight: bold;
+    opacity: 1;
+    color: white;
+    border: 1px solid orange;
+    outline: none;
+}
 
 /** --------------------------------------------------------------------------
     game page
