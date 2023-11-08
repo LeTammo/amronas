@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BingoTemplate index{% endblock %}
+
+{% block body %}
+    <h1>BingoTemplate index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Size</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bingo_template in bingo_templates %}
+            <tr>
+                <td>{{ bingo_template.id }}</td>
+                <td>{{ bingo_template.size }}</td>
+                <td>{{ bingo_template.content ? bingo_template.content|json_encode : '' }}</td>
+                <td>
+                    <a href="{{ path('app_bingo_template_show', {'id': bingo_template.id}) }}">show</a>
+                    <a href="{{ path('app_bingo_template_edit', {'id': bingo_template.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_template_edit') }}">Create new</a>
+{% endblock %}

@@ -4,6 +4,7 @@ import './styles/root.css';
 import './styles/global.scss';
 import './styles/app.css';
 import './styles/wordle.css';
+import './styles/bingo.css';
 
 // start the Stimulus application
 import './bootstrap';

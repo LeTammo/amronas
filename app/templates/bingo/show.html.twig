@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BingoTemplate{% endblock %}
+
+{% block body %}
+    <h1>BingoTemplate</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bingo_template.id }}</td>
+            </tr>
+            <tr>
+                <th>Size</th>
+                <td>{{ bingo_template.size }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ bingo_template.content ? bingo_template.content|json_encode : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_bingo_template_index') }}">back to list</a>
+
+    <a href="{{ path('app_bingo_template_edit', {'id': bingo_template.id}) }}">edit</a>
+
+    {{ include('bingo_template/_delete_form.html.twig') }}
+{% endblock %}

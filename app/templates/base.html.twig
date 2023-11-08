@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.9">
-    <link rel="icon" href="{{ asset('heart.ico') }}">
+    <link rel="icon" href="{{ asset('img/amronas6.svg') }}">
 
     <title>{% block title %}Welcome!{% endblock %}</title>
 
@@ -61,6 +61,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
                 </li>
+                {% if app.user and 'ROLE_FAMILY' in app.user.roles %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_bingo_index') }}">Bingo</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_profile') }}">Profil</a>
                 </li>
