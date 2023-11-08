@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BingoTemplate{% endblock %}
+
+{% block body %}
+    <h1>Create new BingoTemplate</h1>
+
+    {{ include('bingo_template/_form.html.twig') }}
+
+    <a href="{{ path('app_bingo_template_index') }}">back to list</a>
+{% endblock %}

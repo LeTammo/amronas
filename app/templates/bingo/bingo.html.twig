@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bingo{% endblock %}
+{% block headline %}{% endblock %}
+
+{% block body %}
+    <div class="row text-center">
+        <div class="col-12">
+            <div id="bingo-game" class="bingo-game disable-double-tap-zoom fw-bold fs-4">
+                {% for row in [0, 1, 2, 3, 4] %}
+                    <div class="bingo-try d-flex justify-content-center unfinished">
+                        {% for col in [0, 1, 2, 3, 4] %}
+                            {% set id = 5*row + col %}
+                            <div class="bingo-cell d-flex justify-content-center align-items-center p-2
+                                        {% if currentGame.isCrossed(id) %}bg-success text-white{% endif %}"
+                                 onclick="toggleCell(this, {{ id }})">
+                                <div lang="de" class="bingo-letter">
+                                    {{ currentGame.fields[id] ?? '<span style="color: red">ERROR</span>'|raw }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="pt-5 fw-bold text-center">
+        Das ist das Bingo von {{ currentGame.player }}
+    </div>
+    <div class="pt-2 text-center">
+        <a class="btn btn-sm mx-2" href="{{ path('app_template_edit') }}">Template bearbeiten</a>
+        <a class="btn btn-sm mx-2" href="{{ path('app_bingo_reset', {'id': currentGame.id}) }}">Bingo zurücksetzen</a>
+    </div>
+
+    <script>
+        function toggleCell(cell, index) {
+            fetch('/bingo/toggle', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id: {{ currentGame.id }}, index: index}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    cell.classList.toggle('bg-success');
+                    cell.classList.toggle('text-white');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BingoTemplate{% endblock %}
+
+{% block body %}
+    <h1>Edit BingoTemplate</h1>
+
+    {{ include('bingo/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn" href="{{ path('app_bingo_index') }}">back to list</a>
+{% endblock %}

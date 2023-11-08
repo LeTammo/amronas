@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -41,6 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
+
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Bingo::class)]
+    private Collection $bingos;
+
+    public function __construct()
+    {
+        $this->bingos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -172,5 +182,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return ucfirst($this->getUsername());
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+
+    /**
+     * @return Collection<int, Bingo>
+     */
+    public function getBingos(): Collection
+    {
+        return $this->bingos;
+    }
+
+    public function addBingo(Bingo $bingo): self
+    {
+        if (!$this->bingos->contains($bingo)) {
+            $this->bingos->add($bingo);
+            $bingo->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBingo(Bingo $bingo): self
+    {
+        if ($this->bingos->removeElement($bingo)) {
+            // set the owning side to null (unless already changed)
+            if ($bingo->getPlayer() === $this) {
+                $bingo->setPlayer(null);
+            }
+        }
+
+        return $this;
     }
 }
