@@ -1,8 +1,9 @@
 
 .bingo-cell {
-    margin: 3px;
-    width: clamp(80px, 18vh, 160px);
-    height: clamp(80px, 18vh, 160px);
+    margin: 2px;
+    width: clamp(50px, 20vw, 150px);
+    height: clamp(50px, 20vw, 150px);
+    font-size: clamp(8px, 3vw, 22px);
     background-color: var(--amro-creme-dark);
     border: 1px solid var(--amro-black);
 }
