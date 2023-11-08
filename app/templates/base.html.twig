@@ -27,12 +27,17 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <ul class="nav navbar-toggler border-0 position-absolute start-50 translate-middle-x flex-nowrap">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_movie_list_index') }}">Watchlist</a>
+                <li class="nav-item px-1 mx-0">
+                    <a class="nav-link px-1 mx-0" href="{{ path('app_movie_list_index') }}">List</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_wordle_index') }}">Wordle</a>
+                <li class="nav-item px-1 mx-0">
+                    <a class="nav-link px-1 mx-0" href="{{ path('app_wordle_index') }}">Wordle</a>
                 </li>
+                {% if app.user and 'ROLE_FAMILY' in app.user.roles %}
+                    <li class="nav-item px-1 mx-0">
+                        <a class="nav-link px-1 mx-0" href="{{ path('app_bingo_index') }}">Bingo</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-collapse collapse d-md-none" id="navbarCollapse">

@@ -6,12 +6,12 @@
 {% block body %}
     <div class="row text-center">
         <div class="col-12">
-            <div id="bingo-game" class="bingo-game disable-double-tap-zoom fw-bold fs-4">
+            <div id="bingo-game" class="bingo-game disable-double-tap-zoom fw-bold">
                 {% for row in [0, 1, 2, 3, 4] %}
                     <div class="bingo-try d-flex justify-content-center unfinished">
                         {% for col in [0, 1, 2, 3, 4] %}
                             {% set id = 5*row + col %}
-                            <div class="bingo-cell d-flex justify-content-center align-items-center p-2
+                            <div class="bingo-cell d-flex justify-content-center align-items-center p-0 p-md-2
                                         {% if currentGame.isCrossed(id) %}bg-success text-white{% endif %}"
                                  onclick="toggleCell(this, {{ id }})">
                                 <div lang="de" class="bingo-letter">
