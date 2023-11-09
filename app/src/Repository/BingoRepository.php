@@ -67,14 +67,18 @@ class BingoRepository extends ServiceEntityRepository
 //    }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @return Bingo|null
      */
-    public function findLast(User $user): ?Bingo
+    public function findLast(User $user = null): ?Bingo
     {
+        if ($user instanceof User) {
+            $this->createQueryBuilder('b')
+                ->andWhere('b.player = :user')
+                ->setParameter('user', $user);
+        }
+
         return $this->createQueryBuilder('b')
-            ->andWhere('b.player = :user')
-            ->setParameter('user', $user)
             ->orderBy('b.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()

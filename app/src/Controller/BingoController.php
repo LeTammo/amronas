@@ -25,7 +25,7 @@ class BingoController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $bingo = $bingoRepository->findLast($user);
+        $bingo = $bingoRepository->findLast();
         if (!$bingo instanceof Bingo) {
             $bingoTemplate = $templateRepository->findAll()[0];
             if (!$bingoTemplate instanceof BingoTemplate) {
