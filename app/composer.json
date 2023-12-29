@@ -11,7 +11,6 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
-        "sensio/framework-extra-bundle": "^6.2",
         "symfony/console": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/dom-crawler": "6.4.*",
@@ -85,6 +84,8 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.48"
+        "symfony/maker-bundle": "^1.48",
+        "symfony/stopwatch": "6.4.*",
+        "symfony/web-profiler-bundle": "6.4.*"
     }
 }
