@@ -40,6 +40,7 @@ security:
          - { path: ^/login, roles: PUBLIC_ACCESS }
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/ich-arbeite-dran, roles: PUBLIC_ACCESS }
+         - { path: ^/auth, roles: PUBLIC_ACCESS }
          - { path: ^/, roles: ROLE_USER }
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/movie, roles: ROLE_USER }
