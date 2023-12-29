@@ -32,7 +32,7 @@ class WordleController extends AbstractController
             $solutionRepository->save($solution, true);
         }
 
-        $game = $gameRepository->findOneBy(['solution' => $solution, 'player' => $this->getUser()]);
+        $game = $gameRepository->findGameWithSolutionAndGuesses($solution, $this->getUser()->getId());
         if (!$game) {
             $game = new WordleGame($solution);
             $game->setPlayer($this->getUser());
@@ -48,15 +48,17 @@ class WordleController extends AbstractController
         ];
 
         if ($game->isFinished()) {
-            $params['games'] = $gameRepository->findBy(['player' => $this->getUser()]);
+            $userId = $this->getUser()->getId();
+            $games = $gameRepository->findAllGamesWithGuessesForPlayer($userId);
             $guessesNeeded = [];
-            foreach ($params['games'] as $game) {
+            foreach ($games as $game) {
                 if ($game->isSolved()) {
-                    $guessesNeeded[] = $game->getGuesses()->count();
+                    $guessesNeeded[] = count($game->getGuesses());
                 } else if ($game->isFinished()) {
                     $guessesNeeded[] = 7;
                 }
             }
+            $params['games'] = $games;
             $params['guessesNeeded'] = $guessesNeeded;
         }
 
