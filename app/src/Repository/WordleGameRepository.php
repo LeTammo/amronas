@@ -39,28 +39,29 @@ class WordleGameRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return WordleGame[] Returns an array of WordleGame objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('w.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findGameWithSolutionAndGuesses($solution, $userId)
+    {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.solution', 's')
+            ->addSelect('s')
+            ->leftJoin('g.guesses', 'guesses')
+            ->addSelect('guesses')
+            ->where('g.solution = :solution')
+            ->andWhere('g.player = :userId')
+            ->setParameter('solution', $solution)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-//    public function findOneBySomeField($value): ?WordleGame
-//    {
-//        return $this->createQueryBuilder('w')
-//            ->andWhere('w.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findAllGamesWithGuessesForPlayer($userId)
+    {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.guesses', 'guesses')
+            ->addSelect('guesses')
+            ->where('g.player = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }

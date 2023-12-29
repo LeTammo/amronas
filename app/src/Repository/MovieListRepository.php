@@ -70,14 +70,4 @@ class MovieListRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-//    public function findOneBySomeField($value): ?MovieList
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
