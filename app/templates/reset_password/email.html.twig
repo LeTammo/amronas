@@ -43,7 +43,7 @@
         <h2>Hallo {{ user.username }}!</h2>
 
         <p>Es wurde eine Anfrage zum Zurücksetzen deines Passworts ausgelöst.
-            Solltest du diese Anfrage nicht gestellt haben, kannst du diese E-Mail getrost ignorieren.</p>
+            Solltest du diese Anfrage nicht gestellt haben, kannst du diese E-Mail ignorieren.</p>
         <p>Um ein neues Passwort festzulegen, klicke bitte auf den folgenden Link:</p>
         <p><a href="{{ url('app_reset_password', {token: resetToken.token}) }}" target="_blank">Passwort zurücksetzen</a></p>
         <p>Dieser Link verliert nach einer Stunde seine Gültigkeit.
