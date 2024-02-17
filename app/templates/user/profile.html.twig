@@ -6,11 +6,15 @@
 
 {% block body %}
     <div class="d-flex justify-content-center">
-        <form action="{{ path('app_user_change_username', {'user': app.user.id}) }}" method="post">
-            <h4 class="py-3">Nickname ändern:</h4>
+        <form action="{{ path('app_user_change', {'user': app.user.id}) }}" method="post">
+            <h4 class="py-3">Nutzerdaten ändern:</h4>
             <div class="input-group overflow-hidden my-3">
                 <label for="username"></label><span class="input-group-text">Nickname:</span>
                 <input type="text" class="form-control" id="username" name="_username" aria-describedby="search" value="{{ app.user.username }}" min="5">
+            </div>
+            <div class="input-group overflow-hidden my-3">
+                <label for="email"></label><span class="input-group-text">Email:</span>
+                <input type="email" class="form-control" id="email" name="_email" aria-describedby="search" value="{{ app.user.email }}" min="5">
             </div>
             <div>
                 <button class="input-group btn" type="submit">Ändern</button>
@@ -20,7 +24,6 @@
     <div class="d-flex justify-content-center py-5">
         <form action="{{ path('app_user_change_password', {'user': app.user.id}) }}" method="post">
             <h4 class="pt-3">Passwort ändern:</h4>
-            <span>(Minimum 5 Zeichen)</span>
             <div class="input-group overflow-hidden my-3">
                 <label for="password1"></label><span class="input-group-text">Password:</span>
                 <input type="password" class="form-control" id="password1" name="_password1" aria-describedby="search" value="">
@@ -31,6 +34,7 @@
             </div>
             <div>
                 <button id="submitPassword" class="input-group btn" type="submit" disabled>Ändern</button>
+                <span>(Minimum 5 Zeichen)</span>
             </div>
         </form>
     </div>

@@ -41,6 +41,7 @@ security:
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/ich-arbeite-dran, roles: PUBLIC_ACCESS }
          - { path: ^/auth, roles: PUBLIC_ACCESS }
+         - { path: ^/reset-password, roles: PUBLIC_ACCESS }
          - { path: ^/, roles: ROLE_USER }
          - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/movie, roles: ROLE_USER }
