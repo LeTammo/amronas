@@ -1,18 +1,14 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    {% block title %}Passwort-Reset{% endblock %}
     <div class="text-center">
-        <h1 class="py-5 font-handwritten">Passwort zurücksetzen</h1>
+        <h1 class="font-handwritten">Passwort zurücksetzen</h1>
         <div class="d-flex justify-content-center">
-            <div class="mt-2"><a class="input-group btn px-5" href="{{ path('app_logout') }}">logout</a></div>
+            {{ form_start(resetForm) }}
+            {{ form_row(resetForm.plainPassword) }}
+            <button class="btn btn-primary">Bestätigen</button>
+            {{ form_end(resetForm) }}
         </div>
+        <div class="mt-2">Das Passwort muss mindestens 5 Zeichen haben</div>
     </div>
-    <h1></h1>
-
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
 {% endblock %}
