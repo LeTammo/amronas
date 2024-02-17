@@ -8,6 +8,7 @@
 /public/bundles/
 /var/
 /vendor/
+/logs/
 ###< symfony/framework-bundle ###
 
 # PHPStorm
