@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
+        "google/appengine-php-sdk": "^2.2",
         "symfony/console": "7.0.*",
         "symfony/css-selector": "7.0.*",
         "symfony/dom-crawler": "7.0.*",
