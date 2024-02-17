@@ -82,22 +82,28 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/change/username', name: 'app_user_change_username', methods: ['POST'])]
-    public function changeUsername(Request $request, UserRepository $userRepository): Response
+    #[Route('/change', name: 'app_user_change', methods: ['POST'])]
+    public function change(Request $request, UserRepository $userRepository): Response
     {
+        $user = $userRepository->find($request->get('user'));
+
         $username = $_POST['_username'];
 
-        if ($userRepository->findOneBy(['username' => $username])) {
+        if ($username !== $user->getUsername() && $userRepository->findBy(['username' => $username])) {
             $this->addFlash('error', ['text' => sprintf("Der Username '%s' existiert bereits, bitte wähle einen anderen...", $username)]);
-            return $this->redirectToRoute('app_profile');
+        } elseif ($username !== $user->getUsername()) {
+            $user->setUsername($username);
+            $this->addFlash('success', ['text' => sprintf("Dein Username wurde erfolgreich in '%s' geändert", $username)]);
         }
 
-        $user = $userRepository->find($request->get('user'));
-        $user->setUsername($username);
+        $email = $_POST['_email'];
+        if ($email !== $user->getEmail()) {
+            $user->setEmail($email);
+            $this->addFlash('success', ['text' => sprintf("Deine Email wurde erfolgreich in '%s' geändert", $email)]);
+        }
 
         $userRepository->save($user, true);
 
-        $this->addFlash('success', ['text' => sprintf("Dein Username wurde erfolgreich in '%s' geändert", $username)]);
 
         return $this->redirectToRoute('app_profile');
     }
