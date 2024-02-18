@@ -15,7 +15,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 #[Route('/')]
@@ -48,13 +47,16 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout()
     {
-        // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-    //#[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHashService, EntityManagerInterface $entityManager,
-        UserAuthenticatorInterface $authenticatorManager): Response
+    #[Route('/register', name: 'app_register')]
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHashService,
+        EntityManagerInterface $entityManager,
+        UserAuthenticatorInterface $authenticatorManager
+    ): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -73,9 +75,11 @@ class SecurityController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@amronas.one', 'Amronas.one'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Bitte bestätige deine Email')
                     ->htmlTemplate('security/confirmation_email.html.twig')
             );*/
+
+            $this->addFlash('success', 'Dein Account wurde erfolgreich erstellt.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -89,7 +93,6 @@ class SecurityController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
@@ -99,7 +102,7 @@ class SecurityController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Deine Email-Adresse wurde bestätigt.');
 
         return $this->redirectToRoute('app_register');
     }

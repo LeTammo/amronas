@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username'], message: 'Es existiert bereits ein Benutzer mit diesem Benutzernamen')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -180,8 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return ucfirst($this->getUsername());
-        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+        return ucfirst($this->getUsername()) . $this->getFirstName() ? '(' . $this->getFirstName() . ')' : '';
     }
 
     /**

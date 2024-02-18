@@ -1,12 +1,15 @@
-<h1>Hi! Please confirm your email!</h1>
-
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in
-    {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
-
-<p>
-    Cheers!
-</p>
+{% extends 'base_email.html.twig' %}
+{% block header %}Email bestätigen{% endblock %}
+{% block content %}
+    <h2>Hallo {{ user.username }}!</h2>
+    <p>
+        Du hast dich versucht auf Amronas zu registrieren.
+        Bitte bestätige deine Email-Adresse, indem du auf folgenden Link klickst:
+    </p>
+    <p>
+        <a href="{{ signedUrl|raw }}"target="_blank">Email bestätigen</a>.
+    </p>
+    <p>
+        Dieser Link verliert seine Gültigkeit in einer Stunde.
+    </p>
+{% endblock %}

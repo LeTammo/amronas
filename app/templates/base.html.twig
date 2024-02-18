@@ -100,10 +100,10 @@
         {% block headlineWrapper %}
             <h1 class="mt-3 mb-5 font-handwritten title text-center">{% block headline %}Amronas{% endblock %}</h1>
         {% endblock %}
-        {% for label, flashes in app.flashes(['success', 'error']) %}
+        {% for label, flashes in app.flashes(['success', 'error', 'info']) %}
             {% for flash in flashes %}
                 <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
-                    <div class="fw-bold">{{ flash.text }}</div>
+                    <div class="fw-bold">{{ flash }}</div>
                     <div class="remove-parent text-white">⨯</div>
                 </div>
             {% endfor %}
@@ -143,17 +143,6 @@
     <div class="d-flex justify-content-end mx-2">
     </div>
 {% endblock %}
-<div class="d-none h-100 container-xxl text-center text-lg-start">
-    <h1 class="mt-3 mb-5 font-handwritten title text-center">Amronas</h1>
-    {% for label, flashes in app.flashes(['success', 'error']) %}
-        {% for flash in flashes %}
-            <div class="slim-alert alert-{{ label }} d-flex justify-content-between">
-                <div class="fw-bold">{{ flash.text }}</div>
-                <div class="remove-parent text-white">⨯</div>
-            </div>
-        {% endfor %}
-    {% endfor %}
-</div>
 <div class="d-none d-lg-none sticky-bottom">
     <div class="d-flex justify-content-between">
         <div class="header-locale">
