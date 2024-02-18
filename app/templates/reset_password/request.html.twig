@@ -6,6 +6,7 @@
         <div class="d-flex justify-content-center">
             {{ form_start(requestForm) }}
             {{ form_row(requestForm.email) }}
+            {{ form_errors(requestForm.email) }}
             <button class="btn btn-primary">Abschicken</button>
             {{ form_end(requestForm) }}
         </div>

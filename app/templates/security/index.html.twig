@@ -3,7 +3,7 @@
 {% block body %}
     {% if error %}
         <div class="slim-alert alert-error d-flex justify-content-between">
-            <div class="fw-bold">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="fw-bold">Entweder der Benutzername, das Passwort oder die Kombination aus beidem ist falsch.</div>
             <div class="remove-parent text-white">⨯</div>
         </div>
     {% endif %}

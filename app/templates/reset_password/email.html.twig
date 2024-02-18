@@ -1,57 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            background-color: #E2D3C4;
-            color: #35312F;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            background-color: #FFFFFF;
-            margin: 0 auto;
-            padding: 20px;
-            max-width: 600px;
-        }
-        .header {
-            background-color: #903f39;
-            color: #FFFFFF;
-            padding: 10px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-        a {
-            color: #903f39;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.8em;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1>Passwort zurücksetzen</h1>
-    </div>
-    <div class="content">
-        <h2>Hallo {{ user.username }}!</h2>
-
-        <p>Es wurde eine Anfrage zum Zurücksetzen deines Passworts ausgelöst.
-            Solltest du diese Anfrage nicht gestellt haben, kannst du diese E-Mail ignorieren.</p>
-        <p>Um ein neues Passwort festzulegen, klicke bitte auf den folgenden Link:</p>
-        <p><a href="{{ url('app_reset_password', {token: resetToken.token}) }}" target="_blank">Passwort zurücksetzen</a></p>
-        <p>Dieser Link verliert nach einer Stunde seine Gültigkeit.
-            Solltest du bis dahin kein neues Passwort festgelegt haben, muss der Vorgang erneut zu initiiert werden.</p>
-    </div>
-    <div class="footer">
-        <p>Cheers,<br>Jonas & Amrei</p>
-    </div>
-</div>
-</body>
-</html>
+{% extends 'base_email.html.twig' %}
+{% block header %}Passwort zurücksetzen{% endblock %}
+{% block content %}
+    <h2>Hallo {{ user.username }}!</h2>
+    <p>
+        Es wurde eine Anfrage zum Zurücksetzen deines Passworts ausgelöst.
+        Solltest du diese Anfrage nicht gestellt haben, kannst du diese E-Mail ignorieren.
+    </p>
+    <p>
+        Um ein neues Passwort festzulegen, klicke bitte auf den folgenden Link:
+    </p>
+    <p>
+        <a href="{{ url('app_reset_password', {token: resetToken.token}) }}" target="_blank">Passwort zurücksetzen</a>
+    </p>
+    <p>
+        Dieser Link verliert nach einer Stunde seine Gültigkeit.
+        Solltest du bis dahin kein neues Passwort festgelegt haben, muss der Vorgang erneut zu initiiert werden.
+    </p>
+{% endblock %}
