@@ -19,11 +19,17 @@ class ServicesController extends AbstractController
     #[Route('/auth', name: 'app_auth', methods: ['GET'])]
     public function auth(): Response
     {
+        LoggerService::log('auth', 'Trying to authenticate user');
         if ($this->isGranted('ROLE_USER')) {
-            LoggerService::log('auth', 'Authenticated user: ' . $this->getUser()->getUsername());
+            LoggerService::log('auth', 'User has role ROLE_USER');
+            if ($this->getUser()) {
+                LoggerService::log('auth', 'Authenticated user: ' . $this->getUser()->getUsername());
+            } else {
+                LoggerService::log('auth', 'Authenticated user: anonymous');
+            }
             return new Response('Authenticated', Response::HTTP_OK);
         } else {
-            LoggerService::log('auth', 'user: ' . $this->getUser()->getUsername());
+            LoggerService::log('auth', 'User not authenticated');
             return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }
     }
