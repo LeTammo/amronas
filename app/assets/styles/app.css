@@ -406,6 +406,11 @@ img.delete:hover {
     color: white;
 }
 
+.alert-info {
+    background-color: var(--amro-red);
+    color: white;
+}
+
 .remove-parent {
     cursor: pointer;
 }
