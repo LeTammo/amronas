@@ -90,16 +90,16 @@ class UserController extends AbstractController
         $username = $_POST['_username'];
 
         if ($username !== $user->getUsername() && $userRepository->findBy(['username' => $username])) {
-            $this->addFlash('error', ['text' => sprintf("Der Username '%s' existiert bereits, bitte wähle einen anderen...", $username)]);
+            $this->addFlash('error', sprintf("Der Username '%s' existiert bereits, bitte wähle einen anderen...", $username));
         } elseif ($username !== $user->getUsername()) {
             $user->setUsername($username);
-            $this->addFlash('success', ['text' => sprintf("Dein Username wurde erfolgreich in '%s' geändert", $username)]);
+            $this->addFlash('success', sprintf("Dein Username wurde erfolgreich in '%s' geändert", $username));
         }
 
         $email = $_POST['_email'];
         if ($email !== $user->getEmail()) {
             $user->setEmail($email);
-            $this->addFlash('success', ['text' => sprintf("Deine Email wurde erfolgreich in '%s' geändert", $email)]);
+            $this->addFlash('success', sprintf("Deine Email wurde erfolgreich in '%s' geändert", $email));
         }
 
         $userRepository->save($user, true);
@@ -116,7 +116,7 @@ class UserController extends AbstractController
 
         $userRepository->save($user, true);
 
-        $this->addFlash('success', ['text' => "Dein Password wurde erfolgreich geändert"]);
+        $this->addFlash('success', "Dein Password wurde erfolgreich geändert");
 
         return $this->render('user/profile.html.twig');
     }
