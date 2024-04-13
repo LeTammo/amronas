@@ -78,11 +78,11 @@ class ServicesController extends AbstractController
 
             file_put_contents(__DIR__ . "/../../assets/slowly.json", json_encode($myStamps));
 
-            $this->addFlash('success', ['text' => sprintf('Stamp "%s" was successfully added', $request->get('name'))]);
+            $this->addFlash('success', sprintf('Stamp "%s" was successfully added', $request->get('name')));
             LoggerService::log('slowly', sprintf('Added stamp "%s"', $request->get('name')));
 
         } catch (\Exception $e) {
-            $this->addFlash('success', ['text' => sprintf('Stamp "%s" could not be added', $request->get('name'))]);
+            $this->addFlash('success', sprintf('Stamp "%s" could not be added', $request->get('name')));
             LoggerService::log('slowly', sprintf('Error while trying to add stamp "%s"', $request->get('name')));
         }
         return $this->redirectToRoute('app_slowly_index');

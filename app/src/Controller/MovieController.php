@@ -84,9 +84,9 @@ class MovieController extends AbstractController
     {
         $entry = $entryRepository->find($request->get('id'));
         if ($entry->getMovie()->toggleProvider($request->get('provider'))) {
-            $this->addFlash('success', ['text' => sprintf('Ahyoo, man kann "%s" wohl doch nicht auf %s anschauen :(', $entry->getMovie()->getName(), ucfirst($request->get('provider')))]);
+            $this->addFlash('success', sprintf('Ahyoo, man kann "%s" wohl doch nicht auf %s anschauen :(', $entry->getMovie()->getName(), ucfirst($request->get('provider'))));
         } else {
-            $this->addFlash('success', ['text' => sprintf('Super, man kann "%s" auf %s anschauen :D', $entry->getMovie()->getName(), ucfirst($request->get('provider')))]);
+            $this->addFlash('success', sprintf('Super, man kann "%s" auf %s anschauen :D', $entry->getMovie()->getName(), ucfirst($request->get('provider'))));
         }
         $movieRepository->save($entry->getMovie(), true);
 
