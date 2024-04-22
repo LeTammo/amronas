@@ -5,6 +5,50 @@
 
 {% block body %}
     <div class="text-center">
-        <h1 class="py-5 font-handwritten">♡ Hiiii {{ app.user.username|capitalize }} ♡</h1>
+        <h1 class="font-handwritten">♡ Hiiii {{ app.user.username|capitalize }} ♡</h1>
+    </div>
+
+    <div class="row text-center justify-content-md-center">
+        <div class="col-12 col-md-8 col-lg-6 mb-4 px-5 px-lg-0">
+            <a href="https://pdf.amronas.one/" target="_blank">
+                <div class="card border-secondary text-center" style="border-radius: 0.375rem;">
+                    <div class="card-header bg-secondary fst-italic">
+                        kennst du schon...
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Amronas-PDF</h5>
+                        <p class="card-text">
+                            Damit kannst du deine PDFs bearbeiten. Du kannst PDFs zusammenfügen, teilen, drehen,
+                            Passwörter hinzufügen oder entfernen, Text auslesen oder auch die Datei komprimieren
+
+                        </p>
+                    </div>
+                    <div class="card-footer text-body-secondary bg-secondary fst-italic">
+                        https://pdf.amronas.one/
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row text-center justify-content-md-center">
+        <div class="col-12 col-md-8 col-lg-6 mb-4 px-5 px-lg-0">
+            <a href="https://tools.amronas.one/" target="_blank">
+                <div class="card border-secondary text-center" style="border-radius: 0.375rem;">
+                    <div class="card-header bg-secondary fst-italic">
+                        kennst du schon...
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Amronas-Tools</h5>
+                        <p class="card-text">
+                            Hauptsächlich für Programmierer, aber wenn du einen QR-Code generieren,
+                            Wörter zählen oder zwei Texte miteinander vergleichen willst, bist du hier richtig
+                        </p>
+                    </div>
+                    <div class="card-footer text-body-secondary bg-secondary fst-italic">
+                        https://tools.amronas.one/
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 {% endblock %}
