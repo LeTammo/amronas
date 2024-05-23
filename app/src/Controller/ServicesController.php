@@ -34,6 +34,24 @@ class ServicesController extends AbstractController
         }
     }
 
+    #[Route('/auth-admin', name: 'app_auth_admin', methods: ['GET'])]
+    public function authAdmin(): Response
+    {
+        LoggerService::log('auth', 'Trying to authenticate administrator');
+        if ($this->isGranted('ROLE_ADMIN')) {
+            LoggerService::log('auth', 'User has role ROLE_ADMIN');
+            if ($this->getUser()) {
+                LoggerService::log('auth', 'Authenticated admin: ' . $this->getUser()->getUsername());
+            } else {
+                LoggerService::log('auth', 'Authenticated user: anonymous');
+            }
+            return new Response('Authenticated', Response::HTTP_OK);
+        } else {
+            LoggerService::log('auth', 'Admin not authenticated');
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
