@@ -28,6 +28,7 @@
     border: 1px solid var(--amro-black);
     border-radius: 4px;
     margin: 3px;
+    cursor: pointer;
 }
 
 .wordle-date {
