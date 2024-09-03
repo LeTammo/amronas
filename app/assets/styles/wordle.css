@@ -4,8 +4,14 @@
     width: clamp(40px, 9vh, 80px);
     height: clamp(40px, 9vh, 80px);
     background-color: var(--amro-creme-dark);
-    border: 1px solid var(--amro-black);
+    border: 1px solid var(--amro-red);
+    color: white;
 }
+
+.wordle-cell.active {
+    box-shadow: 0 0 7px 1px var(--amro-red);
+}
+
 .wordle-cell-sm {
     font-size: 18px;
     margin: 2px;
@@ -26,6 +32,8 @@
     font-weight: bold;
     width: 100%;
     height: 56px;
+    color: white;
+    background: var(--amro-red);
     border: 3px solid var(--amro-red);
     border-radius: 4px;
     margin: 3px;
@@ -35,8 +43,9 @@
 
 #enter-key,
 #backspace-key {
-    background: var(--amro-red);
-    color: white;
+    background: var(--amro-creme-dark);
+    border: 3px solid var(--amro-red);
+    color: var(--amro-red);
 }
 
 .wordle-date {
@@ -57,20 +66,22 @@
     color: white!important;
 }
 
-.wordle-cell.active {
-    box-shadow: 0 0 7px 1px var(--amro-black);
-}
-
 .correct {
     background-color: #67a760;
+    color: black;
+    border: 1px solid black;
 }
 
 .present {
     background-color: #c8b359;
+    color: black;
+    border: 1px solid black;
 }
 
 .absent {
     background-color: #888888;
+    color: black;
+    border: 1px solid black;
 }
 
 .wordle-shake {
