@@ -7,7 +7,26 @@
     <div class="text-center">
         <h1 class="font-handwritten">♡ Hiiii {{ app.user.username|capitalize }} ♡</h1>
     </div>
-
+    {% if app.user and 'ROLE_FAMILY' in app.user.roles %}
+    <div class="row text-center justify-content-md-center">
+        <div class="col-12 col-md-8 col-lg-6 mb-4 px-5 px-lg-0">
+            <a href="https://uebersicht.amronas.one/" target="_blank">
+                <div class="card border-dark text-center" style="border-radius: 0.375rem;">
+                    <div class="card-header bg-opacity-75 bg-secondary fst-italic"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Übersicht</h5>
+                        <p class="card-text">
+                            Klicke hier um zu deiner Übersicht zu gelangen :D
+                        </p>
+                    </div>
+                    <div class="card-footer bg-opacity-75 text-bg-primary fst-italic">
+                        https://uebersicht.amronas.one/
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endif %}
     <div class="row text-center justify-content-md-center">
         <div class="col-12 col-md-8 col-lg-6 mb-4 px-5 px-lg-0">
             <a href="https://pdf.amronas.one/" target="_blank">
