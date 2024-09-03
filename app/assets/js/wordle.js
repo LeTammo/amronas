@@ -27,7 +27,16 @@ $(document).ready(function () {
     });
 
     $("#keyboard .key").click(function () {
-        evaluateKey($(this).text().charCodeAt(0));
+        let keyCode = $(this).text().charCodeAt(0);
+        console.log(keyCode);
+        if ($(this).attr("id") === "enter-key") {
+            keyCode = 13;
+        } else if ($(this).attr("id") === "backspace-key") {
+            keyCode = 8;
+        }
+        console.log(keyCode);
+
+        evaluateKey(keyCode);
     });
 
     /**************************************************************
@@ -49,12 +58,10 @@ $(document).ready(function () {
                 changeFocusToNext();
                 break;
             case 13:
-            case 10550:
                 keysDisabled = true;
                 submitTry();
                 break;
             case 8:
-            case 8592:
                 if (focus.children().first().text().length === 69 || focus.children().first().text().length === 0) {
                     removePreviousLetter();
                     changeFocusToPrevious();
