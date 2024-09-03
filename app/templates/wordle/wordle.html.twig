@@ -77,11 +77,11 @@
                             {% endfor %}
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div class="key align-content-center" style="color: var(--amro-red)" id="enter-key">✓</div>
+                            <div class="key align-content-center" id="enter-key">✓</div>
                             {% for char in ['y', 'x', 'c', 'v', 'b', 'n', 'm'] %}
                                 <div class="key {{ currentGame.getLetterStatus(char) }} align-content-center">{{ char|upper }}</div>
                             {% endfor %}
-                            <div class="key align-content-center" style="color: var(--amro-red)" id="backspace-key">⌫</div>
+                            <div class="key align-content-center" id="backspace-key">⌫</div>
                         </div>
                     </div>
                 </div>

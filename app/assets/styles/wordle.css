@@ -23,13 +23,20 @@
 }
 
 .key {
+    font-weight: bold;
     width: 100%;
     height: 56px;
-    border: 1px solid var(--amro-black);
+    border: 3px solid var(--amro-red);
     border-radius: 4px;
     margin: 3px;
     font-size: 24px;
     cursor: pointer;
+}
+
+#enter-key,
+#backspace-key {
+    background: var(--amro-red);
+    color: white;
 }
 
 .wordle-date {
