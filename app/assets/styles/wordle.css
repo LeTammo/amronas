@@ -1,10 +1,10 @@
 
 .wordle-cell {
-    margin: 3px;
+    margin: 2px;
     width: clamp(40px, 9vh, 80px);
     height: clamp(40px, 9vh, 80px);
     background-color: var(--amro-creme-white);
-    border: 2px solid var(--amro-red);
+    border: 1px solid var(--amro-red);
     color: var(--amro-black);
 }
 
@@ -36,7 +36,7 @@
     background: var(--amro-red);
     border: 3px solid var(--amro-red);
     border-radius: 4px;
-    margin: 3px;
+    margin: 1px;
     font-size: 24px;
     cursor: pointer;
 }
@@ -69,19 +69,19 @@
 .correct {
     background-color: #67a760;
     color: black;
-    border: 1px solid black;
+    border: 1px solid #67a760;
 }
 
 .present {
     background-color: #c8b359;
     color: black;
-    border: 1px solid black;
+    border: 1px solid #c8b359;
 }
 
 .absent {
     background-color: #888888;
     color: black;
-    border: 1px solid black;
+    border: 1px solid #888888;
 }
 
 .wordle-shake {
