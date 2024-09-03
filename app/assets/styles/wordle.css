@@ -3,9 +3,9 @@
     margin: 3px;
     width: clamp(40px, 9vh, 80px);
     height: clamp(40px, 9vh, 80px);
-    background-color: var(--amro-creme-dark);
-    border: 1px solid var(--amro-red);
-    color: white;
+    background-color: var(--amro-creme-white);
+    border: 2px solid var(--amro-red);
+    color: var(--amro-black);
 }
 
 .wordle-cell.active {
