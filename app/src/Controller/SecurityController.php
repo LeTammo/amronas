@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if ($this->getParameter('app.at-construction')) {
             return $this->redirectToRoute('app_at_construction');
@@ -38,9 +38,12 @@ class SecurityController extends AbstractController
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
+	$redirectTo = $request->query->get('redirect_to');
+
         return $this->render('security/index.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+	    'redirect_to' => $redirectTo,
         ]);
     }
 

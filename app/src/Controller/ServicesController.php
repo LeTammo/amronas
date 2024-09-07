@@ -20,8 +20,8 @@ class ServicesController extends AbstractController
     public function auth(): Response
     {
         LoggerService::log('auth', 'Trying to authenticate user');
-        if ($this->isGranted('ROLE_USER')) {
-            LoggerService::log('auth', 'User has role ROLE_USER');
+        if ($this->isGranted('ROLE_USER') && $this->isGranted('ROLE_SERVICE')) {
+            LoggerService::log('auth', 'User has role ROLE_USER an ROLE_SERVICE');
             if ($this->getUser()) {
                 LoggerService::log('auth', 'Authenticated user: ' . $this->getUser()->getUsername());
             } else {
@@ -30,7 +30,7 @@ class ServicesController extends AbstractController
             return new Response('Authenticated', Response::HTTP_OK);
         } else {
             LoggerService::log('auth', 'User not authenticated');
-            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+            return new Response('Unauthorized', Response::HTTP_FORBIDDEN);
         }
     }
 
@@ -48,7 +48,7 @@ class ServicesController extends AbstractController
             return new Response('Authenticated', Response::HTTP_OK);
         } else {
             LoggerService::log('auth', 'Admin not authenticated');
-            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+            return new Response('Unauthorized', Response::HTTP_FORBIDDEN);
         }
     }
 

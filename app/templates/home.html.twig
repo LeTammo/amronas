@@ -27,6 +27,7 @@
         </div>
     </div>
     {% endif %}
+    {% if app.user and 'ROLE_SERVICE' in app.user.roles %}
     <div class="row text-center justify-content-md-center">
         <div class="col-12 col-md-8 col-lg-6 mb-4 px-5 px-lg-0">
             <a href="https://pdf.amronas.one/" target="_blank">
@@ -69,4 +70,5 @@
             </a>
         </div>
     </div>
+    {% endif %}
 {% endblock %}

@@ -16,9 +16,15 @@
             </div>
         </div>
     {% else %}
+        {% if redirect_to %}
+        <div class="text-center">
+            <h4 class="">Log dich bitte ein,<br>um auf <a class="fw-bold" href="{{ redirect_to }}">{{ redirect_to|replace({'https://': '', 'http://': '', '/': ''}) }}</a> zu gelangen :)</h3>
+        </div>
+	{% else %}
         <div class="text-center">
             <h3 class="font-handwritten">Eine Website von Amrei und Jonas</h3>
         </div>
+        {% endif %}
 
         <div class="d-flex justify-content-center">
             <form action="{{ path('app_login') }}" method="post">
@@ -50,15 +56,19 @@
                     <label for="remember_me">Eingeloggt bleiben</label>
                 </div>
 
+		{% if redirect_to %}
+        	    <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
+    		{% endif %}
+
                 <div>
                     <button class="input-group btn" type="submit">login</button>
                 </div>
             </form>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center mt-4 hideme">
             <a class="btn btn-small" style="background-color: gray" href="{{ path('app_forgot_password_request') }}">Passwort vergessen?</a>
         </div>
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mt-4 hideme">
             <div class="text-center">
                 {% if is_login_enabled %}
                     <div><a class="input-group btn" href="{{ path('app_register') }}">Registrieren</a></div>
@@ -69,4 +79,18 @@
             </div>
         </div>
     {% endif %}
+
+{% if redirect_to %}
+<h1 class="mt-5 mb-3 font-handwritten text-center" style="font-size: 7vh;">Amronas</h1>
+<style>
+.navbar,
+.hideme { display: none!important }
+.title { display: none!important }
+main {
+    margin-bottom: auto !important;
+    margin-top: auto !important;
+}
+</style>
+{% endif %}
+
 {% endblock %}
