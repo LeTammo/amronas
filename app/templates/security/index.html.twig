@@ -18,7 +18,8 @@
     {% else %}
         {% if redirect_to %}
         <div class="text-center">
-            <h4 class="">Log dich bitte ein,<br>um auf <a class="fw-bold" href="{{ redirect_to }}">{{ redirect_to|replace({'https://': '', 'http://': '', '/': ''}) }}</a> zu gelangen :)</h3>
+	    {% set cleaned_url = redirect_to|replace({'https://': '', 'http://': '', 'www.': ''})|split('/')[0] %}
+            <h4 class="">Log dich bitte ein,<br>um auf <a class="fw-bold" href="{{ redirect_to }}">{{ cleaned_url }}</a> zu gelangen :)</h3>
         </div>
 	{% else %}
         <div class="text-center">
