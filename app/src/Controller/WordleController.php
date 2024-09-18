@@ -314,4 +314,26 @@ class WordleController extends AbstractController
 
         return $this->redirectToRoute('app_wordle_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/compare/{id}', name: 'app_wordle_user', methods: ['GET'])]
+    public function compareUser(Request $request, WordleGameRepository $gameRepository): Response
+    {
+        $games = $gameRepository->findAllFinishedGamesForPlayer($this->getUser()->getId());
+        $gamesOpponent = $gameRepository->findAllFinishedGamesForPlayer($request->get('id'));
+
+        $guesses = [];
+        foreach ($games as $game) {
+            $guesses[] = $game->isSolved() ? count($game->getGuesses()) : 7;
+        }
+
+        $guessesOpponent = [];
+        foreach ($gamesOpponent as $game) {
+            $guessesOpponent[] = $game->isSolved() ? count($game->getGuesses()) : 7;
+        }
+
+        return $this->renderForm('wordle/compare.html.twig', [
+            'guesses' => $guesses,
+            'guessesOpponent' => $guessesOpponent,
+        ]);
+    }
 }

@@ -102,7 +102,9 @@
                     {% if game.guesses|length > 0 %}
                         <div class="col-6 mb-3">
                             <div class="fw-bold">
-                                {{ game.player.getUserIdentifier|capitalize }}
+                                <a href="{{ path('app_wordle_user', {'userId': game.player.id}) }}">
+                                    {{ game.player.getUserIdentifier|capitalize }}
+                                </a>
                             </div>
                             <div class="py-2">
                                 {% for guess in game.guesses %}

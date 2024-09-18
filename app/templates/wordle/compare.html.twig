@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vergleich{% endblock %}
+{% block headline %}{% endblock %}
+
+{% block body %}
+    <div class="row text-center">
+        <div class="col-12 col-lg-6">
+            <canvas id="guesses-chart"></canvas>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-12 col-lg-6">
+            <canvas id="guesses-opponent-chart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function generateChartData(guesses, colors) {
+            return {
+                labels: ["1", "2", "3", "4", "5", "6", "nope"],
+                datasets: [{
+                    data: [
+                        ...Array.from({ length: 6 }, (_, i) => guesses.filter(x => x == i + 1).length),
+                        guesses.filter(x => x > 6).length
+                    ],
+                    backgroundColor: ["#67a760", '#98ad5c', "#c8b359", "#b67a4a", "#a4413a"],
+                    borderColor: 'rgba(164, 65, 58, 1)',
+                }]
+            };
+        }
+
+        function createChart(ctxId, chartData) {
+            let ctx = document.getElementById(ctxId).getContext('2d');
+            const totalGuesses = chartData.datasets[0].data.reduce((a, b) => a + b, 0);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Spiele', font: { size: 20 } },
+                        },
+                        x: {
+                            title: { display: true, text: 'Versuche', font: { size: 20 } },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    let value = chartData.datasets[0].data[tooltipItem.dataIndex];
+                                    let percentage = ((value / totalGuesses) * 100).toFixed(2);
+                                    return ` ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+        }
+
+        const userGuesses = {{ guesses|json_encode()|raw }};
+        const userChartData = generateChartData(userGuesses, colors);
+        createChart('guesses-chart', userChartData);
+
+        const opponentGuesses = {{ guessesOpponent|json_encode()|raw }};
+        const opponentChartData = generateChartData(opponentGuesses, colors);
+        createChart('guesses-opponent-chart', opponentChartData);
+    </script>
+{% endblock %}
