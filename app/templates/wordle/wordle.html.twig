@@ -15,6 +15,13 @@
             </a>
         {% endfor %}
     </div>
+{% if currentGame.isFinished and randomUnix %}
+    <div class="d-flex justify-content-center mb-3">
+        <a href="{{ path('app_wordle_index', {'unix': randomUnix, 'isRandom': true}) }}" class="mx-2 wordle-date">
+            Random
+        </a>
+    </div>
+{% endif %}
 
     <div class="row text-center">
         <div class="col-12 h1">
@@ -24,6 +31,7 @@
                 <div>Sorryyyy 😔</div>
             {% else %}
                 <div>viel Erfolg!</div>
+                {% if random %}<div class="h4">Du Spielst das Wordle vom {{ random|date('d.m.Y') }}</div>{% endif %}
             {% endif %}
         </div>
         <div class="col-12 col-lg-6">
@@ -191,7 +199,7 @@
                         plugins: {
                             legend: {
                                 display: false,
-                            }
+	                    }
                         },
                     }
                 });
