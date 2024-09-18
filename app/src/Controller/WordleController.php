@@ -6,6 +6,7 @@ use App\Entity\WordleGame;
 use App\Entity\WordleGuess;
 use App\Entity\WordleSolution;
 use App\Form\WordleSolutionType;
+use App\Repository\UserRepository;
 use App\Repository\WordleGameRepository;
 use App\Repository\WordleSolutionRepository;
 use DateTime;
@@ -313,5 +314,30 @@ class WordleController extends AbstractController
         }
 
         return $this->redirectToRoute('app_wordle_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/compare/{opponentId}', name: 'app_wordle_user', methods: ['GET'])]
+    public function compareUser(Request $request, WordleGameRepository $gameRepository, UserRepository $userRepository): Response
+    {
+        $opponent = $userRepository->find($request->get('opponentId'));
+
+        $games = $gameRepository->findAllFinishedGamesForPlayer($this->getUser()->getId());
+        $gamesOpponent = $gameRepository->findAllFinishedGamesForPlayer($request->get('opponentId'));
+
+        $guesses = [];
+        foreach ($games as $game) {
+            $guesses[] = $game->isSolved() ? count($game->getGuesses()) : 7;
+        }
+
+        $guessesOpponent = [];
+        foreach ($gamesOpponent as $game) {
+            $guessesOpponent[] = $game->isSolved() ? count($game->getGuesses()) : 7;
+        }
+
+        return $this->render('wordle/compare.html.twig', [
+            'guesses' => $guesses,
+            'guessesOpponent' => $guessesOpponent,
+            'opponent' => $opponent,
+        ]);
     }
 }
