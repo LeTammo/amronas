@@ -21,8 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class WordleController extends AbstractController
 {
     #[Route('/', name: 'app_wordle_index', methods: ['GET'])]
-    public function wordle(Request $request, WordleGameRepository $gameRepository, WordleSolutionRepository $solutionRepository): Response
+    public function wordle(
+        Request $request,
+        WordleGameRepository $gameRepository,
+        WordleSolutionRepository $solutionRepository
+    ): Response
     {
+        $player = $this->getUser();
+
         $date = new DateTime();
 
         $minDate = new DateTime('2022-03-04');
@@ -48,10 +54,10 @@ class WordleController extends AbstractController
             $solutionRepository->save($solution, true);
         }
 
-        $game = $gameRepository->findGameWithSolutionAndGuesses($solution, $this->getUser()->getId());
+        $game = $gameRepository->findGameWithSolutionAndGuesses($solution, $player->getId());
         if (!$game) {
             $game = new WordleGame($solution);
-            $game->setPlayer($this->getUser());
+            $game->setPlayer($player);
             $solution->addGame($game);
             $gameRepository->save($game, true);
         }
@@ -70,7 +76,7 @@ class WordleController extends AbstractController
 
 
         if ($game->isFinished()) {
-            $userId = $this->getUser()->getId();
+            $userId = $player->getId();
             $games = $gameRepository->findAllGamesWithGuessesForPlayer($userId);
             $guessesNeeded = [];
             foreach ($games as $game) {
@@ -82,12 +88,12 @@ class WordleController extends AbstractController
             }
             $params['games'] = $games;
             $params['guessesNeeded'] = $guessesNeeded;
-            $randomSolution = $solutionRepository->findRandomStartedGame($this->getUser()->getId());
+            $randomSolution = $solutionRepository->findRandomStartedGame($player->getId());
             if (!$randomSolution) {
-                $randomSolution = $solutionRepository->findRandomUnattemptedSolvedGame($this->getUser()->getId());
+                $randomSolution = $solutionRepository->findRandomUnattemptedSolvedGame($player->getId());
             }
             if ($randomSolution) {
-                $randomSolution = $solutionRepository->findRandomUnsolvedOrSolvedByOtherUser($this->getUser()->getId());
+                $randomSolution = $solutionRepository->findRandomUnsolvedOrSolvedByOtherUser($player->getId());
             }
             if ($randomSolution) {
                 $createdAtString = $randomSolution['created_at'];
@@ -101,7 +107,11 @@ class WordleController extends AbstractController
     }
 
     #[Route('/guess', name: 'app_wordle_guess', methods: ['GET'])]
-    public function wordleGuess(Request $request, EntityManagerInterface $entityManager, int $difficulty = 0): Response
+    public function wordleGuess(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        int $difficulty = 0
+    ): Response
     {
         $date = new DateTime();
         $date->setTimestamp($request->get('unix'));
@@ -110,14 +120,20 @@ class WordleController extends AbstractController
         $solution = $entityManager->getRepository(WordleSolution::class)->findOneBy(['createdAt' => $date]);
 
         /** @var WordleGame $game */
-        $game = $entityManager->getRepository(WordleGame::class)->findOneBy(['solution' => $solution, 'player' => $this->getUser()]);
+        $game = $entityManager->getRepository(WordleGame::class)->findOneBy([
+            'solution' => $solution,
+            'player' => $this->getUser()
+        ]);
 
         $words = $this->getWords($difficulty);
         if ($game->isSolved() || !in_array($request->get("guess"), $words)) {
             return new Response("Invalid guess");
         }
 
-        $response = $this->compareGuess(str_split($request->get("guess")), str_split($solution->getCorrectWord()));
+        $response = $this->compareGuess(
+            str_split($request->get("guess")),
+            str_split($solution->getCorrectWord())
+        );
 
         $guess = new WordleGuess($game, $request->get("guess"), $response['solved']);
         $guess->setInfo($response);
