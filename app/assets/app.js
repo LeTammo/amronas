@@ -14,6 +14,7 @@ import './js/tableSort';
 import './js/tableFilter';
 import './js/wordle';
 import './js/password';
+import './js/chart.min';
 
 const $ = require('jquery');
 require('bootstrap');
