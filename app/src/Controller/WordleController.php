@@ -23,22 +23,22 @@ class WordleController extends AbstractController
     #[Route('/', name: 'app_wordle_index', methods: ['GET'])]
     public function wordle(Request $request, WordleGameRepository $gameRepository, WordleSolutionRepository $solutionRepository): Response
     {
-	$date = new DateTime();
+        $date = new DateTime();
 
-	$minDate = new DateTime('2022-03-04');
+        $minDate = new DateTime('2022-03-04');
         $tomorrow = new DateTime('tomorrow');
         $today = new DateTime('today');
 
         $unix = $request->get('unix');
-	if ($unix) {
-	    $date->setTimestamp($unix);
-	}
+        if ($unix) {
+            $date->setTimestamp($unix);
+        }
 
-	if ($date < $minDate) {
-	    $date = $minData;
-	} elseif ($date >= $tomorrow) {
+        if ($date < $minDate) {
+            $date = $minDate;
+        } elseif ($date >= $tomorrow) {
             $date = $today;
-	}
+        }
 
         $date->setTime(0, 0);
 
@@ -63,6 +63,7 @@ class WordleController extends AbstractController
             'solution' => $solution,
         ];
 
+        $params['random'] = false;
         if ($request->get('isRandom')) {
             $params['random'] = $date->getTimestamp();
         }
@@ -81,19 +82,19 @@ class WordleController extends AbstractController
             }
             $params['games'] = $games;
             $params['guessesNeeded'] = $guessesNeeded;
-                $randomSolution = $solutionRepository->findRandomStartedGame($this->getUser()->getId());
-                if (!$randomSolution) {
+            $randomSolution = $solutionRepository->findRandomStartedGame($this->getUser()->getId());
+            if (!$randomSolution) {
                 $randomSolution = $solutionRepository->findRandomUnattemptedSolvedGame($this->getUser()->getId());
-                }
-		if ($randomSolution) {
+            }
+            if ($randomSolution) {
                 $randomSolution = $solutionRepository->findRandomUnsolvedOrSolvedByOtherUser($this->getUser()->getId());
-                }
-        	if ($randomSolution) {
-		$createdAtString = $randomSolution['created_at'];
+            }
+            if ($randomSolution) {
+                $createdAtString = $randomSolution['created_at'];
 
-		$createdAt = new \DateTime($createdAtString);
-		$params['randomUnix'] = $createdAt->getTimestamp() + 7200;
-        	}
+                $createdAt = new DateTime($createdAtString);
+                $params['randomUnix'] = $createdAt->getTimestamp() + 7200;
+            }
         }
 
         return $this->render('wordle/wordle.html.twig', $params);
@@ -183,7 +184,7 @@ class WordleController extends AbstractController
         $response = [
             'solved' => $guess === $solution,
             0 => null,
-            1=> null,
+            1 => null,
             2 => null,
             3 => null,
             4 => null,
@@ -289,7 +290,11 @@ class WordleController extends AbstractController
     }
 
     //#[Route('/{id}/edit', name: 'app_wordle_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, WordleSolution $wordleSolution, WordleSolutionRepository $wordleSolutionRepository): Response
+    public function edit(
+        Request $request,
+        WordleSolution $wordleSolution,
+        WordleSolutionRepository $wordleSolutionRepository
+    ): Response
     {
         $form = $this->createForm(WordleSolutionType::class, $wordleSolution);
         $form->handleRequest($request);
@@ -307,9 +312,13 @@ class WordleController extends AbstractController
     }
 
     //#[Route('/{id}', name: 'app_wordle_delete', methods: ['POST'])]
-    public function delete(Request $request, WordleSolution $wordleSolution, WordleSolutionRepository $wordleSolutionRepository): Response
+    public function delete(
+        Request $request,
+        WordleSolution $wordleSolution,
+        WordleSolutionRepository $wordleSolutionRepository
+    ): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$wordleSolution->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $wordleSolution->getId(), $request->request->get('_token'))) {
             $wordleSolutionRepository->remove($wordleSolution, true);
         }
 
@@ -317,7 +326,11 @@ class WordleController extends AbstractController
     }
 
     #[Route('/compare/{opponentId}', name: 'app_wordle_user', methods: ['GET'])]
-    public function compareUser(Request $request, WordleGameRepository $gameRepository, UserRepository $userRepository): Response
+    public function compareUser(
+        Request $request,
+        WordleGameRepository $gameRepository,
+        UserRepository $userRepository
+    ): Response
     {
         $opponent = $userRepository->find($request->get('opponentId'));
 
