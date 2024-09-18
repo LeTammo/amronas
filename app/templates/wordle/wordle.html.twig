@@ -102,7 +102,7 @@
                     {% if game.guesses|length > 0 %}
                         <div class="col-6 mb-3">
                             <div class="fw-bold">
-                                <a href="{{ path('app_wordle_user', {'userId': game.player.id}) }}">
+                                <a href="{{ path('app_wordle_user', {'opponentId': game.player.id}) }}">
                                     {{ game.player.getUserIdentifier|capitalize }}
                                 </a>
                             </div>

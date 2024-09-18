@@ -68,8 +68,8 @@ class WordleGameRepository extends ServiceEntityRepository
     public function findAllFinishedGamesForPlayer($userId)
     {
         return $this->createQueryBuilder('g')
-            ->where('g.player_id = :userId')
-            ->andWhere('g.is_finished = 1')
+            ->where('g.player = :userId')
+            ->andWhere('g.isFinished = 1')
             ->setParameter('userId', $userId)
             ->getQuery()
             ->getResult();

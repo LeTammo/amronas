@@ -4,19 +4,21 @@
 {% block headline %}{% endblock %}
 
 {% block body %}
-    <div class="row text-center">
-        <div class="col-12 col-lg-6">
+    <div class="row text-center pb-4">
+        <div class="col-12 col-lg-6 m-auto">
+            <h4>Du:</h4>
             <canvas id="guesses-chart"></canvas>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col-12 col-lg-6">
+    <div class="row text-center mt-5">
+        <div class="col-12 col-lg-6 m-auto">
+            <h4>{{ opponent.username|capitalize }}:</h4>
             <canvas id="guesses-opponent-chart"></canvas>
         </div>
     </div>
 
     <script>
-        function generateChartData(guesses, colors) {
+        function generateChartData(guesses) {
             return {
                 labels: ["1", "2", "3", "4", "5", "6", "nope"],
                 datasets: [{
@@ -65,11 +67,11 @@
         }
 
         const userGuesses = {{ guesses|json_encode()|raw }};
-        const userChartData = generateChartData(userGuesses, colors);
+        const userChartData = generateChartData(userGuesses);
         createChart('guesses-chart', userChartData);
 
         const opponentGuesses = {{ guessesOpponent|json_encode()|raw }};
-        const opponentChartData = generateChartData(opponentGuesses, colors);
+        const opponentChartData = generateChartData(opponentGuesses);
         createChart('guesses-opponent-chart', opponentChartData);
     </script>
 {% endblock %}
