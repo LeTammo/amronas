@@ -18,10 +18,29 @@
 
     <div class="row text-center">
         <div class="col-12 h1">
-            {% if currentGame.isSolved %}
-                <div>Glückwunsch! 🎉</div>
-            {% elseif currentGame.isFinished %}
-                <div>Sorryyyy 😔</div>
+            {% if currentGame.isFinished %}
+                {% if not currentGame.isSolved %}
+                    <div>Schade 😭</div>
+                    <h4>Das war leider nichts. Das gesuchte Wort war "{{ solution.correctWord|upper }}"</h4>
+                {% elseif currentGame.guesses|length == 1 %}
+                    <div>Insane! 🎉</div>
+                    <h4>Du hast das Wordle beim 1. Versuch gelöst</h4>
+                {% elseif currentGame.guesses|length == 2 %}
+                    <div>Respekt! 🎉</div>
+                    <h4>Du hast das Wordle beim 2. Versuch gelöst</h4>
+                {% elseif currentGame.guesses|length == 3 %}
+                    <div>Super! 🥳</div>
+                    <h4>Du hast das Wordle beim 3. Versuch gelöst</h4>
+                {% elseif currentGame.guesses|length == 4 %}
+                    <div>Sehr gut 👍</div>
+                    <h4>Du hast das Wordle beim 4. Versuch gelöst</h4>
+                {% elseif currentGame.guesses|length == 5 %}
+                    <div>Ganz okay 👍</div>
+                    <h4>Du hast das Wordle beim 5. Versuch gelöst</h4>
+                {% elseif currentGame.guesses|length == 6 %}
+                    <div>Das war knapp! 😅</div>
+                    <h4>Du hast das Wordle beim 6. Versuch gelöst</h4>
+                {% endif %}
             {% else %}
                 <div>viel Erfolg!</div>
                 {% if random %}
@@ -35,7 +54,7 @@
         </div>
         <div class="col-12 col-lg-6">
             {% if currentGame.isFinished %}
-                <canvas id="guesses-chart"></canvas>
+                <canvas class="pt-3" id="guesses-chart"></canvas>
             {% else %}
                 <div id="wordle-game" class="wordle-game disable-double-tap-zoom" data-unix="{{ unix }}"
                      data-url="{{ path('app_wordle_guess') }}" data-finished="{{ currentGame.isFinished|raw }}">
