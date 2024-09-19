@@ -40,66 +40,64 @@ class WordleSolutionRepository extends ServiceEntityRepository
         }
     }
 
-public function findRandomStartedGame(int $userId)
-{
-    $conn = $this->getEntityManager()->getConnection();
+    public function findRandomStartedGame(int $userId)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.games', 'g')
+            ->join('g.guesses', 'r')
+            ->where('g.player = :userId')
+            ->andWhere('g.isFinished = false')
+            ->orderBy('s.createdAt', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-    $sql = "
-SELECT s.* FROM wordle_solution s
-JOIN wordle_game g ON s.id = g.solution_id
-JOIN wordle_guess r ON g.id = r.game_id
-WHERE g.player_id = :userId AND g.is_finished = 0;
-        ORDER BY RAND()
-        LIMIT 1;
-    ";
+    public function findRandomUnattemptedSolvedGame(int $userId)
+    {
+        $sql = "
+            SELECT s.*
+            FROM wordle_solution s
+            JOIN wordle_game g ON s.id = g.solution_id
+            JOIN wordle_guess r ON g.id = r.game_id
+            WHERE g.is_solved = 1
+            AND g.player_id <> :userId
+            AND s.id NOT IN (
+                SELECT g2.solution_id
+                FROM wordle_game g2
+                JOIN wordle_guess r2 ON g2.id = r2.game_id
+                WHERE g2.player_id = :userId
+            )
+            LIMIT 1;
+        ";
 
-    $stmt = $conn->executeQuery($sql, ['userId' => $userId]); 
-
-    return $stmt->fetch();
-}
-
-public function findRandomUnattemptedSolvedGame(int $userId)
-{
-    $conn = $this->getEntityManager()->getConnection();
-
-    $sql = "
-SELECT s.*
-FROM wordle_solution s
-JOIN wordle_game g ON s.id = g.solution_id
-JOIN wordle_guess r ON g.id = r.game_id
-WHERE g.is_solved = 1
-AND g.player_id <> :userId
-AND s.id NOT IN (
-    SELECT g2.solution_id
-    FROM wordle_game g2
-    JOIN wordle_guess r2 ON g2.id = r2.game_id
-    WHERE g2.player_id = :userId
-)
-GROUP BY s.id;
-        ORDER BY RAND()
-        LIMIT 1;
-    ";
-
-    $stmt = $conn->executeQuery($sql, ['userId' => $userId]);
-
-    return $stmt->fetch();
-}
+        return $this->getOneOrNullResult(
+            $this->getEntityManager()->getConnection()->executeQuery($sql, ['userId' => $userId])->fetch()
+        );
+    }
 
 
-public function findRandomUnsolvedOrSolvedByOtherUser(int $userId)
-{
-    $conn = $this->getEntityManager()->getConnection();
+    public function findRandomGameThatHasNotBeenStarted(int $userId)
+    {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.games', 'g')
+            ->where('g.player IS NULL')
+            ->orWhere('g.player = :userId')
+            ->andWhere('g.isFinished = 0')
+            ->orderBy('s.createdAt', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-    $sql = "
-	SELECT s.* FROM wordle_solution s
-        LEFT JOIN wordle_game g ON s.id = g.solution_id
-        WHERE (g.player_id IS NULL or (g.player_id = :userId AND g.is_finished = 0))
-        ORDER BY RAND()
-        LIMIT 1;
-    ";
+    private function getOneOrNullResult($result)
+    {
+        if ($result === false) {
+            return null;
+        }
 
-    $stmt = $conn->executeQuery($sql, ['userId' => $userId]); 
-
-    return $stmt->fetch();
-}
+        return $this->getEntityManager()->getRepository(WordleSolution::class)->find($result['id']);
+    }
 }

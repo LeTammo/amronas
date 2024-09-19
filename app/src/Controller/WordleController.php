@@ -74,7 +74,6 @@ class WordleController extends AbstractController
             $params['random'] = $date->getTimestamp();
         }
 
-
         if ($game->isFinished()) {
             $userId = $player->getId();
             $games = $gameRepository->findAllGamesWithGuessesForPlayer($userId);
@@ -88,17 +87,17 @@ class WordleController extends AbstractController
             }
             $params['games'] = $games;
             $params['guessesNeeded'] = $guessesNeeded;
+
             $randomSolution = $solutionRepository->findRandomStartedGame($player->getId());
-            if (!$randomSolution) {
+            if (!$randomSolution instanceof WordleSolution) {
                 $randomSolution = $solutionRepository->findRandomUnattemptedSolvedGame($player->getId());
             }
-            if ($randomSolution) {
-                $randomSolution = $solutionRepository->findRandomUnsolvedOrSolvedByOtherUser($player->getId());
+            if (!$randomSolution instanceof WordleSolution) {
+                $randomSolution = $solutionRepository->findRandomGameThatHasNotBeenStarted($player->getId());
             }
-            if ($randomSolution) {
-                $createdAtString = $randomSolution['created_at'];
 
-                $createdAt = new DateTime($createdAtString);
+            if ($randomSolution instanceof WordleSolution) {
+                $createdAt = $randomSolution->getCreatedAt();
                 $params['randomUnix'] = $createdAt->getTimestamp() + 7200;
             }
         }
