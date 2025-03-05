@@ -85,7 +85,7 @@ class WordleSolutionRepository extends ServiceEntityRepository
             ->where('g.player IS NULL')
             ->orWhere('g.player = :userId')
             ->andWhere('g.isFinished = 0')
-            ->orderBy('s.createdAt', 'ASC')
+            ->orderBy('s.createdAt', 'DESC')
             ->setMaxResults(1)
             ->setParameter('userId', $userId)
             ->getQuery()

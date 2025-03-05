@@ -242,7 +242,7 @@ class WordleController extends AbstractController
         $today->setTime(0, $today->format('i'), $today->format('s'));
 
         $timeDifference = 1000 * ($today->getTimestamp() - $start->getTimestamp());
-        $wordNumber = round($timeDifference / 864e5) + 228;
+        $wordNumber = (round($timeDifference / 864e5) + 228) % 1240;
 
         return new WordleSolution($possibleSolutions[$wordNumber], $date);
     }
