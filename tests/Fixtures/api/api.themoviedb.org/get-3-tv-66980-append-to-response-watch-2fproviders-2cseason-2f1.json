@@ -1,0 +1,437 @@
+{
+    "request": "GET /3/tv/66980?append_to_response=watch%2Fproviders%2Cseason%2F1",
+    "recordedAt": "2026-10-31T09:36:30+00:00",
+    "status": 200,
+    "body": {
+        "adult": false,
+        "backdrop_path": "/7hezSIqkDjhP7MNGFN9vRkyWgO9.jpg",
+        "created_by": [
+            {
+                "id": 1071,
+                "credit_id": "5a005a6c925141471d064975",
+                "name": "Tom Tykwer",
+                "original_name": "Tom Tykwer",
+                "gender": 2,
+                "profile_path": "/7Upo7OK9T1jKkpjXnZHA7bhgwlN.jpg"
+            },
+            {
+                "id": 20254,
+                "credit_id": "5a005a7992514146bd063e9e",
+                "name": "Achim von Borries",
+                "original_name": "Achim von Borries",
+                "gender": 2,
+                "profile_path": null
+            },
+            {
+                "id": 17549,
+                "credit_id": "5f8eaac25aadc40037f218f0",
+                "name": "Hendrik Handloegten",
+                "original_name": "Hendrik Handloegten",
+                "gender": 2,
+                "profile_path": "/krKmenvkf8pYe83qSXILKRt4MLa.jpg"
+            }
+        ],
+        "episode_run_time": [],
+        "first_air_date": "2017-10-13",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            }
+        ],
+        "homepage": "https://www.sky.de/serien/babylon-berlin",
+        "id": 66980,
+        "in_production": false,
+        "languages": [
+            "de"
+        ],
+        "last_air_date": "2026-09-10",
+        "last_episode_to_air": {
+            "id": 7609183,
+            "name": "Episode 8",
+            "overview": "Nyssen (Lars Eidinger) welcomes his guests from business and politics. On the Reichstag, the first flames ignite. A bomb detonates at the castle. Whoever makes a speech now is dedicated to death. Too late, Rath (Volker Bruch) recognizes the momentous error of the hour. In the Reichstag, he goes through the trauma of his life a second time. Anyone who escapes the flames will have to leave Germany tomorrow. The dark age begins. The dance is over.",
+            "vote_average": 0,
+            "vote_count": 0,
+            "air_date": "2026-09-10",
+            "episode_number": 8,
+            "episode_type": "finale",
+            "production_code": "",
+            "runtime": 42,
+            "season_number": 5,
+            "show_id": 66980,
+            "still_path": "/c3xsz15we4tJRE8LQ1pQttfLSWv.jpg"
+        },
+        "name": "Babylon Berlin",
+        "next_episode_to_air": null,
+        "networks": [
+            {
+                "id": 308,
+                "logo_path": "/nGl2dDGonksWY4fTzPPdkK3oNyq.png",
+                "name": "Das Erste",
+                "origin_country": "DE"
+            },
+            {
+                "id": 1431,
+                "logo_path": "/dVBHOr0nYCx9GSNesTVb1TT52Xj.png",
+                "name": "Sky One",
+                "origin_country": "DE"
+            }
+        ],
+        "number_of_episodes": 48,
+        "number_of_seasons": 5,
+        "origin_country": [
+            "DE"
+        ],
+        "original_language": "de",
+        "original_name": "Babylon Berlin",
+        "overview": "Beneath the decadence of 1929 Berlin, lies an underworld city of sin. Police investigator Gereon Rath has been transferred from Cologne to the epicenter of political and social changes in the Golden Twenties.",
+        "popularity": 33.3871,
+        "poster_path": "/hr18RHPMQSA0zbCzAZN2asIOqy5.jpg",
+        "production_companies": [
+            {
+                "id": 1080,
+                "logo_path": "/6bZ0BiLDzCZSqVCjiSqweWwp9Ew.png",
+                "name": "Beta Film",
+                "origin_country": "DE"
+            },
+            {
+                "id": 96,
+                "logo_path": "/9ps82gVzUeNdkjmLzoGDQLiLDio.png",
+                "name": "X Filme Creative Pool",
+                "origin_country": "DE"
+            },
+            {
+                "id": 1251,
+                "logo_path": "/fc0O0mvjl8PbHgZXXY2VgPYos1Z.png",
+                "name": "ARD",
+                "origin_country": "DE"
+            },
+            {
+                "id": 46,
+                "logo_path": "/3xFdKHLXPGHEbrAkmsepGE8974Y.png",
+                "name": "WDR",
+                "origin_country": "DE"
+            },
+            {
+                "id": 986,
+                "logo_path": "/qDV8nLH9pjElZSnPmg29mzzNlTo.png",
+                "name": "ARD Degeto",
+                "origin_country": "DE"
+            }
+        ],
+        "production_countries": [
+            {
+                "iso_3166_1": "DE",
+                "name": "Germany"
+            }
+        ],
+        "seasons": [
+            {
+                "air_date": "2017-10-02",
+                "episode_count": 35,
+                "id": 165686,
+                "name": "Specials",
+                "overview": "",
+                "poster_path": "/qNLSrb8NFiPVScmAaZBlQsSWss9.jpg",
+                "season_number": 0,
+                "vote_average": 0
+            },
+            {
+                "air_date": "2017-10-13",
+                "episode_count": 8,
+                "id": 78241,
+                "name": "Season 1",
+                "overview": "A Soviet freight train's hijacking leads a haunted cop and a poor typist to uncover a political conspiracy amid the vice and glamour of 1929 Berlin.",
+                "poster_path": "/rTwVconHFBqjYEKr7dyypC7BUZk.jpg",
+                "season_number": 1,
+                "vote_average": 6.8
+            },
+            {
+                "air_date": "2017-11-10",
+                "episode_count": 8,
+                "id": 94822,
+                "name": "Season 2",
+                "overview": "Inspectors Gereon Rath and Charlotte Ritter investigate the death of a Hollywood actress during the filming of a big budget European blockbuster, only to uncover a twisted underworld plot.",
+                "poster_path": "/mLFh1R2ktmHMz5VCuYXEIL3Ni4h.jpg",
+                "season_number": 2,
+                "vote_average": 7.2
+            },
+            {
+                "air_date": "2020-01-24",
+                "episode_count": 12,
+                "id": 136059,
+                "name": "Season 3",
+                "overview": "Weeks before Wall Street's 1929 crash, Rath and Charlotte investigate an actress's suspect death, while Greta is tried and the Black Reichswehr regroup.",
+                "poster_path": "/6XClDkYBm1kXtwiJbaoV8LxtH6S.jpg",
+                "season_number": 3,
+                "vote_average": 6.4
+            },
+            {
+                "air_date": "2022-10-08",
+                "episode_count": 12,
+                "id": 246182,
+                "name": "Season 4",
+                "overview": "Now in the 1930s, the city is grappling with the Great Depression - and the Nazi's march to power is in full swing.",
+                "poster_path": "/zElZlb6hIgXgF0tPg4cyvAkuXpJ.jpg",
+                "season_number": 4,
+                "vote_average": 6.8
+            },
+            {
+                "air_date": "2026-09-10",
+                "episode_count": 8,
+                "id": 533159,
+                "name": "Season 5",
+                "overview": "Season 5 is based on Kutscher’s novel \"The March Fallen\". It's set during the last days of the German republic, running from February 1933, just after Adolf Hitler was appointed Reich Chancellor of Germany, through March 5, when a violent campaign against his political opponents secured his absolute power through elections.",
+                "poster_path": "/wpRtGY4SBaDcM1jEdVTRUWvLmUJ.jpg",
+                "season_number": 5,
+                "vote_average": 7.5
+            }
+        ],
+        "softcore": false,
+        "spoken_languages": [
+            {
+                "english_name": "German",
+                "iso_639_1": "de",
+                "name": "Deutsch"
+            }
+        ],
+        "status": "Ended",
+        "tagline": "",
+        "type": "Scripted",
+        "vote_average": 7.754,
+        "vote_count": 428,
+        "watch/providers": {
+            "results": {
+                "AT": {
+                    "link": "https://www.themoviedb.org/tv/66980-babylon-berlin/watch?locale=AT",
+                    "buy": [
+                        {
+                            "logo_path": "/jn6TLbtaTZntTRX9UYucHJvpQx1.png",
+                            "provider_id": 10,
+                            "provider_name": "Amazon Video",
+                            "display_priority": 5
+                        }
+                    ],
+                    "flatrate": [
+                        {
+                            "logo_path": "/1Yvl9eP3pmktqChitnFhHJHcBtX.png",
+                            "provider_id": 29,
+                            "provider_name": "Sky Go",
+                            "display_priority": 9
+                        },
+                        {
+                            "logo_path": "/gliWKhLJVdm7QwL1braBCRko5dx.png",
+                            "provider_id": 381,
+                            "provider_name": "Canal+",
+                            "display_priority": 55
+                        },
+                        {
+                            "logo_path": "/2o26YwA7tXQ7I6CSrMvO9Rj4oNi.png",
+                            "provider_id": 30,
+                            "provider_name": "WOW",
+                            "display_priority": 184
+                        }
+                    ]
+                },
+                "DE": {
+                    "link": "https://www.themoviedb.org/tv/66980-babylon-berlin/watch?locale=DE",
+                    "flatrate": [
+                        {
+                            "logo_path": "/2o26YwA7tXQ7I6CSrMvO9Rj4oNi.png",
+                            "provider_id": 30,
+                            "provider_name": "WOW",
+                            "display_priority": 14
+                        },
+                        {
+                            "logo_path": "/1Yvl9eP3pmktqChitnFhHJHcBtX.png",
+                            "provider_id": 29,
+                            "provider_name": "Sky Go",
+                            "display_priority": 15
+                        },
+                        {
+                            "logo_path": "/mIR4wc2DLEIbn9TbtemvoX4zb26.png",
+                            "provider_id": 2660,
+                            "provider_name": "Wow Fiction Amazon Channel",
+                            "display_priority": 216
+                        }
+                    ],
+                    "buy": [
+                        {
+                            "logo_path": "/qdEGArH3lKfFnAtYXMkSYk5wxuG.png",
+                            "provider_id": 2,
+                            "provider_name": "Apple TV Store",
+                            "display_priority": 6
+                        },
+                        {
+                            "logo_path": "/jn6TLbtaTZntTRX9UYucHJvpQx1.png",
+                            "provider_id": 10,
+                            "provider_name": "Amazon Video",
+                            "display_priority": 8
+                        },
+                        {
+                            "logo_path": "/kWgg0b4wHDr4pwSyOXVK8nAsNKB.png",
+                            "provider_id": 1993,
+                            "provider_name": "Videoload",
+                            "display_priority": 105
+                        }
+                    ],
+                    "free": [
+                        {
+                            "logo_path": "/t3BatjPEMio5Y6uNZ2OpUifOrEK.png",
+                            "provider_id": 219,
+                            "provider_name": "ARD Mediathek",
+                            "display_priority": 29
+                        }
+                    ]
+                }
+            }
+        },
+        "season/1": {
+            "_id": "577a53629251417c300017e0",
+            "air_date": "2017-10-13",
+            "episodes": [
+                {
+                    "air_date": "2017-10-13",
+                    "episode_number": 1,
+                    "episode_type": "standard",
+                    "id": 1203615,
+                    "name": "Episode 1",
+                    "overview": "In 1929, a freight train traveling from the Soviet Union is hijacked. Meanwhile, Chief Inspector Gereon Rath from Cologne pursues a mission in Berlin.",
+                    "production_code": "",
+                    "runtime": 46,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/7pVRfmAvXIbLnnuA8suZXWqafOW.jpg",
+                    "vote_average": 6.7,
+                    "vote_count": 29
+                },
+                {
+                    "air_date": "2017-10-13",
+                    "episode_number": 2,
+                    "episode_type": "standard",
+                    "id": 1379651,
+                    "name": "Episode 2",
+                    "overview": "While interrogating König, Rath loses control of the situation. Charlotte moonlights to make ends meet. An alter ego commits a betrayal.",
+                    "production_code": "",
+                    "runtime": 46,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/OBgH7fwx2Jiiiil0HCs8gvLBgI.jpg",
+                    "vote_average": 7.4,
+                    "vote_count": 19
+                },
+                {
+                    "air_date": "2017-10-20",
+                    "episode_number": 3,
+                    "episode_type": "standard",
+                    "id": 1379652,
+                    "name": "Episode 3",
+                    "overview": "The freight train arrives in Berlin. Tempers explode in Charlotte's household. Aspiring inspector Jänicke makes use of a surprising skill.",
+                    "production_code": "",
+                    "runtime": 45,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/mNoPDRVcdsdGNahUaKI24ibl1Bz.jpg",
+                    "vote_average": 6.9,
+                    "vote_count": 18
+                },
+                {
+                    "air_date": "2017-10-20",
+                    "episode_number": 4,
+                    "episode_type": "standard",
+                    "id": 1379653,
+                    "name": "Episode 4",
+                    "overview": "At the May Day protest, police action spirals out of control. A body is found in a canal. An unsuspecting Svetlana returns to her apartment.",
+                    "production_code": "",
+                    "runtime": 44,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/h8hPmZEgXfkY2j5h6SnJ7v8FJ6O.jpg",
+                    "vote_average": 6.4,
+                    "vote_count": 19
+                },
+                {
+                    "air_date": "2017-10-27",
+                    "episode_number": 5,
+                    "episode_type": "standard",
+                    "id": 1379654,
+                    "name": "Episode 5",
+                    "overview": "Kardakow realizes his first instinct was correct. A photo enlargement yields two leads. Rath and Charlotte get key intel from a colorful character.",
+                    "production_code": "",
+                    "runtime": 46,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/u8FsfwPopvsPMcvMwysy2htTRMT.jpg",
+                    "vote_average": 6.8,
+                    "vote_count": 15
+                },
+                {
+                    "air_date": "2017-10-27",
+                    "episode_number": 6,
+                    "episode_type": "standard",
+                    "id": 1379655,
+                    "name": "Episode 6",
+                    "overview": "Rath confesses to a priest -- and later to Wolter. Charlotte charms medical student Rudi into performing a secret autopsy, which uncovers a vital clue.",
+                    "production_code": "",
+                    "runtime": 46,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/jyv5TyYJrbpOCQnQv0nUikhOshN.jpg",
+                    "vote_average": 6.4,
+                    "vote_count": 18
+                },
+                {
+                    "air_date": "2017-11-03",
+                    "episode_number": 7,
+                    "episode_type": "standard",
+                    "id": 1379657,
+                    "name": "Episode 7",
+                    "overview": "Rath's pharmacist gets shady instructions. Rath learns who's behind the train smuggling operation and why, and recalls the last time he saw his brother.",
+                    "production_code": "",
+                    "runtime": 45,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/gMoxLHO9n9DOWh3wja9HI0RNIN8.jpg",
+                    "vote_average": 6.9,
+                    "vote_count": 16
+                },
+                {
+                    "air_date": "2017-11-03",
+                    "episode_number": 8,
+                    "episode_type": "finale",
+                    "id": 1379658,
+                    "name": "Episode 8",
+                    "overview": "Greta goes on a romantic outing with Fritz. Krajewski finally reveals where the film is hidden. A new patient is brought to Dr. Schmidt for treatment.",
+                    "production_code": "",
+                    "runtime": 46,
+                    "season_number": 1,
+                    "show_id": 66980,
+                    "still_path": "/8pk4Doc6l35kfANCNRRJz3gZNFy.jpg",
+                    "vote_average": 6.5,
+                    "vote_count": 17
+                }
+            ],
+            "name": "Season 1",
+            "networks": [
+                {
+                    "id": 1431,
+                    "logo_path": "/dVBHOr0nYCx9GSNesTVb1TT52Xj.png",
+                    "name": "Sky One",
+                    "origin_country": "DE"
+                }
+            ],
+            "overview": "A Soviet freight train's hijacking leads a haunted cop and a poor typist to uncover a political conspiracy amid the vice and glamour of 1929 Berlin.",
+            "poster_path": "/rTwVconHFBqjYEKr7dyypC7BUZk.jpg",
+            "season_number": 1,
+            "vote_average": 6.8
+        }
+    }
+}

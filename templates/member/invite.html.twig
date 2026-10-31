@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'invite.accept_title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'invite.accept_title'|trans }}</div>
+        <h1>{{ invite ? invite.list.name : 'invite.invalid'|trans }}</h1>
+    </header>
+
+    <div class="panel narrow">
+        {% if invite %}
+            <p>{{ 'invite.accept_text'|trans({'%name%': invite.createdBy.username}) }}</p>
+            <p><span class="pill">{{ (invite.canEdit ? 'access.edit' : 'access.view')|trans }}</span></p>
+            <form method="post" class="form-actions">
+                <input type="hidden" name="_token" value="{{ csrf_token('accept-invite') }}">
+                <a class="btn secondary" href="{{ path('app_list_index') }}">{{ 'action.cancel'|trans }}</a>
+                <button class="btn">{{ ux_icon('tabler:check') }} {{ 'invite.accept'|trans }}</button>
+            </form>
+        {% else %}
+            <p>{{ 'invite.invalid_text'|trans }}</p>
+            <div class="form-actions"><a class="btn" href="{{ path('app_list_index') }}">{{ 'nav.lists'|trans }}</a></div>
+        {% endif %}
+    </div>
+{% endblock %}

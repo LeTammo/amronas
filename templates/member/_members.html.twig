@@ -1,0 +1,77 @@
+{# People on the list and invites, part of the list settings #}
+{% import 'member/_access.html.twig' as members %}
+{% set manage = is_granted('LIST_MANAGE', list) %}
+<section class="panel">
+    <h2>{{ 'member.title'|trans }}</h2>
+    <p>{{ 'member.text'|trans }}</p>
+    <ul class="people">
+        <li>
+            <span class="avatar">{{ list.owner.username|first }}</span>
+            <strong>{{ list.owner.username }}</strong>
+            <span class="pill strong" style="margin-left:auto">{{ 'member.owner'|trans }}</span>
+        </li>
+        {% for member in list.members %}
+            <li>
+                <span class="avatar">{{ member.user.username|first }}</span>
+                <strong>{{ member.user.username }}</strong>
+                {% if manage %}
+                    <form method="post" action="{{ path('app_member_update', {id: list.id, member: member.id}) }}" data-controller="autosubmit" data-action="change->autosubmit#submit">
+                        <input type="hidden" name="_token" value="{{ csrf_token('member') }}">
+                        {{ members.access('access', member.canEdit) }}
+                        <button class="icon-btn" name="remove" value="1" title="{{ 'member.remove'|trans }}" aria-label="{{ 'member.remove'|trans }}"
+                                data-turbo-confirm="{{ 'member.remove_confirm'|trans({'%name%': member.user.username}) }}">{{ ux_icon('tabler:user-minus') }}</button>
+                    </form>
+                {% else %}
+                    <span class="pill" style="margin-left:auto">{{ (member.canEdit ? 'access.edit' : 'access.view')|trans }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if not manage %}
+        <form method="post" action="{{ path('app_list_leave', {id: list.id}) }}" class="form-actions" data-turbo-confirm="{{ 'member.leave_confirm'|trans }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('leave-list') }}">
+            <button class="btn danger">{{ ux_icon('tabler:door-exit') }} {{ 'member.leave'|trans }}</button>
+        </form>
+    {% endif %}
+</section>
+
+{% if manage %}
+    <section class="panel">
+        <h2>{{ 'invite.title'|trans }}</h2>
+        <p>{{ 'invite.text'|trans }}</p>
+
+        {% if new_link %}
+            <div class="form-row" data-controller="copy">
+                <label for="invite-link">{{ 'invite.new_link'|trans }}</label>
+                <div class="invite-link">
+                    <input id="invite-link" readonly value="{{ new_link }}" data-copy-target="source" data-action="click->copy#copy">
+                    <button class="icon-btn" type="button" data-copy-target="button" data-action="copy#copy" title="{{ 'invite.copy'|trans }}" aria-label="{{ 'invite.copy'|trans }}">{{ ux_icon('tabler:copy') }}</button>
+                </div>
+                <div class="help-text">{{ 'invite.new_link_help'|trans }}</div>
+            </div>
+        {% endif %}
+
+        <form method="post" action="{{ path('app_invite_create', {id: list.id}) }}" class="invite-form">
+            <input type="hidden" name="_token" value="{{ csrf_token('member') }}">
+            {{ members.access('access', true) }}
+            <button class="btn" title="{{ 'invite.create'|trans }}">{{ ux_icon('tabler:link-plus') }} {{ 'invite.create'|trans }}</button>
+        </form>
+
+        {% if invites is not empty %}
+            <h3 class="group-label" style="margin-top:20px">{{ 'invite.open'|trans }}</h3>
+            <ul class="people">
+                {% for invite in invites %}
+                    <li>
+                        {{ ux_icon('tabler:link') }}
+                        <span>{{ 'invite.created_by'|trans({'%name%': invite.createdBy.username, '%date%': invite.expiresAt|date('d.m.Y')}) }}</span>
+                        <span class="pill">{{ (invite.canEdit ? 'access.edit' : 'access.view')|trans }}</span>
+                        <form method="post" action="{{ path('app_invite_revoke', {id: invite.id}) }}" style="margin-left:auto">
+                            <input type="hidden" name="_token" value="{{ csrf_token('member') }}">
+                            <button class="icon-btn" title="{{ 'invite.revoke'|trans }}" aria-label="{{ 'invite.revoke'|trans }}">{{ ux_icon('tabler:trash') }}</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+{% endif %}

@@ -1,0 +1,15 @@
+<article class="card {{ row.entry.priority.value }} {{ row.entry.watched ? 'watched' }}" id="entry-{{ row.entry.id }}">
+    <div class="cover">
+        <a href="{{ row.title.imdbUrl }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% if row.title.posterUrl %}<img src="{{ row.title.posterUrl|poster(340) }}" alt="" loading="lazy">{% endif %}</a>
+        {% if row.entry.priority.value == 'important' %}
+            <span class="flag" title="{{ 'group.important'|trans }}">{{ ux_icon('tabler:flame') }}</span>
+        {% elseif row.entry.priority.value == 'maybe' %}
+            <span class="flag down" title="{{ 'group.maybe'|trans }}">{{ ux_icon('tabler:hourglass') }}</span>
+        {% endif %}
+        <div class="overlay">{{ include('watch_list/_actions.html.twig', {compact: true}) }}</div>
+    </div>
+    <div class="info">
+        {{ include('watch_list/_title_info.html.twig') }}
+        {{ include('watch_list/_offers.html.twig') }}
+    </div>
+</article>

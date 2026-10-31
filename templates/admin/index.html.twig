@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'admin.title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'nav.admin'|trans }}</div>
+        <h1>{{ 'admin.title'|trans }}</h1>
+    </header>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'user.username'|trans }}</th>
+                    <th>{{ 'user.email'|trans }}</th>
+                    <th>{{ 'admin.role'|trans }}</th>
+                    <th>{{ 'settings.country'|trans }}</th>
+                    <th>{{ 'nav.lists'|trans }}</th>
+                    <th>{{ 'admin.created'|trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td><strong>{{ user.username }}</strong></td>
+                        <td>{{ user.email ?? '–' }}</td>
+                        <td><span class="pill {{ user.admin ? 'strong' }}">{{ (user.admin ? 'admin.role_admin' : 'admin.role_user')|trans }}</span></td>
+                        <td>{{ ('country.' ~ user.country)|trans }}</td>
+                        <td>{{ list_counts[user.id] }}</td>
+                        <td>{{ user.createdAt|date('d.m.Y') }}</td>
+                        <td style="text-align:right"><a class="icon-btn" href="{{ path('app_admin_user_edit', {id: user.id}) }}" title="{{ 'action.edit'|trans }}" aria-label="{{ 'action.edit'|trans }}">{{ ux_icon('tabler:pencil') }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

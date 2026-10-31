@@ -1,0 +1,250 @@
+nav:
+    lists: Listen
+    admin: Admin
+    theme: Hell/Dunkel
+    settings: Einstellungen
+    profile: Profil und Einstellungen
+    logout: Abmelden
+
+action:
+    close: Schließen
+    save: Speichern
+    cancel: Abbrechen
+    more: Mehr
+    edit: Bearbeiten
+
+login:
+    title: Anmelden
+    register: Konto erstellen
+    submit: Anmelden
+
+register:
+    title: Konto erstellen
+    to_login: Schon ein Konto?
+    submit: Registrieren
+
+user:
+    username: Benutzername
+    email: E-Mail
+    email_help: Optional – nur für das Zurücksetzen des Passworts.
+    password: Passwort
+    password_repeat: Passwort wiederholen
+
+settings:
+    title: Einstellungen
+    welcome_eyebrow: Willkommen
+    welcome_title: Was schaut ihr wo?
+    welcome_text: Damit wir dir zeigen können, wo du Filme und Serien streamen kannst. Lässt sich jederzeit ändern.
+    streaming: Sprache und Streaming
+    streaming_text: Deine bevorzugten Dienste leuchten in der Liste und stehen vorne.
+    language: Sprache
+    country: Standard-Land
+    country_help: Neue Listen zeigen Streamingangebote für dieses Land. Pro Liste änderbar.
+    services: Deine bevorzugten Streamingdienste
+    services_help: Egal ob Abo, Leihen oder Kaufen – Angebote dieser Dienste werden hervorgehoben.
+    sources: 'Streamingdaten von %motn% und von %tmdb% (bereitgestellt von %justwatch%). Dieses Produkt nutzt die TMDB-API, ist aber nicht von TMDB unterstützt oder zertifiziert.'
+    account: Konto
+    account_text: Zum Ändern des Passworts gib zuerst dein aktuelles ein.
+    current_password: Aktuelles Passwort
+    new_password: Neues Passwort
+    saved: Einstellungen gespeichert
+
+country:
+    de: Deutschland
+    at: Österreich
+    ch: Schweiz
+    nl: Niederlande
+    gb: Vereinigtes Königreich
+    ie: Irland
+    fr: Frankreich
+    it: Italien
+    es: Spanien
+    us: USA
+    ca: Kanada
+
+list:
+    icon: Icon
+    icon_missing: 'Wähl bitte ein Icon für „%name%“, es erscheint oben in der Navigation.'
+    settings: Einstellungen
+    index_eyebrow: Hallo %name%
+    index_title: Deine Listen
+    none: Noch keine Liste – leg unten deine erste an.
+    type_movies: Filme
+    type_series: Serien
+    type_mixed: Filme & Serien
+    type_help: Beeinflusst nur zukünftige Einträge. Bereits hinzugefügte Titel bleiben erhalten.
+    open_count: '{0} nichts offen|{1} 1 offen|]1,Inf[ %count% offen'
+    watched_count: '{0} noch nichts gesehen|{1} 1 gesehen|]1,Inf[ %count% gesehen'
+    editors: Dürfen bearbeiten
+    country: Land für Streamingangebote
+    country_help: Für welches Land sollen Streamingdienste und Preise angezeigt werden?
+    country_changed: Streamingangebote für %name% Titel werden geladen
+    you: du
+    new_title: Neue Liste
+    new_text: Du bist Ersteller und kannst danach Leute einladen.
+    name: Name
+    name_placeholder: Unser Filmabend
+    type: Was kommt auf die Liste?
+    create: Liste anlegen
+    edit: Liste bearbeiten
+    view: Ansicht
+    view_list: Liste
+    view_grid: Poster
+    empty: Die Liste ist noch leer.
+    empty_add: Die Liste ist noch leer – such oben nach einem Film oder einer Serie.
+    empty_filtered: Nichts gefunden – probier einen anderen Filter.
+    saved: Liste gespeichert
+    deleted: Liste gelöscht
+    delete: Liste löschen
+    delete_text: Löscht die Liste mit allen %count% Einträgen für alle Mitglieder.
+    delete_confirm: '„%name%“ wirklich löschen?'
+
+sort:
+    label: Sortierung
+    added: Hinzugefügt am
+    name: Name
+    year: Erscheinungsjahr
+    rating: Bewertung
+    length: Länge
+    desc: Absteigend
+    asc: Aufsteigend
+
+filter:
+    type: Filme oder Serien
+    movie: Filme
+    series: Serien
+    movie_one: Film
+    series_one: Serie
+
+group:
+    shown: '%shown% von %total% angezeigt'
+    recent: Gerade hinzugefügt
+    important: Wichtig
+    normal: Auf der Liste
+    maybe: Vielleicht
+    watched: Gesehen
+
+title:
+    episode_runtime: Durchschnittliche Folgenlänge
+    seasons: '{1} 1 Staffel|]1,Inf[ %count% Staffeln'
+
+offer:
+    included_short: Im Abo
+    free: Gratis
+    more: '{1} 1 Anbieter|]1,Inf[ %count% Anbieter'
+    more_title: Leihen oder kaufen
+    more_label: 'Weitere Anbieter für „%name%“'
+    more_heading: Leihen oder kaufen
+    section_rent: Leihen
+    section_buy: Kaufen
+    checking: Suche Streaminganbieter …
+    none: Nirgends im Streaming
+    unknown: Keine Streaming-Infos
+
+search:
+    placeholder_edit: Liste durchsuchen oder hinzufügen …
+    placeholder_view: Liste durchsuchen …
+    on_list: Auf eurer Liste
+    add_new: Neu hinzufügen
+    show: Anzeigen
+    add: Hinzufügen
+    watched: gesehen
+    no_more: 'Keine weiteren Treffer für „%query%“'
+
+entry:
+    search_source: Ergebnisse von IMDb
+    no_results: Nichts gefunden für „%query%“
+    not_found: Der Titel wurde nicht gefunden. Bitte such nochmal.
+    added: '„%name%“ ist jetzt auf der Liste'
+    already_added: '„%name%“ ist schon auf der Liste'
+    removed: '„%name%“ entfernt'
+    refreshing: Infos zu „%name%“ werden aktualisiert
+    trailer: Trailer
+    imdb: Auf IMDb ansehen
+    refresh: Infos aktualisieren
+    remove: Entfernen
+    remove_confirm: '„%name%“ von der Liste entfernen?'
+    important: Als wichtig markieren
+    important_undo: Nicht mehr wichtig
+    maybe: Als vielleicht markieren
+    maybe_undo: Nicht mehr vielleicht
+    watch: Als gesehen markieren
+    unwatch: Doch nicht gesehen
+    watched_on: Gesehen am %date%
+
+member:
+    title: Wer ist dabei?
+    text: Wer bearbeiten darf, kann Titel hinzufügen, entfernen, priorisieren und als gesehen markieren.
+    owner: Ersteller
+    remove: Entfernen
+    remove_confirm: '%name% aus der Liste entfernen?'
+    removed: '%name% wurde entfernt'
+    saved: Rechte von %name% gespeichert
+    leave: Liste verlassen
+    leave_confirm: Willst du die Liste wirklich verlassen?
+
+access:
+    view: Nur ansehen
+    edit: Darf bearbeiten
+
+invite:
+    title: Leute einladen
+    text: Jeder Link funktioniert genau einmal und läuft nach 7 Tagen ab.
+    create: Link erstellen
+    new_link: Dein Einladungslink
+    new_link_help: Schick den Link an die Person, die du einladen möchtest.
+    copy: Kopieren
+    open: Offene Einladungen
+    created_by: Von %name%, gültig bis %date%
+    revoke: Einladung zurückziehen
+    accept_title: Einladung
+    accept_text: '%name% lädt dich zu dieser Liste ein:'
+    accept: Beitreten
+    invalid: Ungültige Einladung
+    invalid_text: Der Link wurde schon benutzt oder ist abgelaufen.
+    joined: Du bist jetzt bei „%name%“ dabei
+
+admin:
+    title: Benutzer
+    role: Rolle
+    role_admin: Admin
+    role_user: Benutzer
+    created: Seit
+    is_admin: Administrator
+    setup_completed: Ersteinrichtung abgeschlossen
+    new_password: Neues Passwort setzen
+    new_password_help: Leer lassen, um das Passwort nicht zu ändern.
+    saved: '%name% gespeichert'
+    deleted: '%name% gelöscht'
+    delete: Benutzer löschen
+    delete_text: Löscht den Benutzer und alle Listen, die er erstellt hat.
+    delete_confirm: '%name% wirklich löschen?'
+    cannot_delete_self: Du kannst dich nicht selbst löschen.
+
+genre:
+    action: Action
+    adventure: Abenteuer
+    animation: Animation
+    biography: Biografie
+    comedy: Komödie
+    crime: Krimi
+    documentary: Dokumentarfilm
+    drama: Drama
+    family: Familie
+    fantasy: Fantasy
+    history: Geschichte
+    horror: Horror
+    music: Musik
+    musical: Musical
+    mystery: Mystery
+    news: Nachrichten
+    reality: Reality
+    romance: Romantik
+    science_fiction: Science-Fiction
+    sci_fi: Sci-Fi
+    sport: Sport
+    thriller: Thriller
+    war: Krieg
+    western: Western
+    talk_show: Talkshow
+    game_show: Spielshow

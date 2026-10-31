@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        failure_transport: failed
+
+        transports:
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    max_retries: 3
+                    delay: 5000
+                    multiplier: 4
+            failed: 'doctrine://default?queue_name=failed'
+
+        routing:
+            App\Message\RefreshTitle: async
+            App\Message\RefreshProviders: async

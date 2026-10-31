@@ -1,0 +1,20 @@
+# Runs the background worker (fetches details and streaming offers of added titles).
+# The web app itself runs on PHP directly (see README). The worker shares the project
+# folder, and with it the SQLite database in var/.
+services:
+    worker:
+        image: php:8.5-cli
+        working_dir: /app
+        command: php bin/console messenger:consume async --time-limit=3600 --memory-limit=128M
+        restart: unless-stopped
+        # Same user as the web server, so both can write var/ (www-data is 33:33 on Debian/Ubuntu)
+        user: '${WORKER_UID:-33}:${WORKER_GID:-33}'
+        environment:
+            APP_ENV: '${APP_ENV:-prod}'
+            # Never save API responses here (see API_RECORDINGS in .env)
+            API_RECORDINGS: 'off'
+            # Cache and logs inside the container, so they don't clash with the web server's var/cache
+            APP_CACHE_DIR: /tmp/cache
+            APP_LOG_DIR: /tmp/log
+        volumes:
+            - ./:/app

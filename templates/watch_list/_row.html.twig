@@ -1,0 +1,8 @@
+<article class="row {{ row.entry.priority.value }} {{ row.entry.watched ? 'watched' }}" id="entry-{{ row.entry.id }}">
+    <a class="poster-link" href="{{ row.title.imdbUrl }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        {% if row.title.posterUrl %}<img class="poster" src="{{ row.title.posterUrl|poster(120) }}" alt="" loading="lazy">{% else %}<span class="poster"></span>{% endif %}
+    </a>
+    <div>{{ include('watch_list/_title_info.html.twig') }}</div>
+    {{ include('watch_list/_offers.html.twig') }}
+    <div class="row-actions">{{ include('watch_list/_actions.html.twig') }}</div>
+</article>

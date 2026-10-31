@@ -1,0 +1,34 @@
+{% use 'form_div_layout.html.twig' %}
+
+{# Checkboxes and radios inside their label, so whole tiles are clickable #}
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <label for="{{ child.vars.id }}"{% with {attr: child.vars.attr} %}{{ block('attributes') }}{% endwith %}>
+                {{- form_widget(child) -}}
+                <span>{{ child.vars.translation_domain is same as(false) ? child.vars.label : child.vars.label|trans(child.vars.label_translation_parameters, child.vars.translation_domain) }}</span>
+            </label>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{%- block checkbox_row -%}
+    <div class="form-row">
+        <label class="check" for="{{ id }}">{{ form_widget(form) }} {{ label|trans(label_translation_parameters, translation_domain) }}</label>
+        {{- form_errors(form) -}}
+        {{- form_help(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
+
+{%- block form_row -%}
+    <div class="form-row">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_help(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block repeated_row -%}
+    {{- block('form_rows') -}}
+{%- endblock repeated_row -%}

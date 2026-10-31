@@ -1,0 +1,133 @@
+{
+    "request": "GET /suggestion/x/test.json",
+    "recordedAt": "2026-10-30T13:01:43+00:00",
+    "status": 200,
+    "body": {
+        "d": [
+            {
+                "i": {
+                    "height": 1350,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZWM1MDI1ZGUtYmI3Ny00Nzc0LTkwYmUtMmEwN2ZjNjNmZDA5XkEyXkFqcGc@._V1_.jpg",
+                    "width": 1080
+                },
+                "id": "tt35432768",
+                "l": "Test",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 3889,
+                "s": "Matthew Morrison, Tammy Blanchard",
+                "tl": "2026",
+                "y": 2026
+            },
+            {
+                "i": {
+                    "height": 3000,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZDI4MjI1YjktNjIyNi00ZjVlLWJkMDktMmNkMDg3YzM0ZDQzXkEyXkFqcGc@._V1_.jpg",
+                    "width": 2037
+                },
+                "id": "tt35669125",
+                "l": "This Is Not a Test",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 6087,
+                "s": "Olivia Holt, Jeff Roop",
+                "tl": "2025",
+                "y": 2025
+            },
+            {
+                "i": {
+                    "height": 1950,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTQwMDU5NDkxNF5BMl5BanBnXkFtZTcwMjk5OTk4OQ@@._V1_.jpg",
+                    "width": 1350
+                },
+                "id": "tt2407380",
+                "l": "Test",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 28503,
+                "s": "Scott Marlowe, Matthew Risch",
+                "tl": "2013",
+                "y": 2013
+            },
+            {
+                "i": {
+                    "height": 3000,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZDZkNTE0OWMtNWYwZS00NTJmLTlmMDMtOTc3MWE5NDUxNzEyXkEyXkFqcGc@._V1_.jpg",
+                    "width": 2025
+                },
+                "id": "tt31314791",
+                "l": "The Copenhagen Test",
+                "q": "TV series",
+                "qid": "tvSeries",
+                "rank": 7424,
+                "s": "Simu Liu, Melissa Barrera",
+                "tl": "2025 TV Series",
+                "y": 2025,
+                "yr": "2025-2025"
+            },
+            {
+                "i": {
+                    "height": 3000,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BOGEzOTQyY2ItYTMwNy00YmY0LTkzNzQtY2FkNDRhZGI1NmIxXkEyXkFqcGc@._V1_.jpg",
+                    "width": 2025
+                },
+                "id": "tt22003362",
+                "l": "Special Forces: World's Toughest Test",
+                "q": "TV series",
+                "qid": "tvSeries",
+                "rank": 3469,
+                "s": "Billy Billingham, Jason Fox",
+                "tl": "2023 TV Series",
+                "y": 2023
+            },
+            {
+                "i": {
+                    "height": 775,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BOWRmYjAwZjktZGVjMi00OWJjLTllMDktNjYyOGQzNGRjMDU2XkEyXkFqcGc@._V1_.jpg",
+                    "width": 620
+                },
+                "id": "tt27477888",
+                "l": "Test",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 43273,
+                "s": "Madhavan, Nayanthara",
+                "tl": "2025",
+                "y": 2025
+            },
+            {
+                "i": {
+                    "height": 1694,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZjllOWNkMWUtODVmYi00YzdkLWI4OWYtMGYyOTYzYTM4NzdhXkEyXkFqcGc@._V1_.jpg",
+                    "width": 1116
+                },
+                "id": "tt0030848",
+                "l": "Test Pilot",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 25759,
+                "s": "Clark Gable, Myrna Loy",
+                "tl": "1938",
+                "y": 1938
+            },
+            {
+                "i": {
+                    "height": 1440,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTcyYTIwOWMtYTFjNS00NTA1LWE5ODItMmY4MjEwMTYxYjg5XkEyXkFqcGc@._V1_.jpg",
+                    "width": 960
+                },
+                "id": "tt0454349",
+                "l": "Johnny Test",
+                "q": "TV series",
+                "qid": "tvSeries",
+                "rank": 18061,
+                "s": "James Arnold Taylor, Maryke Hendrikse",
+                "tl": "2005-2014 TV Series",
+                "y": 2005,
+                "yr": "2005-2014"
+            }
+        ],
+        "q": "test",
+        "v": 1
+    }
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'settings.title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ setup ? 'settings.welcome_eyebrow'|trans : app.user.username }}</div>
+        <h1>{{ (setup ? 'settings.welcome_title' : 'settings.title')|trans }}</h1>
+        {% if setup %}<div class="meta">{{ 'settings.welcome_text'|trans }}</div>{% endif %}
+    </header>
+
+    <div class="profile-actions narrow">
+        {% if is_granted('ROLE_ADMIN') and not setup %}
+            <a class="btn secondary" href="{{ path('app_admin_users') }}">{{ ux_icon('tabler:users') }} {{ 'nav.admin'|trans }}</a>
+        {% endif %}
+        <a class="btn secondary" href="{{ path('app_logout') }}" data-turbo="false">{{ ux_icon('tabler:logout') }} {{ 'nav.logout'|trans }}</a>
+    </div>
+
+    {{ form_start(form, {attr: {class: 'narrow'}}) }}
+        <section class="panel">
+            <h2>{{ 'settings.streaming'|trans }}</h2>
+            <p>{{ 'settings.streaming_text'|trans }}</p>
+            {{ form_row(form.locale) }}
+            {{ form_row(form.country) }}
+            <fieldset class="form-row">
+                <legend>{{ form_label(form.services) }}</legend>
+                <div class="services-pick">{{ form_widget(form.services) }}</div>
+                <div class="help-text">{{ 'settings.services_help'|trans }}</div>
+            </fieldset>
+            {# Attribution required by TMDB and JustWatch #}
+            <p class="help-text">{{ 'settings.sources'|trans({
+                '%motn%': '<a href="https://www.movieofthenight.com/about/api" target="_blank" rel="noopener">Movie of the Night</a>',
+                '%tmdb%': '<a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a>',
+                '%justwatch%': '<a href="https://www.justwatch.com" target="_blank" rel="noopener">JustWatch</a>',
+            })|raw }}</p>
+        </section>
+
+        {% if form.email is defined %}
+            <section class="panel">
+                <h2>{{ 'settings.account'|trans }}</h2>
+                <p>{{ 'settings.account_text'|trans }}</p>
+                {{ form_row(form.email) }}
+                {{ form_row(form.currentPassword) }}
+                {{ form_row(form.newPassword) }}
+            </section>
+        {% endif %}
+
+        {{ form_rest(form) }}
+        <div class="form-actions">
+            <button class="btn" type="submit">{{ ux_icon('tabler:check') }} {{ 'action.save'|trans }}</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

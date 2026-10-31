@@ -1,0 +1,119 @@
+{
+    "request": "GET /suggestion/x/mindhu.json",
+    "recordedAt": "2026-10-31T08:22:11+00:00",
+    "status": 200,
+    "body": {
+        "d": [
+            {
+                "i": {
+                    "height": 2222,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BYTk4NDA4MGMtNjliOC00MjExLWI1YzctOTc4NWIxM2I1YjM5XkEyXkFqcGc@._V1_.jpg",
+                    "width": 1500
+                },
+                "id": "tt5290382",
+                "l": "Mindhunter",
+                "q": "TV series",
+                "qid": "tvSeries",
+                "rank": 571,
+                "s": "Jonathan Groff, Holt McCallany",
+                "tl": "2017-2019 TV Series",
+                "y": 2017,
+                "yr": "2017-2019"
+            },
+            {
+                "i": {
+                    "height": 1500,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BY2EzNGRhYjktOTFkYy00NDdlLTk3NDAtYzFhNzBkZmRhYmE1XkEyXkFqcGc@._V1_.jpg",
+                    "width": 1013
+                },
+                "id": "tt0297284",
+                "l": "Mindhunters",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 5414,
+                "s": "Val Kilmer, LL Cool J",
+                "tl": "2004",
+                "y": 2004
+            },
+            {
+                "i": {
+                    "height": 714,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BYjQ4YzIxNzItZjE0Yy00MzUxLWJmMGItM2VhN2MyZGE0NmNiXkEyXkFqcGc@._V1_.jpg",
+                    "width": 1306
+                },
+                "id": "tt1332560",
+                "l": "Mindhunter",
+                "q": "TV movie",
+                "qid": "tvMovie",
+                "rank": 78353,
+                "s": "John Douglas, Donald Harvey",
+                "tl": "2008 TV Movie",
+                "y": 2008
+            },
+            {
+                "id": "tt0466615",
+                "l": "Mindhunters",
+                "q": "TV series",
+                "qid": "tvSeries",
+                "rank": 122000,
+                "s": "",
+                "tl": "2008 TV Series",
+                "y": 2008,
+                "yr": "2008-2008"
+            },
+            {
+                "i": {
+                    "height": 2880,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BOGUxZmQ4ZTctYmYyNy00YWYwLWE5NWEtOGMwMDFiOWVjMzQ3XkEyXkFqcGc@._V1_.jpg",
+                    "width": 1944
+                },
+                "id": "tt6594492",
+                "l": "Mindhunt",
+                "q": "short",
+                "qid": "short",
+                "rank": 332552,
+                "s": "Alex Bennett, Jill Hernaez",
+                "tl": "2015 Short",
+                "y": 2015
+            },
+            {
+                "id": "tt6134640",
+                "l": "Mind Hunter",
+                "q": "TV movie",
+                "qid": "tvMovie",
+                "rank": 48446,
+                "s": "Natascha Bonnermann, Michael Brandner",
+                "tl": "2000 TV Movie",
+                "y": 2000
+            },
+            {
+                "i": {
+                    "height": 5000,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZWQ3MTdlYmQtNDMwNC00Y2RjLWFkM2EtYWNiNjNlZDcyNWJmXkEyXkFqcGc@._V1_.jpg",
+                    "width": 3337
+                },
+                "id": "nm8930223",
+                "l": "Sindhu Vee",
+                "rank": 22343,
+                "s": "Actress, Matilda: The Musical (2022)"
+            },
+            {
+                "i": {
+                    "height": 1023,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTM0MjYzNzM1N15BMl5BanBnXkFtZTcwMDcwNDc3NA@@._V1_.jpg",
+                    "width": 690
+                },
+                "id": "tt0351977",
+                "l": "Walking Tall",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 7264,
+                "s": "Dwayne Johnson, Ashley Scott",
+                "tl": "2004",
+                "y": 2004
+            }
+        ],
+        "q": "mindhu",
+        "v": 1
+    }
+}

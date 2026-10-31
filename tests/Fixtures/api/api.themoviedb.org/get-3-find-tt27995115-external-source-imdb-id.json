@@ -1,0 +1,35 @@
+{
+    "request": "GET /3/find/tt27995115?external_source=imdb_id",
+    "recordedAt": "2026-10-31T09:37:02+00:00",
+    "status": 200,
+    "body": {
+        "movie_results": [],
+        "person_results": [],
+        "tv_results": [
+            {
+                "adult": false,
+                "backdrop_path": "/ofFMb0hf4Ve0UPMTzYyFtBRBHEF.jpg",
+                "id": 214582,
+                "name": "The Devil's Plan",
+                "original_name": "데블스 플랜",
+                "overview": "It's the ultimate showdown of wits, brains, strategy, and alliances for a chance to win 500 million won.",
+                "poster_path": "/jNY6UVgvKz03yrSgCflkF5NF25K.jpg",
+                "media_type": "tv",
+                "original_language": "ko",
+                "genre_ids": [
+                    10764
+                ],
+                "popularity": 14.0406,
+                "first_air_date": "2023-09-26",
+                "softcore": false,
+                "vote_average": 7.6,
+                "vote_count": 118,
+                "origin_country": [
+                    "KR"
+                ]
+            }
+        ],
+        "tv_episode_results": [],
+        "tv_season_results": []
+    }
+}

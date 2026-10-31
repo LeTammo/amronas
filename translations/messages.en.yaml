@@ -1,0 +1,228 @@
+nav:
+    lists: Lists
+    admin: Admin
+    theme: Light/dark
+    settings: Settings
+    profile: Profile and settings
+    logout: Log out
+
+action:
+    close: Close
+    save: Save
+    cancel: Cancel
+    more: More
+    edit: Edit
+
+login:
+    title: Log in
+    register: Create account
+    submit: Log in
+
+register:
+    title: Create account
+    to_login: Already have an account?
+    submit: Sign up
+
+user:
+    username: Username
+    email: Email
+    email_help: Optional – only used to reset your password.
+    password: Password
+    password_repeat: Repeat password
+
+settings:
+    title: Settings
+    welcome_eyebrow: Welcome
+    welcome_title: What do you watch where?
+    welcome_text: So we can show you where to stream movies and series. You can change this any time.
+    streaming: Language and streaming
+    streaming_text: Your preferred services glow in the list and come first.
+    language: Language
+    country: Default country
+    country_help: New lists show streaming offers for this country. Can be changed per list.
+    services: Your preferred streaming services
+    services_help: Subscription, rent or buy – offers from these services are highlighted.
+    sources: 'Streaming data from %motn% and from %tmdb% (powered by %justwatch%). This product uses the TMDB API but is not endorsed or certified by TMDB.'
+    account: Account
+    account_text: To change your password, enter your current one first.
+    current_password: Current password
+    new_password: New password
+    saved: Settings saved
+
+country:
+    de: Germany
+    at: Austria
+    ch: Switzerland
+    nl: Netherlands
+    gb: United Kingdom
+    ie: Ireland
+    fr: France
+    it: Italy
+    es: Spain
+    us: United States
+    ca: Canada
+
+list:
+    icon: Icon
+    icon_missing: 'Please pick an icon for “%name%”; it shows up in the navigation.'
+    settings: Settings
+    index_eyebrow: Hi %name%
+    index_title: Your lists
+    none: No list yet – create your first one below.
+    type_movies: Movies
+    type_series: Series
+    type_mixed: Movies & series
+    type_help: Changing this affects only future entries. Titles already on the list stay.
+    open_count: '{0} nothing to watch|{1} 1 to watch|]1,Inf[ %count% to watch'
+    watched_count: '{0} nothing watched yet|{1} 1 watched|]1,Inf[ %count% watched'
+    editors: Can edit
+    country: Country for streaming offers
+    country_help: Which country should streaming services and prices be shown for?
+    country_changed: Loading streaming offers for %name% titles
+    you: you
+    new_title: New list
+    new_text: You'll be the owner and can invite people afterwards.
+    name: Name
+    name_placeholder: Our movie night
+    type: What goes on the list?
+    create: Create list
+    edit: Edit list
+    view: View
+    view_list: List
+    view_grid: Posters
+    empty: This list is empty.
+    empty_add: This list is empty – search for a movie or series above.
+    empty_filtered: Nothing found – try another filter.
+    saved: List saved
+    deleted: List deleted
+    delete: Delete list
+    delete_text: Deletes the list with all %count% entries for all members.
+    delete_confirm: Really delete "%name%"?
+
+sort:
+    label: Sort by
+    added: Added at
+    name: Name
+    year: Release year
+    rating: Rating
+    length: Length
+    desc: Descending
+    asc: Ascending
+
+filter:
+    type: Movies or series
+    movie: Movies
+    series: Series
+    movie_one: Movie
+    series_one: Series
+
+group:
+    shown: '%shown% of %total% shown'
+    recent: Just added
+    important: Important
+    normal: On the list
+    maybe: Maybe
+    watched: Watched
+
+title:
+    episode_runtime: Average episode length
+    seasons: '{1} 1 season|]1,Inf[ %count% seasons'
+
+offer:
+    included_short: Included
+    free: Free
+    more: '{1} 1 service|]1,Inf[ %count% services'
+    more_title: Rent or buy
+    more_label: 'More services for “%name%”'
+    more_heading: Rent or buy
+    section_rent: Rent
+    section_buy: Buy
+    checking: Looking for streaming services …
+    none: Not streaming anywhere
+    unknown: No streaming info
+
+search:
+    placeholder_edit: Search the list or add …
+    placeholder_view: Search the list …
+    on_list: On your list
+    add_new: Add new
+    show: Show
+    add: Add
+    watched: watched
+    no_more: 'No more results for “%query%”'
+
+entry:
+    search_source: Results from IMDb
+    no_results: Nothing found for "%query%"
+    not_found: Title not found. Please search again.
+    added: '"%name%" is on the list now'
+    already_added: '"%name%" is already on the list'
+    removed: '"%name%" removed'
+    refreshing: Updating info for "%name%"
+    trailer: Trailer
+    imdb: View on IMDb
+    refresh: Update info
+    remove: Remove
+    remove_confirm: Remove "%name%" from the list?
+    important: Mark as important
+    important_undo: No longer important
+    maybe: Mark as maybe
+    maybe_undo: No longer maybe
+    watch: Mark as watched
+    unwatch: Not watched after all
+    watched_on: Watched on %date%
+
+member:
+    title: Who's in?
+    text: People who can edit may add, remove, prioritise and mark titles as watched.
+    owner: Owner
+    remove: Remove
+    remove_confirm: Remove %name% from the list?
+    removed: '%name% was removed'
+    saved: Saved rights of %name%
+    leave: Leave list
+    leave_confirm: Do you really want to leave this list?
+
+access:
+    view: View only
+    edit: Can edit
+
+invite:
+    title: Invite people
+    text: Each link works exactly once and expires after 7 days.
+    create: Create link
+    new_link: Your invite link
+    new_link_help: Send this link to the person you want to invite.
+    copy: Copy
+    open: Open invites
+    created_by: By %name%, valid until %date%
+    revoke: Revoke invite
+    accept_title: Invite
+    accept_text: '%name% invites you to this list:'
+    accept: Join
+    invalid: Invalid invite
+    invalid_text: This link was already used or has expired.
+    joined: You're now part of "%name%"
+
+admin:
+    title: Users
+    role: Role
+    role_admin: Admin
+    role_user: User
+    created: Since
+    is_admin: Administrator
+    setup_completed: First-login setup done
+    new_password: Set new password
+    new_password_help: Leave empty to keep the password.
+    saved: '%name% saved'
+    deleted: '%name% deleted'
+    delete: Delete user
+    delete_text: Deletes the user and all lists they created.
+    delete_confirm: Really delete %name%?
+    cannot_delete_self: You can't delete yourself.
+
+genre:
+    science_fiction: Science fiction
+    sci_fi: Sci-fi
+    talk_show: Talk show
+    game_show: Game show

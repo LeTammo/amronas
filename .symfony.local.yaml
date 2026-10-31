@@ -1,0 +1,5 @@
+# `symfony serve` also starts the background worker and restarts it when code changes
+workers:
+    messenger_consume_async:
+        cmd: ['symfony', 'console', 'messenger:consume', 'async', '-vv']
+        watch: ['config', 'src', 'templates', 'vendor/composer']

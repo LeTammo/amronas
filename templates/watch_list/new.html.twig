@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'list.new_title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'nav.lists'|trans }}</div>
+        <h1>{{ 'list.new_title'|trans }}</h1>
+        <div class="meta">{{ 'list.new_text'|trans }}</div>
+    </header>
+
+    <section class="panel narrow">
+        {{ include('watch_list/_form.html.twig') }}
+        <div class="form-actions">
+            <a class="btn secondary" href="{{ path('app_list_index') }}">{{ 'action.cancel'|trans }}</a>
+            <button class="btn" type="submit" form="{{ form.vars.id }}">{{ ux_icon('tabler:plus') }} {{ 'list.create'|trans }}</button>
+        </div>
+    </section>
+{% endblock %}

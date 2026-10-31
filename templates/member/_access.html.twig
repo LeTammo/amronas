@@ -1,0 +1,7 @@
+{# Two-way switch between "view only" and "can edit" #}
+{% macro access(name, can_edit) %}
+    <span class="seg access" role="radiogroup">
+        <label class="{{ not can_edit ? 'on' }}"><input type="radio" name="{{ name }}" value="view" {{ not can_edit ? 'checked' }}>{{ ux_icon('tabler:eye') }}{{ 'access.view'|trans }}</label>
+        <label class="{{ can_edit ? 'on' }}"><input type="radio" name="{{ name }}" value="edit" {{ can_edit ? 'checked' }}>{{ ux_icon('tabler:pencil') }}{{ 'access.edit'|trans }}</label>
+    </span>
+{% endmacro %}

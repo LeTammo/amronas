@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ list.name }}{% endblock %}
+
+{% block body %}
+    {% set grid = (filter.view ?? app.user.listView).value == 'grid' %}
+    {% set sort = filter.sort ?? app.user.sortField %}
+    {% set descending = filter.dir ? filter.dir == 'desc' : app.user.sortDescending %}
+    {% set can_add = is_granted('LIST_EDIT', list) %}
+    {% set icons = {recent: 'tabler:sparkles', important: 'tabler:flame', normal: 'tabler:bookmark', maybe: 'tabler:hourglass', watched: 'tabler:eye-check'} %}
+
+    <header class="heading left">
+        <h1>{{ list.name }}</h1>
+        <div class="meta">
+            <span>{{ ux_icon({movies: 'tabler:movie', series: 'tabler:device-tv', mixed: 'tabler:category'}[list.type.value]) }}{{ ('list.type_' ~ list.type.value)|trans }}</span>
+            <span>{{ ux_icon('tabler:list-check') }}{{ 'list.open_count'|trans({'%count%': list.countUnwatched}) }}</span>
+            <span>{{ ux_icon('tabler:eye-check') }}{{ 'list.watched_count'|trans({'%count%': list.countWatched}) }}</span>
+            <span title="{{ 'list.editors'|trans }}">{{ ux_icon('tabler:users') }}{{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</span>
+        </div>
+    </header>
+
+    <div class="toolbar">
+        {# Searches the list; editors also get IMDb results to add #}
+        <div class="add" data-controller="search" data-search-url-value="{{ path('app_entry_search', {id: list.id}) }}" data-action="click@document->search#closeOutside">
+            <div class="search-field">
+                {{ ux_icon('tabler:search') }}
+                <label class="sr-only" for="search-input">{{ (can_add ? 'search.placeholder_edit' : 'search.placeholder_view')|trans }}</label>
+                <input id="search-input" type="search" autocomplete="off" placeholder="{{ (can_add ? 'search.placeholder_edit' : 'search.placeholder_view')|trans }}"
+                       data-search-target="input"
+                       data-action="input->search#query focus->search#open keydown.esc->search#clear keydown.down->search#focusResults">
+            </div>
+            <turbo-frame id="search-results" class="suggest" hidden data-search-target="frame"
+                         data-action="keydown.down->search#moveFocus keydown.up->search#moveFocus keydown.esc->search#clear"></turbo-frame>
+        </div>
+        <div class="actions">
+            <a class="icon-btn" href="{{ path('app_list_edit', {id: list.id}) }}" title="{{ 'list.settings'|trans }}" aria-label="{{ 'list.settings'|trans }}">{{ ux_icon('tabler:settings') }}</a>
+            <div class="seg" role="group" aria-label="{{ 'list.view'|trans }}">
+                <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({view: 'list'}))) }}" class="{{ not grid ? 'on' }}" title="{{ 'list.view_list'|trans }}" aria-label="{{ 'list.view_list'|trans }}">{{ ux_icon('tabler:list') }}</a>
+                <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({view: 'grid'}))) }}" class="{{ grid ? 'on' }}" title="{{ 'list.view_grid'|trans }}" aria-label="{{ 'list.view_grid'|trans }}">{{ ux_icon('tabler:layout-grid') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters">
+        {# Filters on the left, sorting on the right #}
+        {% if list.type.value == 'mixed' %}
+            <div class="seg" role="group" aria-label="{{ 'filter.type'|trans }}">
+                {% for type in ['movie', 'series'] %}
+                    {% set active = filter.type and filter.type.value == type %}
+                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({type: active ? null : type}))) }}" class="{{ active ? 'on' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
+                        {{ ux_icon(type == 'movie' ? 'tabler:movie' : 'tabler:device-tv') }}{{ ('filter.' ~ type)|trans }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="sorting">
+            <form method="get" data-controller="autosubmit" data-turbo-action="replace">
+                {% for key, value in filter.query %}<input type="hidden" name="{{ key }}" value="{{ value }}">{% endfor %}
+                <select name="sort" data-action="autosubmit#submit" aria-label="{{ 'sort.label'|trans }}">
+                    {% for field in enum_cases('App\\Enum\\SortField') %}
+                        <option value="{{ field.value }}" {{ field == sort ? 'selected' }}>{{ ('sort.' ~ field.value)|trans }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <a class="icon-btn" href="{{ path('app_list_show', {id: list.id}|merge(filter.query({dir: descending ? 'asc' : 'desc'}))) }}" data-turbo-action="replace"
+               title="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}" aria-label="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}">{{ ux_icon(descending ? 'tabler:sort-descending' : 'tabler:sort-ascending') }}</a>
+        </div>
+    </div>
+
+    {% if view.pending %}<div data-controller="refresh" hidden></div>{% endif %}
+
+    {% if view.shown == 0 %}
+        <div class="empty">
+            {{ ux_icon(view.total == 0 ? 'tabler:movie' : 'tabler:filter-off') }}
+            <p>{{ (view.total == 0 ? (can_add ? 'list.empty_add' : 'list.empty') : 'list.empty_filtered')|trans }}</p>
+        </div>
+    {% endif %}
+
+    {# Groups can be folded; the state is kept in a cookie so the server renders it and page refreshes keep it #}
+    {% set folds = (app.request.cookies.get('fold') ?? '')|split(',') %}
+    {% for group, rows in view.groups %}
+        {% set key = list.id ~ '-' ~ group %}
+        {% set open = (key ~ '.o') in folds or ((key ~ '.c') not in folds and group != 'watched') %}
+        <details class="group" {{ open ? 'open' }} data-controller="fold" data-fold-key-value="{{ key }}" data-action="toggle->fold#save">
+            <summary class="group-label {{ group }}">{{ ux_icon(icons[group]) }}{{ ('group.' ~ group)|trans }} · {{ rows|length == view.totals[group] ? rows|length : 'group.shown'|trans({'%shown%': rows|length, '%total%': view.totals[group]}) }}{{ ux_icon('tabler:chevron-down', {class: 'chevron'}) }}</summary>
+            {% if grid %}
+                <div class="grid">
+                    {% for row in rows %}{{ include('watch_list/_card.html.twig') }}{% endfor %}
+                </div>
+            {% else %}
+                <div class="list">
+                    {% for row in rows %}{{ include('watch_list/_row.html.twig') }}{% endfor %}
+                </div>
+            {% endif %}
+        </details>
+    {% endfor %}
+{% endblock %}

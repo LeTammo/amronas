@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'nav.lists'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'list.index_eyebrow'|trans({'%name%': app.user.username}) }}</div>
+        <h1>{{ 'list.index_title'|trans }}</h1>
+    </header>
+
+    <div class="list-cards">
+        {% for list in lists %}
+            {% set entries = list.entries|filter(e => not e.watched)|slice(0, 3) %}
+            <a class="list-card" href="{{ path('app_list_show', {id: list.id}) }}">
+                <div class="stack">
+                    {% for entry in entries %}
+                        <img src="{{ entry.title.posterUrl|poster(80) }}" alt="" loading="lazy">
+                    {% else %}
+                        <span></span>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h2>{{ list.name }}</h2>
+                    <div class="sub">{{ ux_icon('tabler:users') }} {{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</div>
+                </div>
+            </a>
+        {% endfor %}
+        <a class="list-card new" href="{{ path('app_list_new') }}" title="{{ 'list.new_title'|trans }}">
+            {{ ux_icon('tabler:plus') }}
+            <span class="sr-only">{{ 'list.new_title'|trans }}</span>
+        </a>
+    </div>
+{% endblock %}

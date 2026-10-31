@@ -1,0 +1,389 @@
+{
+    "request": "GET /v4/shows/tt1375666?series_granularity=show&country=de",
+    "recordedAt": "2026-10-30T13:27:20+00:00",
+    "status": 200,
+    "body": {
+        "itemType": "show",
+        "showType": "movie",
+        "id": "70",
+        "imdbId": "tt1375666",
+        "tmdbId": "movie/27205",
+        "title": "Inception",
+        "overview": "Leonardo DiCaprio plays a thief who steals corporate secrets from sleeping minds. Now he must be the first to pull off the reverse: planting an idea in exchange for his freedom.",
+        "releaseYear": 2010,
+        "originalTitle": "Inception",
+        "genres": [
+            {
+                "id": "adventure",
+                "name": "Adventure"
+            },
+            {
+                "id": "scifi",
+                "name": "Science Fiction"
+            },
+            {
+                "id": "thriller",
+                "name": "Thriller"
+            }
+        ],
+        "directors": [
+            "Christopher Nolan"
+        ],
+        "cast": [
+            "Leonardo DiCaprio",
+            "Joseph Gordon-Levitt",
+            "Ken Watanabe",
+            "Tom Hardy",
+            "Elliot Page",
+            "Dileep Rao",
+            "Cillian Murphy"
+        ],
+        "rating": 86,
+        "runtime": 148,
+        "imageSet": {
+            "verticalPoster": {
+                "w240": "https://cdn.movieofthenight.com/show/70/poster/vertical/en/240.jpg?Expires=1814022906&Signature=UxVMNtJg9kTyZPYnzjuSENRYqx9m9Oy8TR8NvPiMLYAkswQeM3tsBV5N~cFSrHDNd-1b2baOQc2h53f3PjJEv~72UeJktmEI6GsOFHc~FqFOVAmg8U7YEbmJDCzxHMv6OqgTo8bT~VSQDGkwCfTnkP4Sqca2xgeYjhNLgF4sXuIRVPQZpsRrRYKxtRyd1X4DmAIkjAddqx59SNxG6Ryg-03uERhbHSZfnXD-sJIdWT6lFWUWpDd~pbGk9X4jCMiayZTy44vfcjS4MJ9xW757Vz86DLdkDAzvmWFNbBA7j2K3e3sGomvb3CxkutCKVtYks~zZZT74JMw7erwPVZowWA__&Key-Pair-Id=KK4HN3OO4AT5R"
+            },
+            "horizontalPoster": [],
+            "verticalBackdrop": {
+                "w240": "https://cdn.movieofthenight.com/show/70/backdrop/vertical/240.jpg?Expires=1814022898&Signature=eezrx9xJKkW4MBw0W5Ug~JsNB~XJiBtNvSLcSolU51yRDF6OT7zNUUYc8dq2hR7r0ovlAge6G6-17NhWF4BBtIK27ucb2zjmST52NjDGyWqBgq91nKInzY5wSbqt~ZkTIvEWXF0huMoANCuC00VeQjm-KgY4fQZXcBml~0-8dPGrRYi7hf6bRVHY9hTq9SYUyrAUYdTWNsXyCX1JKPwOJFA6aGmU9PDH9z22qRfGU2hu6xbLcPgsHOONiUO~4rqL3l5V~fPhja-ttnXwQKvFLuLDa3YbGK3kKrIm-f0etHrD6uuCOJjflWI0Z5Zq~GhrzINXqLOCx06uZUsypo4fmw__&Key-Pair-Id=KK4HN3OO4AT5R"
+            },
+            "horizontalBackdrop": []
+        },
+        "streamingOptions": {
+            "de": [
+                {
+                    "service": {
+                        "id": "prime",
+                        "name": "Prime Video",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/",
+                        "themeColorCode": "#00A8E1",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/logo-white.svg"
+                        }
+                    },
+                    "type": "buy",
+                    "link": "https://www.amazon.de/gp/video/detail/0FFJSDLK6HUWC5T8XJUQODMFJ3?ref_=atv_dp",
+                    "quality": "uhd",
+                    "audios": [
+                        {
+                            "language": "deu"
+                        },
+                        {
+                            "language": "eng"
+                        }
+                    ],
+                    "subtitles": [],
+                    "price": {
+                        "amount": "9.99",
+                        "currency": "EUR",
+                        "formatted": "9.99 EUR"
+                    },
+                    "expiresSoon": false,
+                    "availableSince": 1776277337
+                },
+                {
+                    "service": {
+                        "id": "prime",
+                        "name": "Prime Video",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/",
+                        "themeColorCode": "#00A8E1",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/logo-white.svg"
+                        }
+                    },
+                    "type": "addon",
+                    "addon": {
+                        "id": "maxde",
+                        "name": "HBO Max",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/subscription/maxde",
+                        "themeColorCode": "#000000",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/de/addons/maxde/light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/de/addons/maxde/dark-theme.png",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/de/addons/maxde/white.svg"
+                        }
+                    },
+                    "link": "https://www.amazon.de/gp/video/detail/0FFJSDLK6HUWC5T8XJUQODMFJ3?ref_=atv_dp",
+                    "quality": "uhd",
+                    "audios": [
+                        {
+                            "language": "deu"
+                        },
+                        {
+                            "language": "eng"
+                        }
+                    ],
+                    "subtitles": [],
+                    "expiresSoon": false,
+                    "availableSince": 1782436402
+                },
+                {
+                    "service": {
+                        "id": "prime",
+                        "name": "Prime Video",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/",
+                        "themeColorCode": "#00A8E1",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/logo-white.svg"
+                        }
+                    },
+                    "type": "addon",
+                    "addon": {
+                        "id": "rtlde",
+                        "name": "RTL+",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/subscription/rtlde",
+                        "themeColorCode": "#000000",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/de/addons/rtlde/light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/de/addons/rtlde/dark-theme.png",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/de/addons/rtlde/white.svg"
+                        }
+                    },
+                    "link": "https://www.amazon.de/gp/video/detail/0FFJSDLK6HUWC5T8XJUQODMFJ3?ref_=atv_dp",
+                    "quality": "uhd",
+                    "audios": [
+                        {
+                            "language": "deu"
+                        },
+                        {
+                            "language": "eng"
+                        }
+                    ],
+                    "subtitles": [],
+                    "expiresSoon": false,
+                    "availableSince": 1776277337
+                },
+                {
+                    "service": {
+                        "id": "prime",
+                        "name": "Prime Video",
+                        "homePage": "https://www.amazon.de/gp/video/storefront/",
+                        "themeColorCode": "#00A8E1",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/prime/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/prime/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/prime/logo-white.svg"
+                        }
+                    },
+                    "type": "rent",
+                    "link": "https://www.amazon.de/gp/video/detail/0FFJSDLK6HUWC5T8XJUQODMFJ3?ref_=atv_dp",
+                    "quality": "uhd",
+                    "audios": [
+                        {
+                            "language": "deu"
+                        },
+                        {
+                            "language": "eng"
+                        }
+                    ],
+                    "subtitles": [],
+                    "price": {
+                        "amount": "3.99",
+                        "currency": "EUR",
+                        "formatted": "3.99 EUR"
+                    },
+                    "expiresSoon": false,
+                    "availableSince": 1776277337
+                },
+                {
+                    "service": {
+                        "id": "apple",
+                        "name": "Apple TV",
+                        "homePage": "https://tv.apple.com/de",
+                        "themeColorCode": "#000000",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/apple/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/apple/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/apple/logo-white.svg"
+                        }
+                    },
+                    "type": "buy",
+                    "link": "https://tv.apple.com/de/movie/inception/umc.cmc.6loas01ow0w4lkatxxloz7a6e?playableId=tvs.sbd.9001%3A400114957",
+                    "quality": "hd",
+                    "audios": [],
+                    "subtitles": [],
+                    "price": {
+                        "amount": "9.99",
+                        "currency": "EUR",
+                        "formatted": "9.99 EUR"
+                    },
+                    "expiresSoon": false,
+                    "availableSince": 1712015658
+                },
+                {
+                    "service": {
+                        "id": "apple",
+                        "name": "Apple TV",
+                        "homePage": "https://tv.apple.com/de",
+                        "themeColorCode": "#000000",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/apple/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/apple/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/apple/logo-white.svg"
+                        }
+                    },
+                    "type": "rent",
+                    "link": "https://tv.apple.com/de/movie/inception/umc.cmc.6loas01ow0w4lkatxxloz7a6e?playableId=tvs.sbd.9001%3A400114957",
+                    "quality": "hd",
+                    "audios": [],
+                    "subtitles": [],
+                    "price": {
+                        "amount": "3.99",
+                        "currency": "EUR",
+                        "formatted": "3.99 EUR"
+                    },
+                    "expiresSoon": false,
+                    "availableSince": 1712015658
+                },
+                {
+                    "service": {
+                        "id": "hbo",
+                        "name": "HBO Max",
+                        "homePage": "https://play.hbomax.com/",
+                        "themeColorCode": "#000000",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/hbo/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/hbo/logo-dark-theme.png",
+                            "whiteImage": "https://media.movieofthenight.com/services/hbo/logo-white.svg"
+                        }
+                    },
+                    "type": "subscription",
+                    "link": "https://play.hbomax.com/movie/14552c93-d318-4563-a00b-343df7e35d0b",
+                    "videoLink": "https://play.hbomax.com/video/watch/aaf706ec-46a1-4453-bb69-293452009004",
+                    "quality": "uhd",
+                    "audios": [
+                        {
+                            "language": "deu"
+                        },
+                        {
+                            "language": "eng"
+                        },
+                        {
+                            "language": "fra"
+                        },
+                        {
+                            "language": "ita"
+                        },
+                        {
+                            "language": "por"
+                        },
+                        {
+                            "language": "rus"
+                        },
+                        {
+                            "language": "spa"
+                        },
+                        {
+                            "language": "tur"
+                        }
+                    ],
+                    "subtitles": [
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "deu"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "ell"
+                            }
+                        },
+                        {
+                            "closedCaptions": true,
+                            "locale": {
+                                "language": "eng"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "fra"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "heb"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "ita"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "nld"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "por"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "rus"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "spa"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "tur"
+                            }
+                        },
+                        {
+                            "closedCaptions": false,
+                            "locale": {
+                                "language": "ukr"
+                            }
+                        }
+                    ],
+                    "expiresSoon": false,
+                    "expiresOn": 1811800740,
+                    "availableSince": 1782391564
+                },
+                {
+                    "service": {
+                        "id": "rtl",
+                        "name": "RTL+",
+                        "homePage": "https://plus.rtl.de/",
+                        "themeColorCode": "#ffffff",
+                        "imageSet": {
+                            "lightThemeImage": "https://media.movieofthenight.com/services/rtl/logo-light-theme.svg",
+                            "darkThemeImage": "https://media.movieofthenight.com/services/rtl/logo-dark-theme.svg",
+                            "whiteImage": "https://media.movieofthenight.com/services/rtl/logo-white.svg"
+                        }
+                    },
+                    "type": "subscription",
+                    "link": "https://plus.rtl.de/inception-p_70282",
+                    "videoLink": "https://plus.rtl.de/inception-p_70282/video/inception-c_1721343",
+                    "audios": [],
+                    "subtitles": [],
+                    "expiresSoon": false,
+                    "availableSince": 1792386824
+                }
+            ]
+        }
+    },
+    "note": "Real response (recorded without country, trimmed to de, as a country=de request returns it)."
+}

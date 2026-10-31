@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'register.title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">Watchlist</div>
+        <h1>{{ 'register.title'|trans }}</h1>
+    </header>
+
+    <div class="panel narrow">
+        {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <div class="form-actions">
+                <a class="btn secondary" href="{{ path('app_login') }}">{{ 'register.to_login'|trans }}</a>
+                <button class="btn" type="submit">{{ 'register.submit'|trans }}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

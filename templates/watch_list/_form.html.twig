@@ -1,0 +1,18 @@
+{{ form_start(form, {attr: {id: form.vars.id}}) }}
+    {{ form_row(form.name) }}
+    <fieldset class="form-row">
+        <legend>{{ form_label(form.icon) }}</legend>
+        <div class="icon-pick">
+            {% for choice in form.icon %}
+                <label title="{{ choice.vars.value }}">{{ form_widget(choice) }}{{ ux_icon('tabler:' ~ choice.vars.value) }}<span class="sr-only">{{ choice.vars.value }}</span></label>
+            {% endfor %}
+        </div>
+        {{ form_errors(form.icon) }}
+    </fieldset>
+    <fieldset class="form-row">
+        <legend>{{ form_label(form.type) }}</legend>
+        <div class="choices">{{ form_widget(form.type) }}</div>
+    </fieldset>
+    {{ form_row(form.country) }}
+    {{ form_rest(form) }}
+{{ form_end(form) }}

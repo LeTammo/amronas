@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+parameters:
+    app.registration_enabled: '%env(bool:REGISTRATION_ENABLED)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude: '../src/{Entity,Enum,Message,Http/RecordingHttpClient.php,Imdb/SearchResult.php,Streaming/ShowDetails.php,Streaming/TmdbDetails.php,Kernel.php}'
+
+    # Save/replay API responses in tests/Fixtures/api (see API_RECORDINGS in .env)
+    app.imdb_client.recording:
+        class: App\Http\RecordingHttpClient
+        decorates: imdb.client
+        arguments:
+            $client: '@.inner'
+            $mode: '%env(API_RECORDINGS)%'
+            $directory: '%kernel.project_dir%/tests/Fixtures/api'
+            $baseUri: 'https://v3.sg.media-imdb.com'
+
+    app.streaming_client.recording:
+        class: App\Http\RecordingHttpClient
+        decorates: streaming.client
+        decoration_priority: 0
+        arguments:
+            $client: '@.inner'
+            $mode: '%env(API_RECORDINGS)%'
+            $directory: '%kernel.project_dir%/tests/Fixtures/api'
+            $baseUri: 'https://api.movieofthenight.com'
+
+    app.tmdb_client.recording:
+        class: App\Http\RecordingHttpClient
+        decorates: tmdb.client
+        arguments:
+            $client: '@.inner'
+            $mode: '%env(API_RECORDINGS)%'
+            $directory: '%kernel.project_dir%/tests/Fixtures/api'
+            $baseUri: 'https://api.themoviedb.org'
+
+    app.omdb_client.recording:
+        class: App\Http\RecordingHttpClient
+        decorates: omdb.client
+        arguments:
+            $client: '@.inner'
+            $mode: '%env(API_RECORDINGS)%'
+            $directory: '%kernel.project_dir%/tests/Fixtures/api'
+            $baseUri: 'https://www.omdbapi.com'

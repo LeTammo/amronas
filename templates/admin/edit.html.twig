@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'admin.title'|trans }}</div>
+        <h1>{{ user.username }}</h1>
+    </header>
+
+    <div class="narrow">
+        <section class="panel">
+            {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <div class="form-actions">
+                    <a class="btn secondary" href="{{ path('app_admin_users') }}">{{ 'action.cancel'|trans }}</a>
+                    <button class="btn" type="submit">{{ ux_icon('tabler:check') }} {{ 'action.save'|trans }}</button>
+                </div>
+            {{ form_end(form) }}
+        </section>
+
+        {% if user != app.user %}
+            <section class="panel">
+                <h2>{{ 'admin.delete'|trans }}</h2>
+                <p>{{ 'admin.delete_text'|trans }}</p>
+                <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}" data-turbo-confirm="{{ 'admin.delete_confirm'|trans({'%name%': user.username}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user') }}">
+                    <button class="btn danger">{{ ux_icon('tabler:trash') }} {{ 'admin.delete'|trans }}</button>
+                </form>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}

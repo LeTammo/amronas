@@ -1,0 +1,46 @@
+{# Green pills: everything you can watch with a subscription or for free (your services first).
+   Rent and buy offers are grouped in one dropdown. #}
+{% macro logo(service) %}<span class="logo" style="--service: {{ service_color(service) }}" aria-hidden="true">{{ service_short(service) }}</span>{% endmacro %}
+
+{% set offers = row.offers %}
+{% if offers and (offers.included or offers.more) %}
+    <div class="offers">
+        {% for offer in offers.included %}
+            <a class="offer {{ offer.preferred ? 'preferred' }}" title="{{ offer.name }}" {% if offer.link %}href="{{ offer.link }}"{% endif %}>
+                {{- _self.logo(offer.service) }}{{ (offer.type == 'free' ? 'offer.free' : 'offer.included_short')|trans -}}
+            </a>
+        {% endfor %}
+        {% if offers.more %}
+            <div class="more-wrap" data-controller="dropdown"
+                 data-action="click@document->dropdown#closeOutside dropdown:open@document->dropdown#closeOthers keydown.esc@document->dropdown#closeOnEscape">
+                <button type="button" class="more" aria-expanded="false" aria-haspopup="dialog" data-dropdown-target="button" data-action="dropdown#toggle"
+                        title="{{ 'offer.more_title'|trans }}">
+                    {{- 'offer.more'|trans({'%count%': offers.more}) }}{{ ux_icon('tabler:chevron-down') -}}
+                </button>
+                <div class="pop" role="dialog" aria-label="{{ 'offer.more_label'|trans({'%name%': row.title.name}) }}" data-dropdown-target="panel" hidden>
+                    <div class="pop-head">
+                        <span>{{ 'offer.more_heading'|trans }}</span>
+                        <a href="https://www.werstreamt.es/filme-serien/?q={{ row.title.imdbId|url_encode }}&action_results=suchen" target="_blank" rel="noopener">werstreamt.es{{ ux_icon('tabler:external-link') }}</a>
+                    </div>
+                    {% for section in ['rent', 'buy']|filter(section => offers[section] is not empty) %}
+                        <h4>{{ ('offer.section_' ~ section)|trans }}</h4>
+                        <ul>
+                            {% for offer in offers[section] %}
+                                <li><a {% if offer.link %}href="{{ offer.link }}"{% endif %} class="{{ offer.preferred ? 'preferred' }}">
+                                    {{- _self.logo(offer.service) }}<span>{{ offer.name }}</span>
+                                    {%- if offer.price %}<span class="price">{{ offer.price }}</span>{% endif -%}
+                                </a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% elseif row.pending %}
+    <div class="offers-status"><span class="skeleton"></span>{{ 'offer.checking'|trans }}</div>
+{% elseif row.checked %}
+    <div class="offers-status">{{ 'offer.none'|trans }}</div>
+{% else %}
+    <div class="offers-status">{{ 'offer.unknown'|trans }}</div>
+{% endif %}

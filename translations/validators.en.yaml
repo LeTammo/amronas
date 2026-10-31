@@ -1,0 +1,10 @@
+user:
+    username:
+        taken: This username is already taken.
+        chars: Only letters, numbers, dots, dashes and underscores.
+    email:
+        taken: This email address is already in use.
+    password:
+        mismatch: The passwords don't match.
+list:
+    icon_required: Please pick an icon for the list.

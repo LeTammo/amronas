@@ -1,0 +1,19 @@
+framework:
+    http_client:
+        default_options:
+            timeout: 8
+        scoped_clients:
+            imdb.client:
+                base_uri: 'https://v3.sg.media-imdb.com'
+            streaming.client:
+                base_uri: 'https://api.movieofthenight.com'
+                headers:
+                    X-API-Key: '%env(MOTN_API_KEY)%'
+            tmdb.client:
+                base_uri: 'https://api.themoviedb.org'
+                query:
+                    api_key: '%env(TMDB_API_KEY)%'
+            omdb.client:
+                base_uri: 'https://www.omdbapi.com'
+                query:
+                    apikey: '%env(OMDB_API_KEY)%'

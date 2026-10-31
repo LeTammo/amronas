@@ -1,0 +1,10 @@
+user:
+    username:
+        taken: Dieser Benutzername ist schon vergeben.
+        chars: Nur Buchstaben, Zahlen, Punkt, Binde- und Unterstrich.
+    email:
+        taken: Diese E-Mail-Adresse wird schon verwendet.
+    password:
+        mismatch: Die Passwörter stimmen nicht überein.
+list:
+    icon_required: Bitte wähle ein Icon für die Liste.

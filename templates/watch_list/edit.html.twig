@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'list.settings'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">{{ 'list.settings'|trans }}</div>
+        <h1><a href="{{ path('app_list_show', {id: list.id}) }}" style="text-decoration:none">{{ list.name }}</a></h1>
+    </header>
+
+    <div class="narrow" style="max-width: 720px">
+        {% if form %}
+            <section class="panel">
+                <h2>{{ 'list.edit'|trans }}</h2>
+                {{ include('watch_list/_form.html.twig') }}
+                <div class="help-text">{{ 'list.type_help'|trans }}</div>
+                <div class="form-actions">
+                    <a class="btn secondary" href="{{ path('app_list_show', {id: list.id}) }}">{{ 'action.cancel'|trans }}</a>
+                    <button class="btn" type="submit" form="{{ form.vars.id }}">{{ ux_icon('tabler:check') }} {{ 'action.save'|trans }}</button>
+                </div>
+            </section>
+        {% endif %}
+
+        {{ include('member/_members.html.twig') }}
+
+        {% if is_granted('LIST_MANAGE', list) %}
+            <section class="panel">
+                <h2>{{ 'list.delete'|trans }}</h2>
+                <p>{{ 'list.delete_text'|trans({'%count%': list.entries|length}) }}</p>
+                <form method="post" action="{{ path('app_list_delete', {id: list.id}) }}" data-turbo-confirm="{{ 'list.delete_confirm'|trans({'%name%': list.name}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-list') }}">
+                    <button class="btn danger">{{ ux_icon('tabler:trash') }} {{ 'list.delete'|trans }}</button>
+                </form>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}

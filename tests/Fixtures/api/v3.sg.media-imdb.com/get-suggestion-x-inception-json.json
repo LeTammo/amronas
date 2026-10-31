@@ -1,0 +1,120 @@
+{
+    "request": "GET /suggestion/x/inception.json",
+    "recordedAt": "2026-10-30T11:55:43+00:00",
+    "status": 200,
+    "body": {
+        "d": [
+            {
+                "i": {
+                    "height": 1037,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
+                    "width": 700
+                },
+                "id": "tt1375666",
+                "l": "Inception",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 234,
+                "s": "Leonardo DiCaprio, Joseph Gordon-Levitt",
+                "tl": "2010",
+                "y": 2010
+            },
+            {
+                "i": {
+                    "height": 644,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BNjYxOGIzZDItN2I2NC00ZjE2LTllYmEtMWMxODUwOGU5NGI1XkEyXkFqcGc@._V1_.jpg",
+                    "width": 420
+                },
+                "id": "tt1790736",
+                "l": "Inception: The Cobol Job",
+                "q": "video",
+                "qid": "video",
+                "rank": 25348,
+                "s": "",
+                "tl": "2010 Video",
+                "y": 2010
+            },
+            {
+                "i": {
+                    "height": 1102,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BOTY3OGFlNTktYTJiZi00ZWMxLTk4MjQtNmJiODkxYThiNjg4XkEyXkFqcGc@._V1_.jpg",
+                    "width": 787
+                },
+                "id": "tt7321322",
+                "l": "Inception",
+                "q": "short",
+                "qid": "short",
+                "rank": 181586,
+                "s": "Erfan Refahatnia, Danial Hajibarat",
+                "tl": "2014 Short",
+                "y": 2014
+            },
+            {
+                "i": {
+                    "height": 3300,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZjhkNjM0ZTMtNGM5MC00ZTQ3LTk3YmYtZTkzYzdiNWE0ZTA2XkEyXkFqcGc@._V1_.jpg",
+                    "width": 2228
+                },
+                "id": "tt5295990",
+                "l": "Inception: Jump Right Into the Action",
+                "q": "video",
+                "qid": "video",
+                "rank": 85625,
+                "s": "Leonardo DiCaprio, Joseph Gordon-Levitt",
+                "tl": "2010 Video",
+                "y": 2010
+            },
+            {
+                "i": {
+                    "height": 500,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BMWFhNWE4ZGEtYjkyNC00ODE0LTk4ZjQtNDU4NzU4NzEyNTZlXkEyXkFqcGc@._V1_.jpg",
+                    "width": 375
+                },
+                "id": "tt8269586",
+                "l": "Bikini Inception",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 99452,
+                "s": "Michael Madsen, Ana Flavia Gavlak",
+                "tl": "2015",
+                "y": 2015
+            },
+            {
+                "i": {
+                    "height": 960,
+                    "imageUrl": "https://m.media-amazon.com/images/M/MV5BZTc4MDliNjAtYmU4YS00NmQzLWEwNjktYTQ2MGFjNDc5MDhlXkEyXkFqcGc@._V1_.jpg",
+                    "width": 672
+                },
+                "id": "tt6793710",
+                "l": "The Crack: Inception",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 137500,
+                "s": "Carlos Santos, Miguel Ángel Muñoz",
+                "tl": "2019",
+                "y": 2019
+            },
+            {
+                "id": "tt5581256",
+                "l": "Inception",
+                "q": "feature",
+                "qid": "movie",
+                "rank": 495476,
+                "s": "",
+                "tl": ""
+            },
+            {
+                "id": "tt40105725",
+                "l": "AI Inception",
+                "q": "video",
+                "qid": "video",
+                "rank": 287655,
+                "s": "Felix Betancourt, Yadira Camacho",
+                "tl": "2024 Video",
+                "y": 2024
+            }
+        ],
+        "q": "inception",
+        "v": 1
+    }
+}

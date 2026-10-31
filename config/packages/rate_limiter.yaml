@@ -1,0 +1,19 @@
+framework:
+    cache:
+        pools:
+            # Kept in the database, so the web server and the worker container share it and it survives restarts
+            cache.api_budget:
+                adapter: cache.adapter.doctrine_dbal
+
+    rate_limiter:
+        # Protects the monthly request quota of the streaming API (free plan: 1000 / month)
+        streaming_api:
+            policy: fixed_window
+            limit: '%env(int:STREAMING_API_MONTHLY_BUDGET)%'
+            interval: '31 days' # one counter per calendar month, see BudgetHttpClient
+            cache_pool: cache.api_budget
+        # Search is free, but we stay polite to IMDb
+        title_search:
+            policy: sliding_window
+            limit: 60
+            interval: '1 minute'

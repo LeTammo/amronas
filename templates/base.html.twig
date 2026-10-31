@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}{{ block('title') is not empty ? ' · ' }}Watchlist</title>
+        <meta name="color-scheme" content="light dark">
+        <meta name="turbo-refresh-method" content="morph">
+        <meta name="turbo-refresh-scroll" content="preserve">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%238C403A%22/><circle cx=%2216%22 cy=%2216%22 r=%225%22 fill=%22%23C9873F%22/></svg>">
+        <script>
+            {# Set the theme before the first paint to avoid flashing #}
+            (() => {
+                let theme = null;
+                try { theme = localStorage.getItem('theme'); } catch (e) {}
+                document.documentElement.dataset.theme = theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            })();
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        <header class="topbar">
+            {% if app.user %}
+                {% set route = app.current_route %}
+                {% set current_list = route starts with 'app_list_show' ? app.request.attributes.get('id') : null %}
+                <nav class="tabs" aria-label="{{ 'nav.lists'|trans }}">
+                    <a class="tab" href="{{ path('app_list_index') }}" {{ route == 'app_list_index' ? 'aria-current="page"' }}>{{ ux_icon('tabler:list') }}<span class="lbl">{{ 'nav.lists'|trans }}</span></a>
+                    {% for list in recent_lists() %}
+                        <a class="tab" href="{{ path('app_list_show', {id: list.id}) }}" title="{{ list.name }}" {{ current_list == list.id ? 'aria-current="page"' }}>{{ ux_icon('tabler:' ~ (list.icon ?? 'movie')) }}<span class="lbl">{{ list.name }}</span></a>
+                    {% endfor %}
+                </nav>
+            {% endif %}
+            <div class="nav-tools">
+                <div class="lang">
+                    {% for locale in ['de', 'en'] %}
+                        <a href="{{ path('app_locale', {locale}) }}" class="{{ app.request.locale == locale ? 'on' }}" hreflang="{{ locale }}" data-turbo="false">{{ locale|upper }}</a>
+                    {% endfor %}
+                </div>
+                <button class="nav-btn theme-switch" type="button" data-controller="theme" data-action="theme#toggle" title="{{ 'nav.theme'|trans }}" aria-label="{{ 'nav.theme'|trans }}">{{ ux_icon('tabler:moon', {class: 'to-dark'}) }}{{ ux_icon('tabler:sun', {class: 'to-light'}) }}</button>
+                {% if app.user %}
+                    <a class="nav-btn {{ route == 'app_settings' ? 'active' }}" href="{{ path('app_settings') }}" title="{{ 'nav.profile'|trans }}" aria-label="{{ 'nav.profile'|trans }}">
+                        <span class="avatar">{{ app.user.username|first }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="container">
+            {% block body %}{% endblock %}
+        </main>
+
+        <div class="flashes" aria-live="polite">
+            {% for type, messages in app.flashes(['success', 'info', 'error']) %}
+                {% for message in messages %}
+                    {% set parts = message|split('|', 2) %}
+                    <div class="flash {{ type }}" data-controller="flash">
+                        {{ ux_icon(type == 'error' ? 'tabler:alert-circle' : 'tabler:circle-check') }}
+                        <span>{{ parts[0]|trans({'%name%': parts[1] ?? ''}) }}</span>
+                        <button type="button" data-action="flash#close" aria-label="{{ 'action.close'|trans }}">{{ ux_icon('tabler:x') }}</button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </body>
+</html>

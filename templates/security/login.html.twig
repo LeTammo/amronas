@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
+
+{% block body %}
+    <header class="heading">
+        <div class="eyebrow">Watchlist</div>
+        <h1>{{ 'login.title'|trans }}</h1>
+    </header>
+
+    <form method="post" class="panel narrow">
+        {% if error %}
+            <ul><li>{{ error.messageKey|trans(error.messageData, 'security') }}</li></ul>
+        {% endif %}
+        <div class="form-row">
+            <label for="username">{{ 'user.username'|trans }}</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" autocomplete="username" required autofocus>
+        </div>
+        <div class="form-row">
+            <label for="password">{{ 'user.password'|trans }}</label>
+            <input type="password" id="password" name="_password" autocomplete="current-password" required>
+        </div>
+        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+        <div class="form-actions">
+            {% if registration_enabled %}
+                <a class="btn secondary" href="{{ path('app_register') }}">{{ 'login.register'|trans }}</a>
+            {% endif %}
+            <button class="btn" type="submit">{{ ux_icon('tabler:login-2') }} {{ 'login.submit'|trans }}</button>
+        </div>
+    </form>
+{% endblock %}
