@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\Availability;
+use App\Enum\DetailsSource;
 use App\Message\RefreshTitle;
 use App\Repository\TitleRepository;
 use App\Streaming\StreamingAvailability;
@@ -33,11 +34,12 @@ final readonly class RefreshTitleHandler
             ->setPlot($details->overview)
             ->setYear($details->year ?? $title->getYear())
             ->setEndYear($details->endYear)
-            ->setRuntime($details->runtime ?? $title->getRuntime())
+            ->setRuntime($title->getRuntime() ?? $details->runtime)
             ->setSeasons($details->seasons)
             ->setGenres($details->genres)
             ->setRating($details->rating)
             ->setPosterUrl($title->getPosterUrl() ?? $details->posterUrl)
+            ->setDetailsSource(DetailsSource::Streaming)
             ->setDetailsFetchedAt(new \DateTimeImmutable());
 
         foreach ($message->countries as $country) {

@@ -165,6 +165,10 @@ entry:
     removed: '„%name%“ entfernt'
     refreshing: Infos zu „%name%“ werden aktualisiert
     trailer: Trailer
+    fallback_title: Infos aus Ersatzquelle
+    fallback_text: 'Movie of the Night kennt diesen Titel (noch) nicht, oft weil er neu ist oder noch nicht erschienen. Genres, Bewertung und Staffeln kommen deshalb von %source%, Streaming-Angebote nur von TMDB und ohne Preise.'
+    fallback_tmdb_rating: Die Bewertung ist die der TMDB-Nutzer, nicht die von IMDb.
+    fallback_retry: '„Infos aktualisieren“ im Menü fragt später nochmal bei Movie of the Night nach.'
     imdb: Auf IMDb ansehen
     refresh: Infos aktualisieren
     remove: Entfernen

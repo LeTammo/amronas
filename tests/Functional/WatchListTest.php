@@ -7,6 +7,7 @@ use App\Entity\ListEntry;
 use App\Entity\Title;
 use App\Entity\User;
 use App\Entity\WatchList;
+use App\Enum\DetailsSource;
 use App\Enum\Priority;
 use App\Message\RefreshProviders;
 use App\Message\RefreshTitle;
@@ -82,8 +83,8 @@ final class WatchListTest extends WebTestCase
         /** @var InMemoryTransport $transport */
         $transport = self::getContainer()->get('messenger.transport.async');
         $messages = array_map(static fn ($envelope) => $envelope->getMessage(), $transport->getSent());
-        self::assertSame([RefreshProviders::class, RefreshTitle::class], array_map(get_class(...), $messages));
-        self::assertSame(['de'], $messages[1]->countries);
+        self::assertSame([RefreshTitle::class, RefreshProviders::class], array_map(get_class(...), $messages));
+        self::assertSame(['de'], $messages[0]->countries);
     }
 
     public function testFiltersAreRememberedInTheSessionAndRatingIsTheDefaultSort(): void
@@ -301,6 +302,19 @@ final class WatchListTest extends WebTestCase
         $this->client->request('GET', '/admin/users');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('table', 'erik');
+    }
+
+    public function testTitlesWithFallbackDetailsExplainWhereTheyComeFrom(): void
+    {
+        $list = $this->login('robin')->list('Unsere Filmliste');
+        $this->em->getRepository(Title::class)->findOneBy(['name' => 'Bullet Train'])->setDetailsSource(DetailsSource::Imdb);
+        $this->em->getRepository(Title::class)->findOneBy(['name' => 'Hannibal'])->setDetailsSource(DetailsSource::Streaming);
+        $this->em->flush();
+
+        $crawler = $this->client->request('GET', '/lists/'.$list->getId());
+
+        self::assertStringContainsString('von IMDb', $crawler->filter('#entry-'.$this->entryId($list, 'Bullet Train').' .fallback .pop')->text());
+        self::assertCount(0, $crawler->filter('#entry-'.$this->entryId($list, 'Hannibal').' .fallback'));
     }
 
     public function testHoveringAFilterLinkDoesNotRememberIt(): void

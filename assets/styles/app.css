@@ -284,6 +284,11 @@ details.group > summary:hover { color: var(--text); }
 .card .t-genre, .card .t-facts { font-size: 12px; }
 .card .offers, .card .offers-status { justify-content: flex-start; margin-top: 8px; }
 .card .pop { right: auto; left: 0; }
+.fallback { position: relative; }
+.fallback-pop { padding: 6px 10px 10px; }
+.fallback-pop .pop-head { padding: 6px 0 2px; }
+.fallback-pop p { margin: 6px 0 0; font-size: 13px; line-height: 1.45; color: var(--text); }
+.fallback-pop p + p { color: var(--muted); }
 
 /* Lists overview */
 .list-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }

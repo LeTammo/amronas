@@ -165,6 +165,10 @@ entry:
     removed: '"%name%" removed'
     refreshing: Updating info for "%name%"
     trailer: Trailer
+    fallback_title: Info from a fallback source
+    fallback_text: "Movie of the Night doesn't know this title (yet), often because it's new or not released. Genres, rating and seasons therefore come from %source%; streaming offers only from TMDB and without prices."
+    fallback_tmdb_rating: "The rating is TMDB users', not IMDb's."
+    fallback_retry: '"Update info" in the menu asks Movie of the Night again later.'
     imdb: View on IMDb
     refresh: Update info
     remove: Remove

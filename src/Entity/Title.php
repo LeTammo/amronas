@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\DetailsSource;
 use App\Enum\TitleType;
 use App\Repository\TitleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -59,6 +60,9 @@ class Title
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $detailsFetchedAt = null;
+
+    #[ORM\Column(length: 10, nullable: true, enumType: DetailsSource::class)]
+    private ?DetailsSource $detailsSource = null;
 
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
@@ -259,6 +263,24 @@ class Title
     public function getDetailsFetchedAt(): ?\DateTimeImmutable
     {
         return $this->detailsFetchedAt;
+    }
+
+    public function getDetailsSource(): ?DetailsSource
+    {
+        return $this->detailsSource;
+    }
+
+    public function setDetailsSource(?DetailsSource $detailsSource): static
+    {
+        $this->detailsSource = $detailsSource;
+
+        return $this;
+    }
+
+    /** True if genres, rating and seasons only come from a fallback (IMDb via OMDb, or TMDB). */
+    public function hasFallbackDetails(): bool
+    {
+        return null !== $this->detailsSource && DetailsSource::Streaming !== $this->detailsSource;
     }
 
     public function setDetailsFetchedAt(?\DateTimeImmutable $detailsFetchedAt): static

@@ -81,7 +81,25 @@ final readonly class TmdbProviders
             }
         }
 
-        return new TmdbDetails($offers, self::runtime($details));
+        return new TmdbDetails($offers, self::runtime($details), self::facts($details));
+    }
+
+    /** Genres, rating, years and seasons, for titles nobody else knows. TMDB's rating is its own users', so only with enough votes. */
+    private static function facts(array $details): TitleFacts
+    {
+        $year = static fn (?string $date): ?int => $date ? (int) substr($date, 0, 4) : null;
+        // TV genres combine two ("Action & Adventure", "Sci-Fi & Fantasy")
+        $genres = array_merge(...array_map(static fn (array $g) => explode(' & ', $g['name']), $details['genres'] ?? []));
+
+        return new TitleFacts(
+            genres: array_values(array_unique($genres)),
+            rating: ($details['vote_count'] ?? 0) >= 20 ? round((float) $details['vote_average'], 1) : null,
+            year: $year($details['release_date'] ?? $details['first_air_date'] ?? null),
+            endYear: 'Ended' === ($details['status'] ?? null) ? $year($details['last_air_date'] ?? null) : null,
+            seasons: $details['number_of_seasons'] ?? null,
+            plot: ($details['overview'] ?? '') ?: null,
+            runtime: self::runtime($details),
+        );
     }
 
     /**

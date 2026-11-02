@@ -4,6 +4,20 @@
 {% set prio = entry.priority.value %}
 {% set in_menu = (compact ?? false) or entry.watched %}
 
+{# The streaming API doesn't know the title: say where genres and rating come from instead #}
+{% if entry.title.hasFallbackDetails %}
+    {% set source = entry.title.detailsSource.value == 'omdb' ? 'IMDb' : 'TMDB' %}
+    <div class="fallback" data-controller="dropdown" data-action="click@document->dropdown#closeOutside dropdown:open@document->dropdown#closeOthers keydown.esc@document->dropdown#closeOnEscape">
+        <button type="button" class="round" aria-expanded="false" aria-haspopup="dialog" title="{{ 'entry.fallback_title'|trans }}" aria-label="{{ 'entry.fallback_title'|trans }}" data-dropdown-target="button" data-action="dropdown#toggle">{{ ux_icon('tabler:question-mark') }}</button>
+        <div class="pop fallback-pop" role="dialog" aria-label="{{ 'entry.fallback_title'|trans }}" hidden data-dropdown-target="panel">
+            <div class="pop-head">{{ 'entry.fallback_title'|trans }}</div>
+            <p>{{ 'entry.fallback_text'|trans({'%source%': source}) }}</p>
+            {% if source == 'TMDB' %}<p>{{ 'entry.fallback_tmdb_rating'|trans }}</p>{% endif %}
+            <p>{{ 'entry.fallback_retry'|trans }}</p>
+        </div>
+    </div>
+{% endif %}
+
 {% if not in_menu %}
     <a class="round trailer" href="{{ entry.title.trailerSearchUrl }}" target="_blank" rel="noopener" title="{{ 'entry.trailer'|trans }}" aria-label="{{ 'entry.trailer'|trans }}">{{ ux_icon('tabler:player-play') }}</a>
 {% endif %}

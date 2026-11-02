@@ -55,8 +55,9 @@ final readonly class WatchListManager
     /** Fetches details and streaming offers for the list's country in the background. */
     public function refresh(Title $title, WatchList $list): void
     {
-        $this->bus->dispatch(new RefreshProviders($title->getId(), [$list->getCountry()]));
+        // The streaming API first: TMDB and OMDb only fill in genres and rating if it doesn't know the title
         $this->bus->dispatch(new RefreshTitle($title->getId(), [$list->getCountry()]));
+        $this->bus->dispatch(new RefreshProviders($title->getId(), [$list->getCountry()]));
     }
 
     /** After the list's country changed: fetch offers for titles that don't have any for it yet. Returns how many were queued. */
