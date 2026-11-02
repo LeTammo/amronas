@@ -57,7 +57,7 @@ extension=sqlite3
    * * * * * cd /path/to/watchlist && php bin/console messenger:consume async --time-limit=55 >/dev/null 2>&1
    ```
 
-After each deployment, run `php bin/console messenger:stop-workers` so the worker picks up the new code.
+After each deployment, run `docker compose restart worker` (or `php bin/console messenger:stop-workers`) so the worker picks up the new code. Its cache lives in a `tmpfs` on `/tmp` and starts empty on every restart; after changing `compose.yaml` itself, recreate it with `docker compose up -d --force-recreate worker`.
 
 The database is the file `var/data_prod.db`. Back it up like any other file.
 

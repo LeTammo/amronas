@@ -17,5 +17,8 @@ services:
             # Cache and logs inside the container, so they don't clash with the web server's var/cache
             APP_CACHE_DIR: /tmp/cache
             APP_LOG_DIR: /tmp/log
+        # /tmp in memory: emptied on every (re)start, so the worker never runs on a cache of old code
+        tmpfs:
+            - /tmp
         volumes:
             - ./:/app
