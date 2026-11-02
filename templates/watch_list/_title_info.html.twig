@@ -1,4 +1,3 @@
-{# Title and year / genres / rating and runtime (series: seasons and episode runtime; watched: the date instead) #}
 {% set title = row.title %}
 <h3 class="t-name">
     <a href="{{ title.imdbUrl }}" target="_blank" rel="noopener">{{ title.name }}</a><span class="year">{{ title.year }}{% if title.endYear and title.endYear != title.year %}–{{ title.endYear }}{% endif %}</span>

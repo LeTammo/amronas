@@ -3,7 +3,6 @@
         <h3 class="s-head">{{ 'search.on_list'|trans }}</h3>
         {% for entry in matches %}
             {% set title = entry.title %}
-            {# Shows the entry without filters, so it is sure to be there #}
             <a class="s-item" href="{{ path('app_list_show', {id: list.id, f: 1}) }}#entry-{{ entry.id }}" data-turbo-frame="_top" data-action="search#jump">
                 {% if title.posterUrl %}<img src="{{ title.posterUrl|poster(80) }}" alt="" loading="lazy">{% else %}<span class="no-poster"></span>{% endif %}
                 <span>

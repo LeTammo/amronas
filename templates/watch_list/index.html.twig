@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <h2>{{ list.name }}</h2>
-                    <div class="sub">{{ ux_icon('tabler:users') }} {{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</div>
+                    {% if list.editors|length > 1 or list.editors|first is not same as(app.user) %}<div class="sub">{{ ux_icon('tabler:users') }} {{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</div>{% endif %}
                 </div>
             </a>
         {% endfor %}

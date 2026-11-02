@@ -95,19 +95,16 @@ class Availability
      */
     public function overview(array $preferredServices): array
     {
-        // TMDB offers last: for the same service the streaming API's offer wins, it has a price and a direct link
         $offers = $this->offers;
         usort($offers, static fn (array $a, array $b) => ('tmdb' === ($a['source'] ?? null)) <=> ('tmdb' === ($b['source'] ?? null)));
 
         $byService = [];
         foreach ($offers as $offer) {
-            // Add-on channels (e.g. "HBO Max via Prime Video") need an extra subscription and would show up under the wrong name
             if ('addon' === $offer['type']) {
                 continue;
             }
             $section = \in_array($offer['type'], ['subscription', 'free'], true) ? 'included' : $offer['type'];
             $current = $byService[$offer['service']][$section] ?? null;
-            // Keep the first offer, or the cheapest (e.g. SD and HD); a subscription wins over free with ads
             if ($current && !('included' === $section && 'subscription' === $offer['type'] && 'free' === $current['type'])
                 && ('included' === $section || ($offer['amount'] ?? \INF) >= $current['amount'])) {
                 continue;

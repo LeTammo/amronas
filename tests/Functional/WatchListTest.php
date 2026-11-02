@@ -147,21 +147,22 @@ final class WatchListTest extends WebTestCase
         self::assertCount(0, $hannibal->filter('.watched-on'));
     }
 
-    public function testGenrePillsFilterAndCount(): void
+    public function testGenreFilterWithPillsAndCountsInThePhoneSheet(): void
     {
         $list = $this->login('robin')->list('Unsere Filmliste');
         $url = '/lists/'.$list->getId();
-        $pillTexts = static fn ($crawler) => $crawler->filter('.genre-pills .pill')->each(static fn ($p) => preg_replace('/\s+/', '', $p->text()));
-        $pill = static fn ($crawler, string $name) => $crawler->filter('.genre-pills .pill')->reduce(static fn ($p) => str_starts_with($p->text(), $name))->link();
+        $sheetTexts = static fn ($crawler) => $crawler->filter('#genre-sheet > a')->each(static fn ($a) => preg_replace('/\s+/', '', $a->text()));
+        $pill = static fn ($crawler, string $name) => $crawler->filter('.genre-pills .genre-pill')->reduce(static fn ($p) => str_starts_with($p->text(), $name))->link();
 
         $crawler = $this->client->request('GET', $url.'?f=1&type=movie');
-        self::assertSame('Drama6', $pillTexts($crawler)[0]);
-        self::assertContains('Doku1', $pillTexts($crawler));
-        self::assertContains('Krimi1', $pillTexts($crawler));
+        self::assertSame('Drama', $crawler->filter('.genre-pills .genre-pill')->first()->text());
+        self::assertSame('Drama6', $sheetTexts($crawler)[0]);
+        self::assertContains('Doku1', $sheetTexts($crawler));
+        self::assertContains('Krimi1', $sheetTexts($crawler));
 
         $crawler = $this->client->click($pill($crawler, 'Krimi'));
         self::assertSame(['Swimming with Sharks'], $crawler->filter('.row .t-name a')->each(static fn ($a) => $a->text()));
-        self::assertSame('true', $crawler->filter('.genre-pills .pill.on')->attr('aria-pressed'));
+        self::assertSame('true', $crawler->filter('.genre-pills .genre-pill.on')->attr('aria-pressed'));
         self::assertSame('1 Genre', trim($crawler->filter('#genre-button')->text()));
 
         $crawler = $this->client->click($pill($crawler, 'Doku'));
@@ -275,6 +276,21 @@ final class WatchListTest extends WebTestCase
         self::assertGreaterThan(0, $crawler->filter('.offer')->count());
     }
 
+    public function testListsNobodyElseIsOnDontShowPeople(): void
+    {
+        $this->login('robin');
+        $own = new WatchList($this->user('robin'))->setName('Nur für mich')->setIcon('cat');
+        $this->em->persist($own);
+        $this->em->flush();
+
+        $this->client->request('GET', '/lists/'.$own->getId());
+        self::assertSelectorNotExists('.heading .meta span[title]');
+
+        $crawler = $this->client->request('GET', '/');
+        self::assertCount(0, $crawler->filter('.list-card')->reduce(static fn ($c) => str_contains($c->text(), 'Nur für mich'))->filter('.sub'));
+        self::assertCount(2, $crawler->filter('.list-card .sub'));
+    }
+
     public function testAdminPagesAreForAdminsOnly(): void
     {
         $this->login('klara');
@@ -285,6 +301,20 @@ final class WatchListTest extends WebTestCase
         $this->client->request('GET', '/admin/users');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('table', 'erik');
+    }
+
+    public function testSwitchingTheLanguageKeepsThePage(): void
+    {
+        $list = $this->login('robin')->list('Unsere Filmliste');
+        $url = 'http://localhost/lists/'.$list->getId().'?f=1&genre[]=drama';
+
+        $this->client->request('GET', '/locale/en', server: ['HTTP_REFERER' => $url]);
+        self::assertResponseRedirects($url);
+        $this->client->followRedirect();
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('.group-label', 'Important');
+        self::assertSame('en', $this->em->getRepository(User::class)->findOneBy(['username' => 'robin'])->getLocale());
     }
 
     private function login(string $username): self

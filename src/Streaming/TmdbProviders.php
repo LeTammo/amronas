@@ -46,7 +46,6 @@ final readonly class TmdbProviders
             if (null === $found) {
                 return null;
             }
-            // IMDb sometimes calls a series a movie (and the other way round), so fall back to the other kind
             $kinds = TitleType::Series === $type ? ['tv', 'movie'] : ['movie', 'tv'];
             $kind = array_find($kinds, static fn (string $k) => !empty($found[$k.'_results']));
             if (!$kind) {

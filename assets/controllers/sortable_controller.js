@@ -9,7 +9,6 @@ export default class extends Controller {
         this.sortable = Sortable.create(this.element, {
             draggable: '[data-id]',
             animation: 150,
-            // On touch screens a long press starts dragging, so tapping and scrolling keep working
             delay: 300,
             delayOnTouchOnly: true,
             ghostClass: 'drag-ghost',

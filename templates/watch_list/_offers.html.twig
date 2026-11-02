@@ -1,5 +1,3 @@
-{# Green pills: everything you can watch with a subscription or for free (your services first).
-   Rent and buy offers are grouped in one dropdown. #}
 {% macro logo(service) %}<span class="logo" style="--service: {{ service_color(service) }}" aria-hidden="true">{{ service_short(service) }}</span>{% endmacro %}
 
 {% set offers = row.offers %}

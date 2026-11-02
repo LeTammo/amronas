@@ -15,12 +15,11 @@
             <span>{{ ux_icon({movies: 'tabler:movie', series: 'tabler:device-tv', mixed: 'tabler:category'}[list.type.value]) }}{{ ('list.type_' ~ list.type.value)|trans }}</span>
             <span>{{ ux_icon('tabler:list-check') }}{{ 'list.open_count'|trans({'%count%': list.countUnwatched}) }}</span>
             <span>{{ ux_icon('tabler:eye-check') }}{{ 'list.watched_count'|trans({'%count%': list.countWatched}) }}</span>
-            <span title="{{ 'list.editors'|trans }}">{{ ux_icon('tabler:users') }}{{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</span>
+            {% if list.editors|length > 1 or list.editors|first is not same as(app.user) %}<span title="{{ 'list.editors'|trans }}">{{ ux_icon('tabler:users') }}{{ list.editors|map(p => p == app.user ? 'list.you'|trans : p.username)|join(', ') }}</span>{% endif %}
         </div>
     </header>
 
     <div class="toolbar">
-        {# Searches the list; editors also get IMDb results to add #}
         <div class="add" data-controller="search" data-search-url-value="{{ path('app_entry_search', {id: list.id}) }}" data-action="click@document->search#closeOutside">
             <div class="search-field">
                 {{ ux_icon('tabler:search') }}
@@ -38,11 +37,24 @@
                 <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({view: 'list'}))) }}" class="{{ not grid ? 'on' }}" title="{{ 'list.view_list'|trans }}" aria-label="{{ 'list.view_list'|trans }}">{{ ux_icon('tabler:list') }}</a>
                 <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({view: 'grid'}))) }}" class="{{ grid ? 'on' }}" title="{{ 'list.view_grid'|trans }}" aria-label="{{ 'list.view_grid'|trans }}">{{ ux_icon('tabler:layout-grid') }}</a>
             </div>
+            <div class="sorting">
+                <form method="get" data-controller="autosubmit" data-turbo-action="replace">
+                    {% for key, value in filter.query %}
+                        {% for item in value is iterable ? value : [value] %}<input type="hidden" name="{{ key }}{{ value is iterable ? '[]' }}" value="{{ item }}">{% endfor %}
+                    {% endfor %}
+                    <select name="sort" data-action="autosubmit#submit" aria-label="{{ 'sort.label'|trans }}">
+                        {% for field in enum_cases('App\\Enum\\SortField') %}
+                            <option value="{{ field.value }}" {{ field == sort ? 'selected' }}>{{ ('sort.' ~ field.value)|trans }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <a class="icon-btn" href="{{ path('app_list_show', {id: list.id}|merge(filter.query({dir: descending ? 'asc' : 'desc'}))) }}" data-turbo-action="replace"
+                   title="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}" aria-label="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}">{{ ux_icon(descending ? 'tabler:sort-descending' : 'tabler:sort-ascending') }}</a>
+            </div>
         </div>
     </div>
 
     <div class="filters">
-        {# Filters on the left, sorting on the right #}
         {% if list.type.value == 'mixed' %}
             <div class="seg" role="group" aria-label="{{ 'filter.type'|trans }}">
                 {% for type in ['movie', 'series'] %}
@@ -54,17 +66,14 @@
             </div>
         {% endif %}
 
-        {# Genres: pills on wide screens, a multi-select sheet on phones; the numbers say how many entries of each genre the other filters leave #}
         {% if view.genres %}
             <div class="genre-pills" role="group" aria-label="{{ 'filter.genres'|trans }}">
                 {% for genre, count in view.genres %}
                     {% set active = genre in filter.genre %}
-                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="pill {{ active ? 'on' }} {{ count == 0 and not active ? 'empty' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
-                        {{- genre|genre }}<span class="count">{{ count }}</span>
-                    </a>
+                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="genre-pill {{ active ? 'on' }} {{ count == 0 and not active ? 'zero' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">{{ genre|genre }}</a>
                 {% endfor %}
                 {% if filter.genre %}
-                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({genre: []}))) }}" class="pill reset" data-turbo-action="replace">{{ ux_icon('tabler:x') }}{{ 'filter.genres_reset'|trans }}</a>
+                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({genre: []}))) }}" class="genre-pill reset" data-turbo-action="replace">{{ ux_icon('tabler:x') }}{{ 'filter.genres_reset'|trans }}</a>
                 {% endif %}
             </div>
 
@@ -81,28 +90,13 @@
                     </div>
                     {% for genre, count in view.genres %}
                         {% set active = genre in filter.genre %}
-                        <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="{{ active ? 'on' }} {{ count == 0 and not active ? 'empty' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
+                        <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="{{ active ? 'on' }} {{ count == 0 and not active ? 'zero' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
                             {{ ux_icon(active ? 'tabler:square-check-filled' : 'tabler:square') }}{{ genre|genre }}<span class="count">{{ count }}</span>
                         </a>
                     {% endfor %}
                 </div>
             </div>
         {% endif %}
-
-        <div class="sorting">
-            <form method="get" data-controller="autosubmit" data-turbo-action="replace">
-                {% for key, value in filter.query %}
-                    {% for item in value is iterable ? value : [value] %}<input type="hidden" name="{{ key }}{{ value is iterable ? '[]' }}" value="{{ item }}">{% endfor %}
-                {% endfor %}
-                <select name="sort" data-action="autosubmit#submit" aria-label="{{ 'sort.label'|trans }}">
-                    {% for field in enum_cases('App\\Enum\\SortField') %}
-                        <option value="{{ field.value }}" {{ field == sort ? 'selected' }}>{{ ('sort.' ~ field.value)|trans }}</option>
-                    {% endfor %}
-                </select>
-            </form>
-            <a class="icon-btn" href="{{ path('app_list_show', {id: list.id}|merge(filter.query({dir: descending ? 'asc' : 'desc'}))) }}" data-turbo-action="replace"
-               title="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}" aria-label="{{ (descending ? 'sort.desc' : 'sort.asc')|trans }}">{{ ux_icon(descending ? 'tabler:sort-descending' : 'tabler:sort-ascending') }}</a>
-        </div>
     </div>
 
     {% if view.pending %}<div data-controller="refresh" hidden></div>{% endif %}
@@ -114,7 +108,6 @@
         </div>
     {% endif %}
 
-    {# Groups can be folded; the state is kept in a cookie so the server renders it and page refreshes keep it #}
     {% set folds = (app.request.cookies.get('fold') ?? '')|split(',') %}
     {% for group, rows in view.groups %}
         {% set key = list.id ~ '-' ~ group %}
