@@ -28,10 +28,11 @@
             {% if app.user %}
                 {% set route = app.current_route %}
                 {% set current_list = route starts with 'app_list_show' ? app.request.attributes.get('id') : null %}
-                <nav class="tabs" aria-label="{{ 'nav.lists'|trans }}">
+                {# All lists in the user's order; they can be dragged here or on the overview #}
+                <nav class="tabs" aria-label="{{ 'nav.lists'|trans }}" data-controller="sortable" data-sortable-url-value="{{ path('app_list_order') }}" data-sortable-token-value="{{ csrf_token('list-order') }}">
                     <a class="tab" href="{{ path('app_list_index') }}" {{ route == 'app_list_index' ? 'aria-current="page"' }}>{{ ux_icon('tabler:list') }}<span class="lbl">{{ 'nav.lists'|trans }}</span></a>
-                    {% for list in recent_lists() %}
-                        <a class="tab" href="{{ path('app_list_show', {id: list.id}) }}" title="{{ list.name }}" {{ current_list == list.id ? 'aria-current="page"' }}>{{ ux_icon('tabler:' ~ (list.icon ?? 'movie')) }}<span class="lbl">{{ list.name }}</span></a>
+                    {% for list in nav_lists() %}
+                        <a class="tab" href="{{ path('app_list_show', {id: list.id}) }}" data-id="{{ list.id }}" title="{{ list.name }}" {{ current_list == list.id ? 'aria-current="page"' }}>{{ ux_icon('tabler:' ~ (list.icon ?? 'movie')) }}<span class="lbl">{{ list.name }}</span></a>
                     {% endfor %}
                 </nav>
             {% endif %}

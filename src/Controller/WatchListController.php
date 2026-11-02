@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\ListFilter;
+use App\Dto\ListOrder;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Enum\ListType;
@@ -19,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
@@ -34,7 +36,19 @@ class WatchListController extends AbstractController
     #[Route('/', name: 'app_list_index', methods: ['GET'])]
     public function index(#[CurrentUser] User $user, WatchListRepository $lists): Response
     {
-        return $this->render('watch_list/index.html.twig', ['lists' => $lists->findForUser($user)]);
+        return $this->render('watch_list/index.html.twig', ['lists' => $user->sortLists($lists->findForUser($user))]);
+    }
+
+    /** Saves the order the user dragged their lists into (overview and navigation). */
+    #[Route('/lists/order', name: 'app_list_order', methods: ['POST'])]
+    #[IsCsrfTokenValid('list-order')]
+    public function order(#[CurrentUser] User $user, WatchListRepository $lists, #[MapRequestPayload] ListOrder $order): Response
+    {
+        $own = array_map(static fn (WatchList $list) => $list->getId(), $lists->findForUser($user));
+        $user->setListOrder(array_values(array_intersect(array_map(intval(...), $order->ids), $own)));
+        $this->em->flush();
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
     #[Route('/lists/new', name: 'app_list_new', methods: ['GET', 'POST'])]
@@ -67,22 +81,18 @@ class WatchListController extends AbstractController
         $session = $request->getSession();
         $sessionKey = 'list_filter_'.$list->getId();
         if ($filter->f) {
-            $session->set($sessionKey, ['type' => $filter->type?->value, 'short' => $filter->short]);
+            $session->set($sessionKey, ['type' => $filter->type?->value, 'short' => $filter->short, 'genre' => $filter->genre]);
         } elseif ($saved = $session->get($sessionKey)) {
-            $filter = new ListFilter(TitleType::tryFrom((string) $saved['type']), $saved['short'], $filter->sort, $filter->dir, $filter->view, true);
+            $filter = new ListFilter(TitleType::tryFrom((string) $saved['type']), $saved['short'], $filter->sort, $filter->dir, $filter->view, $saved['genre'] ?? [], true);
         }
         if (ListType::Mixed !== $list->getType() && $filter->type) {
-            $filter = new ListFilter(null, $filter->short, $filter->sort, $filter->dir, $filter->view, true);
+            $filter = new ListFilter(null, $filter->short, $filter->sort, $filter->dir, $filter->view, $filter->genre, true);
         }
 
-        $changed = $user->addRecentList($list->getId());
         if ($filter->sort || $filter->dir || $filter->view) {
             $filter->sort && $user->setSortField($filter->sort);
             $filter->dir && $user->setSortDescending('desc' === $filter->dir);
             $filter->view && $user->setListView($filter->view);
-            $changed = true;
-        }
-        if ($changed) {
             $this->em->flush();
         }
 

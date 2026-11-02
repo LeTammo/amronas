@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TitleRepository::class)]
 class Title
 {
+    private const GENRE_ALIASES = [
+        'science_fiction' => 'sci_fi',
+        'reality_tv' => 'reality',
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -177,6 +182,22 @@ class Title
     public function getGenres(): array
     {
         return $this->genres;
+    }
+
+    /**
+     * The genres as keys for filtering and translation; IMDb and the streaming API name some differently ("Sci-Fi", "Science Fiction" → sci_fi).
+     *
+     * @return list<string>
+     */
+    public function getGenreKeys(): array
+    {
+        $keys = array_map(static function (string $genre): string {
+            $key = trim(preg_replace('/[^a-z]+/', '_', strtolower($genre)), '_');
+
+            return self::GENRE_ALIASES[$key] ?? $key;
+        }, $this->genres);
+
+        return array_values(array_unique(array_filter($keys)));
     }
 
     /** @param list<string> $genres */

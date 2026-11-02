@@ -4,10 +4,24 @@ namespace App\Twig;
 
 use App\Streaming\ServiceCatalog;
 use Twig\Attribute\AsTwigFilter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Attribute\AsTwigFunction;
 
 final class AppExtension
 {
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
+
+    /** Short genre name ("sci_fi" → "Sci-Fi"); genres without a translation get their key spelled out. */
+    #[AsTwigFilter('genre')]
+    public function genre(string $key): string
+    {
+        $label = $this->translator->trans('genre.'.$key);
+
+        return 'genre.'.$key === $label ? ucfirst(str_replace('_', ' ', $key)) : $label;
+    }
+
     /** IMDb images can be resized on the fly: "…_V1_.jpg" → "…_V1_QL75_UX120_.jpg". */
     #[AsTwigFilter('poster')]
     public static function poster(?string $url, int $width = 120): ?string

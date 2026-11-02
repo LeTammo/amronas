@@ -3,6 +3,8 @@
         <a href="{{ row.title.imdbUrl }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% if row.title.posterUrl %}<img src="{{ row.title.posterUrl|poster(340) }}" alt="" loading="lazy">{% endif %}</a>
         {% if row.entry.priority.value == 'important' %}
             <span class="flag" title="{{ 'group.important'|trans }}">{{ ux_icon('tabler:flame') }}</span>
+        {% elseif row.entry.priority.value == 'waiting' %}
+            <span class="flag down" title="{{ 'group.waiting'|trans }}">{{ ux_icon('tabler:calendar-clock') }}</span>
         {% elseif row.entry.priority.value == 'maybe' %}
             <span class="flag down" title="{{ 'group.maybe'|trans }}">{{ ux_icon('tabler:hourglass') }}</span>
         {% endif %}
@@ -10,6 +12,6 @@
     </div>
     <div class="info">
         {{ include('watch_list/_title_info.html.twig') }}
-        {{ include('watch_list/_offers.html.twig') }}
+        {% if not row.entry.watched %}{{ include('watch_list/_offers.html.twig') }}{% endif %}
     </div>
 </article>

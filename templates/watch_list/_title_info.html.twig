@@ -1,11 +1,11 @@
-{# Title and year / genres / rating and runtime (series: seasons and episode runtime) #}
+{# Title and year / genres / rating and runtime (series: seasons and episode runtime; watched: the date instead) #}
 {% set title = row.title %}
 <h3 class="t-name">
     <a href="{{ title.imdbUrl }}" target="_blank" rel="noopener">{{ title.name }}</a><span class="year">{{ title.year }}{% if title.endYear and title.endYear != title.year %}–{{ title.endYear }}{% endif %}</span>
 </h3>
 <div class="t-genre">
     {%- if title.genres is not empty -%}
-        {{ title.genres|map(g => ('genre.' ~ g|lower|replace({' ': '_', '&': 'and', '-': '_'})))|map(k => k|trans != k ? k|trans : k|split('.')|last|replace({'_': ' '})|title)|join(', ') }}
+        {{ title.genreKeys|map(g => g|genre)|join(', ') }}
     {%- elseif row.pending -%}
         <span class="skeleton"></span>
     {%- else -%}
@@ -15,7 +15,9 @@
 <div class="t-facts">
     {% if title.rating %}<span class="rating">{{ ux_icon('tabler:star') }}{{ title.rating|number_format(1, app.request.locale == 'de' ? ',' : '.') }}</span>{% endif %}
     {% if row.pending and not title.rating %}<span class="skeleton"></span>{% endif %}
-    {% if title.series %}
+    {% if row.entry.watched %}
+        <span class="watched-on" title="{{ 'entry.watched_on'|trans({'%date%': row.entry.watchedAt|date('d.m.Y')}) }}">{{ ux_icon('tabler:eye-check') }}{{ row.entry.watchedAt|date('d.m.Y') }}</span>
+    {% elseif title.series %}
         {% if title.seasons %}
             <span>{{ ux_icon('tabler:device-tv') }}{{ 'title.seasons'|trans({'%count%': title.seasons}) }}
                 {%- if title.runtime %} <span class="episode" title="{{ 'title.episode_runtime'|trans }}">({{ ux_icon('tabler:clock') }}{{ title.runtime|runtime }})</span>{% endif -%}

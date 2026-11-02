@@ -51,14 +51,14 @@ final class WatchListTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Unsere Filmliste');
-        self::assertSame(['important', 'normal', 'maybe', 'watched'], $crawler->filter('details.group > summary')->each(static fn ($s) => explode(' ', $s->attr('class'))[1]));
+        self::assertSame(['important', 'waiting', 'normal', 'maybe', 'watched'], $crawler->filter('details.group > summary')->each(static fn ($s) => explode(' ', $s->attr('class'))[1]));
         self::assertNull($crawler->filter('details.group')->last()->attr('open'));
         self::assertStringContainsString('Kedi', $crawler->filter('details.group')->last()->text());
 
         $this->client->getCookieJar()->set(new Cookie('fold', $list->getId().'-watched.o,'.$list->getId().'-maybe.c'));
         $crawler = $this->client->request('GET', '/lists/'.$list->getId());
         self::assertNotNull($crawler->filter('details.group')->last()->attr('open'));
-        self::assertNull($crawler->filter('details.group')->eq(2)->attr('open'));
+        self::assertNull($crawler->filter('details.group')->eq(3)->attr('open'));
     }
 
     public function testSearchAndAddTitleQueuesBackgroundRefresh(): void
@@ -104,15 +104,73 @@ final class WatchListTest extends WebTestCase
         self::assertCount(10, $crawler->filter('.row'));
     }
 
-    public function testOpenedListsShowUpInTheNavigation(): void
+    public function testAllListsAreInTheNavigationInTheOrderTheUserDraggedThemInto(): void
     {
-        $this->login('robin');
-        $this->client->request('GET', '/lists/'.$this->list('Klaras Serien')->getId());
-        $crawler = $this->client->request('GET', '/lists/'.$this->list('Unsere Filmliste')->getId());
+        $ours = $this->login('robin')->list('Unsere Filmliste');
+        $klaras = $this->list('Klaras Serien');
+        $foreign = $this->list('Anime');
 
+        $crawler = $this->client->request('GET', '/lists/'.$ours->getId());
         $tabs = $crawler->filter('.topbar .tab');
         self::assertSame(['Listen', 'Unsere Filmliste', 'Klaras Serien'], $tabs->each(static fn ($a) => $a->text()));
         self::assertSame('page', $tabs->eq(1)->attr('aria-current'));
+        $token = $crawler->filter('.topbar .tabs')->attr('data-sortable-token-value');
+
+        $this->client->request('POST', '/lists/order', ['_token' => 'wrong', 'ids' => [$klaras->getId(), $ours->getId()]]);
+        self::assertFalse($this->client->getResponse()->isSuccessful());
+        self::assertSame([], $this->em->getRepository(User::class)->findOneBy(['username' => 'robin'])->getListOrder());
+
+        $this->client->request('POST', '/lists/order', ['_token' => $token, 'ids' => [$foreign->getId(), $klaras->getId(), $ours->getId()]]);
+        self::assertResponseStatusCodeSame(204);
+        $this->em->clear();
+        self::assertSame([$klaras->getId(), $ours->getId()], $this->em->getRepository(User::class)->findOneBy(['username' => 'robin'])->getListOrder());
+
+        $crawler = $this->client->request('GET', '/');
+        self::assertSame(['Listen', 'Klaras Serien', 'Unsere Filmliste'], $crawler->filter('.topbar .tab')->each(static fn ($a) => $a->text()));
+        self::assertSame(['Klaras Serien', 'Unsere Filmliste'], $crawler->filter('.list-card h2')->each(static fn ($h) => $h->text()));
+    }
+
+    public function testWatchedEntriesShowTheirDateAndKeepTheirActionsInTheMenu(): void
+    {
+        $list = $this->login('robin')->list('Unsere Filmliste');
+        $crawler = $this->client->request('GET', '/lists/'.$list->getId());
+
+        $kedi = $crawler->filter('#entry-'.$this->entryId($list, 'Kedi'));
+        self::assertSame(new \DateTimeImmutable('-10 days')->format('d.m.Y'), $kedi->filter('.watched-on')->text());
+        self::assertCount(0, $kedi->filter('.offers'));
+        self::assertCount(0, $kedi->filter('.trailer'));
+        self::assertCount(1, $kedi->filter('.menu form[action$="/watched"]'));
+
+        $hannibal = $crawler->filter('#entry-'.$this->entryId($list, 'Hannibal'));
+        self::assertCount(1, $hannibal->filter('.trailer'));
+        self::assertCount(1, $hannibal->filter('.row-actions > form[action$="/watched"]'));
+        self::assertCount(0, $hannibal->filter('.watched-on'));
+    }
+
+    public function testGenrePillsFilterAndCount(): void
+    {
+        $list = $this->login('robin')->list('Unsere Filmliste');
+        $url = '/lists/'.$list->getId();
+        $pillTexts = static fn ($crawler) => $crawler->filter('.genre-pills .pill')->each(static fn ($p) => preg_replace('/\s+/', '', $p->text()));
+        $pill = static fn ($crawler, string $name) => $crawler->filter('.genre-pills .pill')->reduce(static fn ($p) => str_starts_with($p->text(), $name))->link();
+
+        $crawler = $this->client->request('GET', $url.'?f=1&type=movie');
+        self::assertSame('Drama6', $pillTexts($crawler)[0]);
+        self::assertContains('Doku1', $pillTexts($crawler));
+        self::assertContains('Krimi1', $pillTexts($crawler));
+
+        $crawler = $this->client->click($pill($crawler, 'Krimi'));
+        self::assertSame(['Swimming with Sharks'], $crawler->filter('.row .t-name a')->each(static fn ($a) => $a->text()));
+        self::assertSame('true', $crawler->filter('.genre-pills .pill.on')->attr('aria-pressed'));
+        self::assertSame('1 Genre', trim($crawler->filter('#genre-button')->text()));
+
+        $crawler = $this->client->click($pill($crawler, 'Doku'));
+        self::assertSame(['Swimming with Sharks', 'Kedi'], $crawler->filter('.row .t-name a')->each(static fn ($a) => $a->text()));
+        self::assertSame(['crime', 'documentary'], $crawler->filter('.sorting input[name="genre[]"]')->each(static fn ($i) => $i->attr('value')), 'Sorting keeps the genres');
+
+        $crawler = $this->client->request('GET', $url);
+        self::assertCount(2, $crawler->filter('.row'), 'Genres are remembered like the other filters');
+        self::assertCount(10, $this->client->request('GET', $url.'?f=1')->filter('.row'));
     }
 
     public function testListsWithoutIconAskForOneFirst(): void

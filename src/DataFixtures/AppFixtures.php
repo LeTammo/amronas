@@ -96,7 +96,7 @@ class AppFixtures extends Fixture
             'tt12593682' => [Priority::Normal, '-20 days', $robin],
             'tt13651794' => [Priority::Normal, '-12 days', $klara],
             'tt11225626' => [Priority::Normal, '-8 days', $klara],
-            'tt26699529' => [Priority::Normal, '-2 days', $robin],
+            'tt26699529' => [Priority::Waiting, '-2 days', $robin],
             'tt15239678' => [Priority::Normal, '-1 day', $klara],
             'tt3234122' => [Priority::Maybe, '-15 days', $klara],
             'tt0114594' => [Priority::Maybe, '-40 days', $robin],

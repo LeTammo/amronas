@@ -60,9 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(enumType: ListView::class)]
     private ListView $listView = ListView::List;
 
-    /** @var list<int> ids of the lists opened last, newest first */
+    /** @var list<int> ids of the lists in the order the user dragged them into (navigation and overview) */
     #[ORM\Column(type: Types::JSON)]
-    private array $recentLists = [];
+    private array $listOrder = [];
 
     /** False until the user went through the first-login setup. */
     #[ORM\Column]
@@ -220,21 +220,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /** @return list<int> */
-    public function getRecentLists(): array
+    public function getListOrder(): array
     {
-        return $this->recentLists;
+        return $this->listOrder;
     }
 
-    /** Remembers a list as opened; returns false if nothing changed. */
-    public function addRecentList(int $listId, int $keep = 3): bool
+    /** @param list<int|string> $listIds */
+    public function setListOrder(array $listIds): static
     {
-        $recent = \array_slice(array_values(array_unique([$listId, ...$this->recentLists])), 0, $keep);
-        if ($recent === $this->recentLists) {
-            return false;
-        }
-        $this->recentLists = $recent;
+        $this->listOrder = array_values(array_unique(array_map(intval(...), $listIds)));
 
-        return true;
+        return $this;
+    }
+
+    /**
+     * Sorts lists into the user's order; lists the user hasn't placed yet come last, oldest first.
+     *
+     * @param list<WatchList> $lists
+     *
+     * @return list<WatchList>
+     */
+    public function sortLists(array $lists): array
+    {
+        $position = array_flip($this->listOrder);
+        usort($lists, static fn (WatchList $a, WatchList $b) => [$position[$a->getId()] ?? \PHP_INT_MAX, $a->getCreatedAt()] <=> [$position[$b->getId()] ?? \PHP_INT_MAX, $b->getCreatedAt()]);
+
+        return $lists;
     }
 
     public function isSetupCompleted(): bool

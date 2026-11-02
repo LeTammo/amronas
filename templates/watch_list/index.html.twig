@@ -7,11 +7,11 @@
         <div class="eyebrow">{{ 'list.index_eyebrow'|trans({'%name%': app.user.username}) }}</div>
         <h1>{{ 'list.index_title'|trans }}</h1>
     </header>
-
-    <div class="list-cards">
+    <div class="list-cards" data-controller="sortable" data-sortable-url-value="{{ path('app_list_order') }}" data-sortable-token-value="{{ csrf_token('list-order') }}">
         {% for list in lists %}
             {% set entries = list.entries|filter(e => not e.watched)|slice(0, 3) %}
-            <a class="list-card" href="{{ path('app_list_show', {id: list.id}) }}">
+            <a class="list-card" href="{{ path('app_list_show', {id: list.id}) }}" data-id="{{ list.id }}">
+                <span class="grip" title="{{ 'list.drag'|trans }}">{{ ux_icon('tabler:grip-vertical') }}</span>
                 <div class="stack">
                     {% for entry in entries %}
                         <img src="{{ entry.title.posterUrl|poster(80) }}" alt="" loading="lazy">

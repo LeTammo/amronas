@@ -28,6 +28,14 @@ export default class extends Controller {
         if (event.detail !== this.element) this.close();
     }
 
+    // Links in the panel (e.g. genre filters) reload the page by morphing it; keep the panel open meanwhile
+    keepState(event) {
+        const { attributeName } = event.detail;
+        if ((event.target === this.panelTarget && attributeName === 'hidden') || (event.target === this.buttonTarget && attributeName === 'aria-expanded')) {
+            event.preventDefault();
+        }
+    }
+
     closeOnEscape() {
         if (!this.panelTarget.hidden) {
             this.close();

@@ -1,18 +1,19 @@
-{# Trailer, watched toggle and a menu with priority and the rarer actions #}
+{# Trailer, watched toggle and a menu with priority and the rarer actions; watched entries keep all of it in the menu #}
 {% set entry = row.entry %}
 {% set return = app.request.requestUri %}
 {% set token = csrf_token('entry') %}
 {% set prio = entry.priority.value %}
+{% set in_menu = (compact ?? false) or entry.watched %}
 
-{% if not (compact ?? false) %}
+{% if not in_menu %}
     <a class="round trailer" href="{{ entry.title.trailerSearchUrl }}" target="_blank" rel="noopener" title="{{ 'entry.trailer'|trans }}" aria-label="{{ 'entry.trailer'|trans }}">{{ ux_icon('tabler:player-play') }}</a>
 {% endif %}
 
-{% if is_granted('LIST_EDIT', list) %}
+{% if is_granted('LIST_EDIT', list) and not entry.watched %}
     <form method="post" action="{{ path('app_entry_watched', {id: entry.id}) }}" data-turbo-action="replace">
         <input type="hidden" name="_token" value="{{ token }}">
         <input type="hidden" name="return" value="{{ return }}">
-        <button class="round {{ entry.watched ? 'done' }}" title="{{ (entry.watched ? 'entry.unwatch' : 'entry.watch')|trans }}" aria-label="{{ (entry.watched ? 'entry.unwatch' : 'entry.watch')|trans }}">{{ ux_icon('tabler:check') }}</button>
+        <button class="round" title="{{ 'entry.watch'|trans }}" aria-label="{{ 'entry.watch'|trans }}">{{ ux_icon('tabler:check') }}</button>
     </form>
 {% endif %}
 
@@ -26,13 +27,24 @@
                 <button name="priority" value="{{ prio == 'important' ? 'normal' : 'important' }}" class="{{ prio == 'important' ? 'active' }}">
                     {{ ux_icon('tabler:flame') }}{{ (prio == 'important' ? 'entry.important_undo' : 'entry.important')|trans }}
                 </button>
+                <button name="priority" value="{{ prio == 'waiting' ? 'normal' : 'waiting' }}" class="{{ prio == 'waiting' ? 'active' }}">
+                    {{ ux_icon('tabler:calendar-clock') }}{{ (prio == 'waiting' ? 'entry.waiting_undo' : 'entry.waiting')|trans }}
+                </button>
                 <button name="priority" value="{{ prio == 'maybe' ? 'normal' : 'maybe' }}" class="{{ prio == 'maybe' ? 'active' }}">
                     {{ ux_icon('tabler:hourglass') }}{{ (prio == 'maybe' ? 'entry.maybe_undo' : 'entry.maybe')|trans }}
                 </button>
             </form>
             <hr>
         {% endif %}
-        {% if compact ?? false %}
+        {% if is_granted('LIST_EDIT', list) and entry.watched %}
+            <form method="post" action="{{ path('app_entry_watched', {id: entry.id}) }}" data-turbo-action="replace">
+                <input type="hidden" name="_token" value="{{ token }}">
+                <input type="hidden" name="return" value="{{ return }}">
+                <button>{{ ux_icon('tabler:eye-off') }}{{ 'entry.unwatch'|trans }}</button>
+            </form>
+            <hr>
+        {% endif %}
+        {% if in_menu %}
             <a href="{{ entry.title.trailerSearchUrl }}" target="_blank" rel="noopener">{{ ux_icon('tabler:player-play') }}{{ 'entry.trailer'|trans }}</a>
         {% endif %}
         <a href="{{ entry.title.imdbUrl }}" target="_blank" rel="noopener">{{ ux_icon('tabler:external-link') }}{{ 'entry.imdb'|trans }}</a>
@@ -49,9 +61,6 @@
                 <input type="hidden" name="return" value="{{ return }}">
                 <button class="danger">{{ ux_icon('tabler:trash') }}{{ 'entry.remove'|trans }}</button>
             </form>
-        {% endif %}
-        {% if entry.watched %}
-            <span class="menu-note">{{ 'entry.watched_on'|trans({'%date%': entry.watchedAt|date('d.m.Y')}) }}</span>
         {% endif %}
     </div>
 </details>

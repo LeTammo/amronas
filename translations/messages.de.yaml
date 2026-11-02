@@ -63,6 +63,7 @@ country:
     ca: Kanada
 
 list:
+    drag: Zum Sortieren ziehen
     icon: Icon
     icon_missing: 'Wähl bitte ein Icon für „%name%“, es erscheint oben in der Navigation.'
     settings: Einstellungen
@@ -115,11 +116,15 @@ filter:
     series: Serien
     movie_one: Film
     series_one: Serie
+    genres: Genres
+    genres_count: '{1} 1 Genre|]1,Inf[ %count% Genres'
+    genres_reset: Alle Genres
 
 group:
     shown: '%shown% von %total% angezeigt'
     recent: Gerade hinzugefügt
     important: Wichtig
+    waiting: Wartet auf Release
     normal: Auf der Liste
     maybe: Vielleicht
     watched: Gesehen
@@ -166,6 +171,8 @@ entry:
     remove_confirm: '„%name%“ von der Liste entfernen?'
     important: Als wichtig markieren
     important_undo: Nicht mehr wichtig
+    waiting: Wartet auf Release
+    waiting_undo: Ist schon erschienen
     maybe: Als vielleicht markieren
     maybe_undo: Nicht mehr vielleicht
     watch: Als gesehen markieren
@@ -228,20 +235,20 @@ genre:
     biography: Biografie
     comedy: Komödie
     crime: Krimi
-    documentary: Dokumentarfilm
+    documentary: Doku
     drama: Drama
     family: Familie
     fantasy: Fantasy
-    history: Geschichte
+    history: Historie
     horror: Horror
     music: Musik
     musical: Musical
     mystery: Mystery
-    news: Nachrichten
+    news: News
     reality: Reality
-    romance: Romantik
-    science_fiction: Science-Fiction
+    romance: Romanze
     sci_fi: Sci-Fi
+    short: Kurzfilm
     sport: Sport
     thriller: Thriller
     war: Krieg

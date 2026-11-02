@@ -10,7 +10,8 @@ services:
         # Same user as the web server, so both can write var/ (www-data is 33:33 on Debian/Ubuntu)
         user: '${WORKER_UID:-33}:${WORKER_GID:-33}'
         environment:
-            APP_ENV: '${APP_ENV:-prod}'
+            # No APP_ENV here: Compose would fill it from Symfony's .env (dev). The worker
+            # reads .env.local like the web app, so both use the same environment and database.
             # Never save API responses here (see API_RECORDINGS in .env)
             API_RECORDINGS: 'off'
             # Cache and logs inside the container, so they don't clash with the web server's var/cache

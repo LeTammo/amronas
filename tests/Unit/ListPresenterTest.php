@@ -25,10 +25,11 @@ final class ListPresenterTest extends TestCase
         $this->list = new WatchList($this->viewer);
     }
 
-    public function testGroupsImportantFirstMaybeLastAndSortsWithinGroups(): void
+    public function testGroupsImportantFirstThenWaitingMaybeLastAndSortsWithinGroups(): void
     {
         $entries = [
             $this->entry('Zodiac', priority: Priority::Normal),
+            $this->entry('Dune: Part Three', priority: Priority::Waiting),
             $this->entry('Alien', priority: Priority::Maybe),
             $this->entry('Brazil', priority: Priority::Important),
             $this->entry('Amélie', priority: Priority::Normal),
@@ -37,10 +38,10 @@ final class ListPresenterTest extends TestCase
 
         $view = new ListPresenter()->present($entries, new ListFilter(), $this->viewer, 'de');
 
-        self::assertSame(['important', 'normal', 'maybe', 'watched'], array_keys($view['groups']));
+        self::assertSame(['important', 'waiting', 'normal', 'maybe', 'watched'], array_keys($view['groups']));
         self::assertSame(['Amélie', 'Zodiac'], $this->names($view['groups']['normal']));
-        self::assertSame(5, $view['shown']);
-        self::assertSame(5, $view['total']);
+        self::assertSame(6, $view['shown']);
+        self::assertSame(6, $view['total']);
     }
 
     public function testWatchedTitlesComeLastWithTheLastWatchedFirstWhateverTheSorting(): void
@@ -115,10 +116,32 @@ final class ListPresenterTest extends TestCase
         self::assertSame(['Brand new'], $this->names($groups['recent']));
     }
 
-    /** @param array<string, string> $offers */
-    private function entry(string $name, Priority $priority = Priority::Normal, bool $watched = false, ?float $rating = 7.0, ?int $runtime = 100, TitleType $type = TitleType::Movie, array $offers = [], string $addedAgo = '-1 day'): ListEntry
+    public function testGenresMatchAnyChosenOneAndCountWhatTheOtherFiltersLeave(): void
     {
-        $title = new Title('tt'.crc32($name), $type, $name)->setRating($rating)->setRuntime(TitleType::Movie === $type ? $runtime : null)->setDetailsFetchedAt(new \DateTimeImmutable());
+        $entries = [
+            $this->entry('Alien', genres: ['Horror', 'Science Fiction']),
+            $this->entry('Arrival', genres: ['Drama', 'Sci-Fi']),
+            $this->entry('Dark', type: TitleType::Series, genres: ['Drama', 'Mystery', 'Sci-Fi']),
+            $this->entry('Kedi', genres: ['Documentary']),
+        ];
+        $presenter = new ListPresenter();
+
+        $view = $presenter->present($entries, new ListFilter(genre: ['sci_fi', 'documentary']), $this->viewer, 'de');
+        self::assertSame(['Alien', 'Arrival', 'Dark', 'Kedi'], $this->names($view['groups']['normal']));
+        self::assertSame(['sci_fi' => 3, 'drama' => 2, 'documentary' => 1, 'horror' => 1, 'mystery' => 1], $view['genres']);
+
+        $view = $presenter->present($entries, new ListFilter(type: TitleType::Movie, genre: ['drama']), $this->viewer, 'de');
+        self::assertSame(['Arrival'], $this->names($view['groups']['normal']));
+        self::assertSame(['sci_fi' => 2, 'drama' => 1, 'documentary' => 1, 'horror' => 1, 'mystery' => 0], $view['genres']);
+    }
+
+    /**
+     * @param array<string, string> $offers
+     * @param list<string>          $genres
+     */
+    private function entry(string $name, Priority $priority = Priority::Normal, bool $watched = false, ?float $rating = 7.0, ?int $runtime = 100, TitleType $type = TitleType::Movie, array $offers = [], string $addedAgo = '-1 day', array $genres = []): ListEntry
+    {
+        $title = new Title('tt'.crc32($name), $type, $name)->setGenres($genres)->setRating($rating)->setRuntime(TitleType::Movie === $type ? $runtime : null)->setDetailsFetchedAt(new \DateTimeImmutable());
         $availability = new Availability($title, 'de')->setOffers(array_map(
             static fn (string $service, string $kind) => ['service' => $service, 'name' => ucfirst($service), 'type' => $kind, 'link' => null, 'price' => null, 'color' => null],
             array_keys($offers),

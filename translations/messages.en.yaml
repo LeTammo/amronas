@@ -63,6 +63,7 @@ country:
     ca: Canada
 
 list:
+    drag: Drag to reorder
     icon: Icon
     icon_missing: 'Please pick an icon for “%name%”; it shows up in the navigation.'
     settings: Settings
@@ -115,11 +116,15 @@ filter:
     series: Series
     movie_one: Movie
     series_one: Series
+    genres: Genres
+    genres_count: '{1} 1 genre|]1,Inf[ %count% genres'
+    genres_reset: All genres
 
 group:
     shown: '%shown% of %total% shown'
     recent: Just added
     important: Important
+    waiting: Waiting for release
     normal: On the list
     maybe: Maybe
     watched: Watched
@@ -166,6 +171,8 @@ entry:
     remove_confirm: Remove "%name%" from the list?
     important: Mark as important
     important_undo: No longer important
+    waiting: Mark as waiting for release
+    waiting_undo: Already released
     maybe: Mark as maybe
     maybe_undo: No longer maybe
     watch: Mark as watched
@@ -222,7 +229,29 @@ admin:
     cannot_delete_self: You can't delete yourself.
 
 genre:
-    science_fiction: Science fiction
-    sci_fi: Sci-fi
+    action: Action
+    adventure: Adventure
+    animation: Animation
+    biography: Biopic
+    comedy: Comedy
+    crime: Crime
+    documentary: Docu
+    drama: Drama
+    family: Family
+    fantasy: Fantasy
+    history: History
+    horror: Horror
+    music: Music
+    musical: Musical
+    mystery: Mystery
+    news: News
+    reality: Reality
+    romance: Romance
+    sci_fi: Sci-Fi
+    short: Short
+    sport: Sport
+    thriller: Thriller
+    war: War
+    western: Western
     talk_show: Talk show
     game_show: Game show

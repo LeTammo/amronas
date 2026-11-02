@@ -7,7 +7,7 @@
     {% set sort = filter.sort ?? app.user.sortField %}
     {% set descending = filter.dir ? filter.dir == 'desc' : app.user.sortDescending %}
     {% set can_add = is_granted('LIST_EDIT', list) %}
-    {% set icons = {recent: 'tabler:sparkles', important: 'tabler:flame', normal: 'tabler:bookmark', maybe: 'tabler:hourglass', watched: 'tabler:eye-check'} %}
+    {% set icons = {recent: 'tabler:sparkles', important: 'tabler:flame', waiting: 'tabler:calendar-clock', normal: 'tabler:bookmark', maybe: 'tabler:hourglass', watched: 'tabler:eye-check'} %}
 
     <header class="heading left">
         <h1>{{ list.name }}</h1>
@@ -54,9 +54,46 @@
             </div>
         {% endif %}
 
+        {# Genres: pills on wide screens, a multi-select sheet on phones; the numbers say how many entries of each genre the other filters leave #}
+        {% if view.genres %}
+            <div class="genre-pills" role="group" aria-label="{{ 'filter.genres'|trans }}">
+                {% for genre, count in view.genres %}
+                    {% set active = genre in filter.genre %}
+                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="pill {{ active ? 'on' }} {{ count == 0 and not active ? 'empty' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
+                        {{- genre|genre }}<span class="count">{{ count }}</span>
+                    </a>
+                {% endfor %}
+                {% if filter.genre %}
+                    <a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({genre: []}))) }}" class="pill reset" data-turbo-action="replace">{{ ux_icon('tabler:x') }}{{ 'filter.genres_reset'|trans }}</a>
+                {% endif %}
+            </div>
+
+            <div class="genre-select" data-controller="dropdown"
+                 data-action="click@document->dropdown#closeOutside dropdown:open@document->dropdown#closeOthers keydown.esc@document->dropdown#closeOnEscape turbo:before-morph-attribute->dropdown#keepState">
+                <button type="button" id="genre-button" class="chip {{ filter.genre ? 'on' }}" aria-expanded="false" aria-haspopup="true" data-dropdown-target="button" data-action="dropdown#toggle">
+                    {{ ux_icon('tabler:tags') }}{{ filter.genre ? 'filter.genres_count'|trans({'%count%': filter.genre|length}) : 'filter.genres'|trans }}{{ ux_icon('tabler:chevron-down') }}
+                </button>
+                <div id="genre-sheet" class="genre-sheet" hidden data-dropdown-target="panel">
+                    <div class="sheet-head">
+                        <strong>{{ 'filter.genres'|trans }}</strong>
+                        {% if filter.genre %}<a href="{{ path('app_list_show', {id: list.id}|merge(filter.query({genre: []}))) }}" data-turbo-action="replace">{{ 'filter.genres_reset'|trans }}</a>{% endif %}
+                        <button type="button" class="icon-btn" data-action="dropdown#close" aria-label="{{ 'action.close'|trans }}">{{ ux_icon('tabler:x') }}</button>
+                    </div>
+                    {% for genre, count in view.genres %}
+                        {% set active = genre in filter.genre %}
+                        <a href="{{ path('app_list_show', {id: list.id}|merge(filter.toggleGenre(genre))) }}" class="{{ active ? 'on' }} {{ count == 0 and not active ? 'empty' }}" data-turbo-action="replace" aria-pressed="{{ active ? 'true' : 'false' }}">
+                            {{ ux_icon(active ? 'tabler:square-check-filled' : 'tabler:square') }}{{ genre|genre }}<span class="count">{{ count }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="sorting">
             <form method="get" data-controller="autosubmit" data-turbo-action="replace">
-                {% for key, value in filter.query %}<input type="hidden" name="{{ key }}" value="{{ value }}">{% endfor %}
+                {% for key, value in filter.query %}
+                    {% for item in value is iterable ? value : [value] %}<input type="hidden" name="{{ key }}{{ value is iterable ? '[]' }}" value="{{ item }}">{% endfor %}
+                {% endfor %}
                 <select name="sort" data-action="autosubmit#submit" aria-label="{{ 'sort.label'|trans }}">
                     {% for field in enum_cases('App\\Enum\\SortField') %}
                         <option value="{{ field.value }}" {{ field == sort ? 'selected' }}>{{ ('sort.' ~ field.value)|trans }}</option>

@@ -3,6 +3,6 @@
         {% if row.title.posterUrl %}<img class="poster" src="{{ row.title.posterUrl|poster(120) }}" alt="" loading="lazy">{% else %}<span class="poster"></span>{% endif %}
     </a>
     <div>{{ include('watch_list/_title_info.html.twig') }}</div>
-    {{ include('watch_list/_offers.html.twig') }}
+    {% if not row.entry.watched %}{{ include('watch_list/_offers.html.twig') }}{% endif %}
     <div class="row-actions">{{ include('watch_list/_actions.html.twig') }}</div>
 </article>
