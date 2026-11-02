@@ -19,7 +19,8 @@
         </div>
     </header>
 
-    <div class="toolbar">
+    {# Filter and sorting links change what is remembered, so Turbo must not load them on hover #}
+    <div class="toolbar" data-turbo-prefetch="false">
         <div class="add" data-controller="search" data-search-url-value="{{ path('app_entry_search', {id: list.id}) }}" data-action="click@document->search#closeOutside">
             <div class="search-field">
                 {{ ux_icon('tabler:search') }}
@@ -54,7 +55,7 @@
         </div>
     </div>
 
-    <div class="filters">
+    <div class="filters" data-turbo-prefetch="false">
         {% if list.type.value == 'mixed' %}
             <div class="seg" role="group" aria-label="{{ 'filter.type'|trans }}">
                 {% for type in ['movie', 'series'] %}

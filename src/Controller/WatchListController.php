@@ -78,9 +78,11 @@ class WatchListController extends AbstractController
             return $this->redirectToRoute('app_list_edit', ['id' => $list->getId()]);
         }
 
+        // Turbo loads links in advance when the mouse hovers them; only a real visit may remember filters and sorting
+        $prefetch = 'prefetch' === $request->headers->get('X-Sec-Purpose');
         $session = $request->getSession();
         $sessionKey = 'list_filter_'.$list->getId();
-        if ($filter->f) {
+        if ($filter->f && !$prefetch) {
             $session->set($sessionKey, ['type' => $filter->type?->value, 'short' => $filter->short, 'genre' => $filter->genre]);
         } elseif ($saved = $session->get($sessionKey)) {
             $filter = new ListFilter(TitleType::tryFrom((string) $saved['type']), $saved['short'], $filter->sort, $filter->dir, $filter->view, $saved['genre'] ?? [], true);
@@ -89,7 +91,7 @@ class WatchListController extends AbstractController
             $filter = new ListFilter(null, $filter->short, $filter->sort, $filter->dir, $filter->view, $filter->genre, true);
         }
 
-        if ($filter->sort || $filter->dir || $filter->view) {
+        if (!$prefetch && ($filter->sort || $filter->dir || $filter->view)) {
             $filter->sort && $user->setSortField($filter->sort);
             $filter->dir && $user->setSortDescending('desc' === $filter->dir);
             $filter->view && $user->setListView($filter->view);

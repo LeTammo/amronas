@@ -303,6 +303,23 @@ final class WatchListTest extends WebTestCase
         self::assertSelectorTextContains('table', 'erik');
     }
 
+    public function testHoveringAFilterLinkDoesNotRememberIt(): void
+    {
+        $list = $this->login('robin')->list('Unsere Filmliste');
+        $url = '/lists/'.$list->getId();
+
+        $crawler = $this->client->request('GET', $url);
+        self::assertSame('false', $crawler->filter('.filters')->attr('data-turbo-prefetch'));
+        self::assertSame('false', $crawler->filter('.toolbar')->attr('data-turbo-prefetch'));
+
+        $this->client->request('GET', $url.'?f=1&genre[]=documentary&sort=name', server: ['HTTP_X_SEC_PURPOSE' => 'prefetch']);
+        self::assertCount(1, $this->client->getCrawler()->filter('.row'));
+
+        $crawler = $this->client->request('GET', $url);
+        self::assertCount(10, $crawler->filter('.row'));
+        self::assertSame('rating', $crawler->filter('select[name=sort] option[selected]')->attr('value'));
+    }
+
     public function testSwitchingTheLanguageKeepsThePage(): void
     {
         $list = $this->login('robin')->list('Unsere Filmliste');
